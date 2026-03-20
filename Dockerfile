@@ -31,9 +31,11 @@ RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
 # 5. Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# 6. Copy project files
+# 6. Copy project files and startup script
 WORKDIR /var/www/html
 COPY . .
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
 
 # 7. Install PHP dependencies
 RUN composer install --optimize-autoloader --no-scripts --no-interaction
@@ -45,11 +47,6 @@ RUN mkdir -p writable/cache \
              writable/uploads \
     && chmod -R 777 writable/ \
     && chown -R www-data:www-data /var/www/html
-
-# 9. Create startup script
-# Uses printf to overwrite ports.conf and VirtualHost cleanly at runtime
-RUN printf '#!/bin/bash\nset -e\n\n# Fix MPM conflict\na2dismod mpm_event mpm_worker 2>/dev/null || true\na2enmod mpm_prefork 2>/dev/null || true\n\n# Use Railway PORT or default to 8080\nLISTEN_PORT=${PORT:-8080}\necho "Listening on port $LISTEN_PORT"\n\n# Overwrite ports.conf completely (avoids sed running twice bug)\nprintf "Listen %s\\n" "$LISTEN_PORT" > /etc/apache2/ports.conf\n\n# Update VirtualHost port\nsed -i "s/<VirtualHost \\*:[0-9]*>/<VirtualHost *:$LISTEN_PORT>/g" /etc/apache2/sites-available/000-default.conf\n\nexec apache2-foreground\n' > /start.sh \
-    && chmod +x /start.sh
 
 EXPOSE 8080
 

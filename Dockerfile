@@ -11,9 +11,12 @@ RUN apt-get update && apt-get install -y \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-# 2. FIX: Explicitly disable conflicting MPM modules
-# This prevents the "More than one MPM loaded" error
-RUN a2dismod mpm_event || true && a2enmod mpm_prefork
+# 2. FORCE FIX: Physically remove all MPM configs and only enable prefork
+# This is the "brute force" fix for the AH00534 error
+RUN rm -f /etc/apache2/mods-enabled/mpm_event.load /etc/apache2/mods-enabled/mpm_event.conf \
+    && rm -f /etc/apache2/mods-enabled/mpm_worker.load /etc/apache2/mods-enabled/mpm_worker.conf \
+    && a2dismod mpm_event mpm_worker || true \
+    && a2enmod mpm_prefork
 
 # 3. Install PHP extensions
 RUN docker-php-ext-install \
@@ -29,7 +32,6 @@ RUN a2enmod rewrite
 # 5. Set document root to CI4 public folder
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 
-# Fixed the sed command (using double quotes to allow ENV variable expansion)
 RUN sed -ri -e "s!/var/www/html!${APACHE_DOCUMENT_ROOT}!g" /etc/apache2/sites-available/*.conf
 RUN sed -ri -e "s!/var/www/!${APACHE_DOCUMENT_ROOT}!g" /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
@@ -48,17 +50,13 @@ WORKDIR /var/www/html
 COPY . .
 
 # 8. Install PHP dependencies
-# Added --no-dev for production deployment
 RUN composer install --optimize-autoloader --no-scripts --no-interaction --no-dev
 
 # 9. Create CI4 writable folders and set permissions
-# It is better to give ownership to the www-data user
 RUN mkdir -p writable/cache writable/logs writable/session writable/uploads \
     && chown -R www-data:www-data /var/www/html \
     && chmod -R 775 writable/
 
-# Railway uses the PORT environment variable. 
-# We don't hardcode EXPOSE 80 because Railway assigns a random port.
-# Apache by default listens on 80; Railway maps its $PORT to your container's port.
+EXPOSE 80
 
 CMD ["apache2-foreground"]

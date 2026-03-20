@@ -1,12 +1,13 @@
 FROM php:8.2-apache
 
-# Install system dependencies
+# Install system dependencies including oniguruma (required by mbstring)
 RUN apt-get update && apt-get install -y \
     libicu-dev \
     libzip-dev \
     libpng-dev \
     libxml2-dev \
     libcurl4-openssl-dev \
+    libonig-dev \
     unzip \
     git \
     && rm -rf /var/lib/apt/lists/*
@@ -19,7 +20,6 @@ RUN docker-php-ext-install \
     pdo_mysql \
     zip \
     gd \
-    curl \
     mbstring \
     xml \
     fileinfo \
@@ -37,11 +37,7 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' \
     /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
 # Allow .htaccess overrides
-RUN echo '<Directory /var/www/html/public>\n\
-    Options Indexes FollowSymLinks\n\
-    AllowOverride All\n\
-    Require all granted\n\
-</Directory>' >> /etc/apache2/apache2.conf
+RUN echo '<Directory /var/www/html/public>\nOptions Indexes FollowSymLinks\nAllowOverride All\nRequire all granted\n</Directory>' >> /etc/apache2/apache2.conf
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -56,7 +52,6 @@ RUN composer install --optimize-autoloader --no-scripts --no-interaction
 # Set permissions for CI4 writable folder
 RUN chmod -R 777 writable/
 
-# Expose port (Railway sets $PORT dynamically)
 EXPOSE 80
 
 CMD ["apache2-foreground"]

@@ -12,7 +12,6 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install only extensions that need compilation
-# (tokenizer, xml, mbstring, fileinfo, pdo are already in php:8.2-apache)
 RUN docker-php-ext-install \
     intl \
     mysqli \
@@ -44,8 +43,12 @@ COPY . .
 # Install PHP dependencies
 RUN composer install --optimize-autoloader --no-scripts --no-interaction
 
-# Set permissions for CI4 writable folder
-RUN chmod -R 777 writable/
+# Create CI4 writable folders (not in git) and set permissions
+RUN mkdir -p writable/cache \
+             writable/logs \
+             writable/session \
+             writable/uploads \
+    && chmod -R 777 writable/
 
 EXPOSE 80
 

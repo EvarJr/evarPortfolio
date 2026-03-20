@@ -50,6 +50,10 @@ RUN mkdir -p writable/cache \
     && chmod -R 777 writable/ \
     && chown -R www-data:www-data /var/www/html
 
+# 10. Create startup script that fixes MPM at runtime
+RUN printf '#!/bin/bash\na2dismod mpm_event mpm_worker 2>/dev/null || true\na2enmod mpm_prefork 2>/dev/null || true\nexec apache2-foreground\n' > /start.sh \
+    && chmod +x /start.sh
+
 EXPOSE 80
 
-CMD ["apache2-foreground"]
+CMD ["/start.sh"]

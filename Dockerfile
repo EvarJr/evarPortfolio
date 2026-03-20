@@ -19,15 +19,11 @@ RUN docker-php-ext-install \
     zip \
     gd
 
-# 3. FIX: Kill the "More than one MPM loaded" error
-# We physically delete the conflicting event and worker modules 
-# and force Apache to use the prefork module.
-RUN rm -f /etc/apache2/mods-enabled/mpm_event.load /etc/apache2/mods-enabled/mpm_event.conf \
-    && rm -f /etc/apache2/mods-enabled/mpm_worker.load /etc/apache2/mods-enabled/mpm_worker.conf \
+# 3. FIX MPM *after* PHP extensions (order matters!)
+RUN a2dismod mpm_event mpm_worker || true \
     && a2enmod mpm_prefork rewrite
 
 # 4. FIX: Port configuration for Railway
-# Railway assigns a random port; we must tell Apache to listen on it.
 RUN sed -i "s/Listen 80/Listen \${PORT}/g" /etc/apache2/ports.conf \
     && sed -i "s/<VirtualHost \*:80>/<VirtualHost *:\${PORT}>/g" /etc/apache2/sites-available/000-default.conf
 

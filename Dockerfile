@@ -46,11 +46,11 @@ RUN mkdir -p writable/cache \
     && chmod -R 777 writable/ \
     && chown -R www-data:www-data /var/www/html
 
-# 9. Create startup script that fixes MPM and sets PORT at runtime
-RUN printf '#!/bin/bash\nset -e\n\n# Fix MPM conflict\na2dismod mpm_event mpm_worker 2>/dev/null || true\na2enmod mpm_prefork 2>/dev/null || true\n\n# Set port from Railway environment variable (defaults to 8080)\nLISTEN_PORT=${PORT:-8080}\necho "Listening on port $LISTEN_PORT"\n\n# Update Apache port config at runtime\nsed -i "s/Listen 80/Listen $LISTEN_PORT/g" /etc/apache2/ports.conf\nsed -i "s/<VirtualHost \\*:80>/<VirtualHost *:$LISTEN_PORT>/g" /etc/apache2/sites-available/000-default.conf\n\nexec apache2-foreground\n' > /start.sh \
+# 9. Create startup script
+# Uses printf to overwrite ports.conf and VirtualHost cleanly at runtime
+RUN printf '#!/bin/bash\nset -e\n\n# Fix MPM conflict\na2dismod mpm_event mpm_worker 2>/dev/null || true\na2enmod mpm_prefork 2>/dev/null || true\n\n# Use Railway PORT or default to 8080\nLISTEN_PORT=${PORT:-8080}\necho "Listening on port $LISTEN_PORT"\n\n# Overwrite ports.conf completely (avoids sed running twice bug)\nprintf "Listen %s\\n" "$LISTEN_PORT" > /etc/apache2/ports.conf\n\n# Update VirtualHost port\nsed -i "s/<VirtualHost \\*:[0-9]*>/<VirtualHost *:$LISTEN_PORT>/g" /etc/apache2/sites-available/000-default.conf\n\nexec apache2-foreground\n' > /start.sh \
     && chmod +x /start.sh
 
-# Railway routes traffic to the PORT env var — use 8080 as default
 EXPOSE 8080
 
 CMD ["/start.sh"]

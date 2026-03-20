@@ -1,29 +1,24 @@
 FROM php:8.2-apache
 
-# Install system dependencies including oniguruma (required by mbstring)
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     libicu-dev \
     libzip-dev \
     libpng-dev \
     libxml2-dev \
-    libcurl4-openssl-dev \
     libonig-dev \
     unzip \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-# Install required PHP extensions
+# Install only extensions that need compilation
+# (tokenizer, xml, mbstring, fileinfo, pdo are already in php:8.2-apache)
 RUN docker-php-ext-install \
     intl \
     mysqli \
-    pdo \
     pdo_mysql \
     zip \
-    gd \
-    mbstring \
-    xml \
-    fileinfo \
-    tokenizer
+    gd
 
 # Enable Apache mod_rewrite (required for CI4 routing)
 RUN a2enmod rewrite

@@ -404,19 +404,19 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
 .re-contact-item i{color:#3b82f6;font-size:10px}
 .re-body{column-count:2;column-gap:0;background:linear-gradient(to right,#ffffff 50%,#f9fafb 50%);column-rule:2px solid #f0f2f4;display:block;padding:0}
 .re-col-l,.re-col-r{display:contents}
-.re-section{break-inside:avoid;margin-bottom:16px;padding:16px 20px 0}
+.re-section{break-inside:avoid;margin-bottom:16px;padding:16px 20px 0;box-sizing:border-box}
 .re-section-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#2c3e50;padding-bottom:4px;border-bottom:2px solid #3b82f6;margin-bottom:10px}
 .re-summary{font-size:12.5px;color:#555;line-height:1.75}
 .re-job{margin-bottom:14px;break-inside:avoid}
 .re-job-role{display:block;font-weight:700;font-size:13px}
 .re-job-meta{display:block;font-size:11px;color:#3b82f6;font-style:italic;margin:1px 0 4px}
-.re-ul{padding-left:16px;margin-top:3px}
+.re-ul{padding-left:14px;margin-top:3px;margin-bottom:0}
 .re-ul li{font-size:12px;color:#555;margin-bottom:3px;line-height:1.5}
-.re-edu{margin-bottom:12px;break-inside:avoid}
+.re-edu{margin-bottom:12px;break-inside:avoid;padding-left:0}
 .re-edu-deg{font-weight:700;font-size:13px}
 .re-edu-sch{font-size:11.5px;color:#3b82f6;margin:1px 0}
 .re-edu-dt{font-size:11px;color:#888;margin-bottom:4px}
-.re-cert{margin-bottom:10px;break-inside:avoid}
+.re-cert{margin-bottom:10px;break-inside:avoid;padding-left:0}
 .re-cert-name{font-weight:600;font-size:12px;line-height:1.4}
 .re-cert-yr{font-size:11px;color:#3b82f6;margin-top:2px}
 .re-lang-list{display:inline-grid;grid-template-columns:max-content auto;align-items:center;gap:8px 20px;width:100%}

@@ -7,9 +7,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Cabinet+Grotesk:wght@300;400;500;700;800;900&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-/* ════════════════════════════════════════════
-   SIGNAL — Design System
-   ════════════════════════════════════════════ */
 :root {
   --ink:      #050810;
   --ink-2:    #0b0f1e;
@@ -37,127 +34,41 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{font-family:var(--font-b);background:var(--ink);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased}
-
-/* ── SCROLL PROGRESS BAR ── */
-#scroll-progress{
-  position:fixed;top:0;left:0;z-index:9999;
-  height:3px;width:0%;
-  background:var(--g-accent);
-  transition:width 0.1s linear;
-  pointer-events:none;
-}
-
-/* ── NOISE OVERLAY ── */
-body::before{
-  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-  opacity:0.35;
-}
-
-/* ════════════════════════════════════════════
-   NAVBAR
-   ════════════════════════════════════════════ */
-.navbar{
-  position:fixed;top:0;left:0;right:0;z-index:500;
-  height:var(--nav-h);
-  background:rgba(5,8,16,0.88);
-  backdrop-filter:blur(20px) saturate(180%);
-  border-bottom:1px solid var(--border);
-  display:flex;align-items:center;
-  padding:0 8vw;gap:28px;
-}
+#scroll-progress{position:fixed;top:0;left:0;z-index:9999;height:3px;width:0%;background:var(--g-accent);transition:width 0.1s linear;pointer-events:none}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");opacity:0.35}
+.navbar{position:fixed;top:0;left:0;right:0;z-index:500;height:var(--nav-h);background:rgba(5,8,16,0.88);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 8vw;gap:28px}
 .nav-brand{display:flex;align-items:center;gap:11px;text-decoration:none;flex-shrink:0}
-.nav-avatar{
-  width:38px;height:38px;border-radius:11px;
-  background:var(--g-accent);
-  display:flex;align-items:center;justify-content:center;
-  color:#fff;font-family:var(--font-d);font-size:15px;font-weight:700;
-  overflow:hidden;flex-shrink:0;
-  box-shadow:0 0 0 1px rgba(139,92,246,0.4),0 4px 16px rgba(99,102,241,0.3);
-}
+.nav-avatar{width:38px;height:38px;border-radius:11px;background:var(--g-accent);display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--font-d);font-size:15px;font-weight:700;overflow:hidden;flex-shrink:0;box-shadow:0 0 0 1px rgba(139,92,246,0.4),0 4px 16px rgba(99,102,241,0.3)}
 .nav-avatar img{width:100%;height:100%;object-fit:cover}
 .nav-name{font-family:var(--font-d);font-size:15px;font-weight:600;color:var(--text);letter-spacing:-0.3px}
 .nav-name span{font-weight:300;opacity:0.65}
 .nav-links{display:flex;align-items:center;gap:2px;margin-left:auto}
-.nav-link{
-  padding:7px 14px;border-radius:9px;
-  text-decoration:none;font-size:13px;font-weight:500;
-  color:var(--text-2);transition:all 0.2s;white-space:nowrap;
-  font-family:var(--font-b);
-}
+.nav-link{padding:7px 14px;border-radius:9px;text-decoration:none;font-size:13px;font-weight:500;color:var(--text-2);transition:all 0.2s;white-space:nowrap;font-family:var(--font-b)}
 .nav-link:hover,.nav-link.active{color:var(--text);background:rgba(255,255,255,0.06)}
-.nav-btn{
-  padding:9px 22px;background:var(--g-accent);color:#fff;
-  border-radius:50px;font-size:12.5px;font-weight:700;
-  font-family:var(--font-d);text-decoration:none;
-  margin-left:8px;transition:all 0.2s;
-  box-shadow:0 4px 20px rgba(99,102,241,0.4);letter-spacing:0.3px;
-}
+.nav-btn{padding:9px 22px;background:var(--g-accent);color:#fff;border-radius:50px;font-size:12.5px;font-weight:700;font-family:var(--font-d);text-decoration:none;margin-left:8px;transition:all 0.2s;box-shadow:0 4px 20px rgba(99,102,241,0.4);letter-spacing:0.3px}
 .nav-btn:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(99,102,241,0.5)}
 .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;margin-left:12px}
 .nav-hamburger span{display:block;width:22px;height:2px;background:var(--text-2);border-radius:2px;transition:all 0.3s}
-
-/* ════════════════════════════════════════════
-   HERO
-   ════════════════════════════════════════════ */
-.hero{
-  position:relative;min-height:100vh;
-  margin-top:var(--nav-h);
-  background:var(--g-hero);
-  display:flex;align-items:center;
-  padding:60px 8vw 120px;gap:72px;overflow:visible;
-  max-width:100%;
-}
+.hero{position:relative;min-height:100vh;margin-top:var(--nav-h);background:var(--g-hero);display:flex;align-items:center;padding:60px 8vw 120px;gap:72px;overflow:visible;max-width:100%}
 .hero-orb{position:absolute;border-radius:50%;pointer-events:none;filter:blur(80px)}
 .hero-orb-1{width:520px;height:520px;top:-120px;right:-100px;background:radial-gradient(circle,rgba(99,102,241,0.22) 0%,transparent 70%);animation:orbFloat 9s ease-in-out infinite}
 .hero-orb-2{width:400px;height:400px;bottom:-60px;left:-80px;background:radial-gradient(circle,rgba(139,92,246,0.14) 0%,transparent 70%);animation:orbFloat 12s ease-in-out infinite reverse}
 .hero-orb-3{width:280px;height:280px;top:35%;right:28%;background:radial-gradient(circle,rgba(6,182,212,0.09) 0%,transparent 70%);animation:orbFloat 15s ease-in-out infinite}
 @keyframes orbFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-28px) scale(1.04)}}
-.hero::after{
-  content:'';position:absolute;bottom:-2px;left:0;right:0;height:90px;
-  background:var(--ink-3);
-  clip-path:polygon(0 55%,100% 0%,100% 100%,0% 100%);
-  z-index:2;
-}
-
-/* Photo */
+.hero::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:90px;background:var(--ink-3);clip-path:polygon(0 55%,100% 0%,100% 100%,0% 100%);z-index:2}
 .hero-photo-wrap{flex-shrink:0;position:relative;z-index:3;animation:heroPhotoIn 1s cubic-bezier(0.16,1,0.3,1) both}
 @keyframes heroPhotoIn{from{opacity:0;transform:translateX(-40px) rotate(-3deg)}to{opacity:1;transform:translateX(0) rotate(0)}}
-.hero-photo-frame{
-  width:360px;height:440px;border-radius:30px;
-  position:relative;overflow:hidden;
-  background:linear-gradient(145deg,rgba(99,102,241,0.18),rgba(139,92,246,0.08));
-  border:1px solid rgba(99,102,241,0.22);
-  box-shadow:0 0 0 1px rgba(99,102,241,0.12),0 32px 80px rgba(0,0,0,0.55),inset 0 1px 0 rgba(255,255,255,0.07);
-}
+.hero-photo-frame{width:360px;height:440px;border-radius:30px;position:relative;overflow:hidden;background:linear-gradient(145deg,rgba(99,102,241,0.18),rgba(139,92,246,0.08));border:1px solid rgba(99,102,241,0.22);box-shadow:0 0 0 1px rgba(99,102,241,0.12),0 32px 80px rgba(0,0,0,0.55),inset 0 1px 0 rgba(255,255,255,0.07)}
 .hero-photo-frame img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
 .photo-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:80px;color:rgba(99,102,241,0.35)}
-.hero-badge{
-  position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);
-  background:linear-gradient(135deg,#1a2038,#212940);
-  border:1px solid rgba(99,102,241,0.4);
-  border-radius:50px;padding:8px 18px;
-  font-size:11px;font-weight:600;font-family:var(--font-d);
-  color:var(--text);white-space:nowrap;
-  box-shadow:0 8px 32px rgba(0,0,0,0.4),0 0 0 1px rgba(99,102,241,0.18);
-  display:flex;align-items:center;gap:7px;letter-spacing:0.3px;
-}
+.hero-badge{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#1a2038,#212940);border:1px solid rgba(99,102,241,0.4);border-radius:50px;padding:8px 18px;font-size:11px;font-weight:600;font-family:var(--font-d);color:var(--text);white-space:nowrap;box-shadow:0 8px 32px rgba(0,0,0,0.4),0 0 0 1px rgba(99,102,241,0.18);display:flex;align-items:center;gap:7px;letter-spacing:0.3px}
 .badge-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,0.22);animation:pulseDot 2s ease-in-out infinite}
 @keyframes pulseDot{0%,100%{box-shadow:0 0 0 3px rgba(34,197,94,0.22)}50%{box-shadow:0 0 0 6px rgba(34,197,94,0.08)}}
-
-/* Stats on photo */
-.hero-stat{
-  position:absolute;background:rgba(5,8,16,0.92);
-  backdrop-filter:blur(12px);
-  border:1px solid var(--border-p);border-radius:13px;
-  padding:10px 13px;box-shadow:0 8px 28px rgba(0,0,0,0.45);
-}
+.hero-stat{position:absolute;background:rgba(5,8,16,0.92);backdrop-filter:blur(12px);border:1px solid var(--border-p);border-radius:13px;padding:10px 13px;box-shadow:0 8px 28px rgba(0,0,0,0.45)}
 .hero-stat-1{top:22px;right:-30px}
 .hero-stat-2{top:50%;right:-38px;transform:translateY(-50%)}
 .hero-stat .s-val{font-family:var(--font-d);font-size:18px;font-weight:700;color:var(--text)}
 .hero-stat .s-lbl{font-size:9px;color:var(--text-3);margin-top:1px;font-family:var(--font-m);text-transform:uppercase;letter-spacing:0.8px}
-
-/* Text */
 .hero-text{flex:1;min-width:0;z-index:3;position:relative;animation:heroTextIn 1s cubic-bezier(0.16,1,0.3,1) 0.15s both}
 @keyframes heroTextIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
 .hero-mono{font-family:var(--font-m);font-size:11.5px;color:var(--cyan);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px}
@@ -165,23 +76,13 @@ body::before{
 .hero-name{font-family:var(--font-d);font-size:clamp(44px,5.5vw,76px);font-weight:700;line-height:1.0;color:var(--text);margin-bottom:10px;letter-spacing:-2px}
 .hero-name-accent{background:var(--g-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block}
 .hero-pill{display:inline-flex;align-items:center;gap:7px;background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.22);border-radius:50px;padding:6px 14px;font-size:11.5px;font-weight:600;color:#a5b4fc;margin-bottom:20px;font-family:var(--font-d);letter-spacing:0.2px}
-
-/* ── CREDENTIAL BADGES ── */
 .cred-row{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:22px}
-.cred-badge{
-  display:inline-flex;align-items:center;gap:6px;
-  background:rgba(16,185,129,0.08);
-  border:1px solid rgba(16,185,129,0.22);
-  border-radius:50px;padding:5px 12px;
-  font-size:11px;font-weight:500;color:#6ee7b7;
-  font-family:var(--font-b);
-}
+.cred-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.22);border-radius:50px;padding:5px 12px;font-size:11px;font-weight:500;color:#6ee7b7;font-family:var(--font-b)}
 .cred-badge i{font-size:9px;color:#10b981}
 .cred-badge.dost{background:rgba(6,182,212,0.08);border-color:rgba(6,182,212,0.22);color:#67e8f9}
 .cred-badge.dost i{color:var(--cyan)}
 .cred-badge.award{background:rgba(251,191,36,0.08);border-color:rgba(251,191,36,0.2);color:#fde68a}
 .cred-badge.award i{color:#fbbf24}
-
 .hero-bio{font-size:15px;line-height:1.85;color:var(--text-2);max-width:580px;margin-bottom:32px;font-weight:400}
 .hero-btns{display:flex;gap:13px;flex-wrap:wrap;margin-bottom:30px}
 .btn-primary{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;background:var(--g-accent);color:#fff;border-radius:50px;font-size:13.5px;font-weight:700;font-family:var(--font-d);text-decoration:none;transition:all 0.25s;box-shadow:0 4px 22px rgba(99,102,241,0.42);letter-spacing:0.3px}
@@ -191,16 +92,8 @@ body::before{
 .hero-socials{display:flex;gap:9px}
 .social-icon{width:40px;height:40px;border-radius:11px;background:rgba(255,255,255,0.04);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-3);text-decoration:none;font-size:14px;transition:all 0.2s}
 .social-icon:hover{background:rgba(99,102,241,0.14);border-color:rgba(99,102,241,0.38);color:#a5b4fc;transform:translateY(-2px)}
-
-/* ── ANIMATED COUNTERS ROW ── */
 .counters-row{display:flex;gap:14px;margin-top:28px;flex-wrap:wrap}
-.counter-chip{
-  display:flex;align-items:center;gap:9px;
-  background:rgba(255,255,255,0.03);
-  border:1px solid var(--border);
-  border-radius:12px;padding:10px 16px;
-  transition:border-color 0.3s;
-}
+.counter-chip{display:flex;align-items:center;gap:9px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:12px;padding:10px 16px;transition:border-color 0.3s}
 .counter-chip:hover{border-color:rgba(99,102,241,0.3)}
 .counter-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
 .counter-icon.blue{background:rgba(99,102,241,0.15);color:#a5b4fc}
@@ -208,10 +101,6 @@ body::before{
 .counter-icon.green{background:rgba(16,185,129,0.12);color:#6ee7b7}
 .counter-val{font-family:var(--font-d);font-size:20px;font-weight:700;color:var(--text);line-height:1}
 .counter-lbl{font-size:10px;color:var(--text-3);margin-top:2px;font-family:var(--font-m);text-transform:uppercase;letter-spacing:0.7px}
-
-/* ════════════════════════════════════════════
-   SHARED SECTION STYLES
-   ════════════════════════════════════════════ */
 .section-eyebrow{font-family:var(--font-m);font-size:10.5px;letter-spacing:3px;text-transform:uppercase;margin-bottom:9px;display:flex;align-items:center;gap:9px}
 .section-eyebrow::before{content:'';display:inline-block;width:22px;height:1px}
 .ey-purple{color:var(--purple)}.ey-purple::before{background:var(--purple)}
@@ -220,10 +109,6 @@ body::before{
 .ey-green{color:var(--green)}.ey-green::before{background:var(--green)}
 .section-title{font-family:var(--font-d);font-size:clamp(26px,2.8vw,40px);font-weight:700;color:var(--text);letter-spacing:-1px;line-height:1.1}
 .section-title span{background:var(--g-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-
-/* ════════════════════════════════════════════
-   SERVICES
-   ════════════════════════════════════════════ */
 .services-section{background:var(--ink-3);padding:0 8vw 70px}
 .services-header{padding-top:60px;margin-bottom:36px;width:100%}
 .services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px;position:relative;z-index:5}
@@ -237,17 +122,7 @@ body::before{
 .service-card:hover .svc-icon{background:linear-gradient(135deg,rgba(99,102,241,0.3),rgba(139,92,246,0.18));box-shadow:0 0 22px rgba(99,102,241,0.22)}
 .service-card h3{font-family:var(--font-d);font-size:15.5px;font-weight:700;color:var(--text);margin-bottom:9px;letter-spacing:-0.3px}
 .service-card p{font-size:13px;line-height:1.78;color:var(--text-2)}
-
-/* ════════════════════════════════════════════
-   PROJECTS
-   ════════════════════════════════════════════ */
-.projects-section{
-  position:relative;
-  background:linear-gradient(160deg,#0e0825 0%,#110f2e 50%,#0b1a35 100%);
-  padding:100px 8vw 80px;
-  clip-path:polygon(0 60px,100% 0,100% calc(100% - 60px),0 100%);
-  margin:-20px 0;z-index:1;
-}
+.projects-section{position:relative;background:linear-gradient(160deg,#0e0825 0%,#110f2e 50%,#0b1a35 100%);padding:100px 8vw 80px;clip-path:polygon(0 60px,100% 0,100% calc(100% - 60px),0 100%);margin:-20px 0;z-index:1}
 .projects-header{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:36px;flex-wrap:wrap;width:100%}
 .proj-filters{display:flex;gap:7px;flex-wrap:wrap}
 .proj-filter{padding:7px 16px;border-radius:50px;font-size:12.5px;font-weight:600;font-family:var(--font-d);border:1px solid var(--border);color:var(--text-3);background:transparent;cursor:pointer;transition:all 0.2s;letter-spacing:0.2px}
@@ -284,10 +159,6 @@ body::before{
 .proj-link:hover{color:#a5b4fc}
 .proj-link i{font-size:10px}
 .proj-card:hover .proj-thumb-icon{transform:scale(1.12);transition:transform 0.3s}
-
-/* ════════════════════════════════════════════
-   TESTIMONIALS
-   ════════════════════════════════════════════ */
 .testi-section{position:relative;background:linear-gradient(155deg,#0a0a1a 0%,#0e0825 100%);padding:80px 8vw 70px;clip-path:polygon(0 50px,100% 0,100% calc(100% - 50px),0 100%);margin:-15px 0;z-index:1}
 .testi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px;margin-top:44px}
 .testi-card{background:rgba(255,255,255,0.03);border:1px solid rgba(99,102,241,0.13);border-radius:var(--radius);padding:30px;position:relative;transition:all 0.3s}
@@ -298,30 +169,18 @@ body::before{
 .testi-avatar{width:40px;height:40px;border-radius:50%;background:var(--g-accent);display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-weight:700;font-size:15px;color:#fff;flex-shrink:0}
 .testi-name{font-weight:700;font-size:14px;font-family:var(--font-d);color:var(--text)}
 .testi-role{font-size:11.5px;color:var(--text-3);margin-top:1px}
-
-/* ════════════════════════════════════════════
-   RESUME STRIP
-   ════════════════════════════════════════════ */
 .resume-strip{position:relative;z-index:2;background:var(--ink-2);padding:70px 8vw;text-align:center;overflow:hidden}
 .resume-strip::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(99,102,241,0.1) 0%,transparent 70%);pointer-events:none}
 .rs-title{font-family:var(--font-d);font-size:clamp(24px,3.2vw,42px);font-weight:700;color:var(--text);margin-bottom:11px;letter-spacing:-1px;position:relative}
 .rs-sub{font-size:15px;color:var(--text-2);margin-bottom:34px;position:relative}
 .btn-resume{display:inline-flex;align-items:center;gap:10px;padding:15px 34px;background:var(--g-accent);color:#fff;border-radius:50px;font-family:var(--font-d);font-size:14.5px;font-weight:700;text-decoration:none;box-shadow:0 8px 38px rgba(99,102,241,0.4);transition:all 0.25s;position:relative;letter-spacing:0.3px}
 .btn-resume:hover{transform:translateY(-3px);box-shadow:0 14px 46px rgba(99,102,241,0.5)}
-
-/* ════════════════════════════════════════════
-   CONTACT
-   ════════════════════════════════════════════ */
 .contact-section{position:relative;background:linear-gradient(135deg,#0a0a1a 0%,#0f0825 100%);padding:80px 8vw 60px;clip-path:polygon(0 50px,100% 0,100% 100%,0 100%);margin-top:-20px}
 .contact-inner{max-width:580px;margin:0 auto;text-align:center}
 .contact-inner h2{font-family:var(--font-d);font-size:clamp(26px,3.5vw,44px);font-weight:700;margin-bottom:13px;letter-spacing:-1px;color:var(--text)}
 .contact-inner p{color:var(--text-2);font-size:15px;margin-bottom:30px;line-height:1.75}
 .btn-email{display:inline-flex;align-items:center;gap:9px;padding:14px 30px;background:rgba(99,102,241,0.12);border:1px solid rgba(99,102,241,0.32);color:#a5b4fc;border-radius:50px;font-family:var(--font-d);font-size:14.5px;font-weight:600;text-decoration:none;transition:all 0.25s}
 .btn-email:hover{background:rgba(99,102,241,0.22);border-color:rgba(99,102,241,0.55);color:var(--text);transform:translateY(-2px);box-shadow:0 8px 30px rgba(99,102,241,0.22)}
-
-/* ════════════════════════════════════════════
-   FOOTER
-   ════════════════════════════════════════════ */
 footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border);font-size:11.5px;color:var(--text-3)}
 .footer-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .footer-brand{display:flex;align-items:center;gap:8px}
@@ -330,10 +189,6 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
 .footer-admin-link{font-size:11px;color:rgba(255,255,255,0.13);text-decoration:none;transition:color 0.2s;font-family:var(--font-m)}
 .footer-admin-link:hover{color:var(--blue-v)}
 .footer-divider{color:var(--border);font-size:11px}
-
-/* ════════════════════════════════════════════
-   RESUME MODAL
-   ════════════════════════════════════════════ */
 .modal-overlay{position:fixed;inset:0;background:rgba(2,4,12,0.9);backdrop-filter:blur(8px);z-index:800;display:flex;align-items:flex-start;justify-content:center;padding:24px;overflow-y:auto;opacity:0;pointer-events:none;transition:opacity 0.3s}
 .modal-overlay.open{opacity:1;pointer-events:all}
 .modal-box{background:#fff;border-radius:20px;max-width:980px;width:100%;position:relative;animation:modalIn 0.35s cubic-bezier(0.16,1,0.3,1) both;box-shadow:0 40px 120px rgba(0,0,0,0.7)}
@@ -363,7 +218,7 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
 .re-ul{padding-left:16px;margin-top:3px}
 .re-ul li{font-size:12px;color:#555;margin-bottom:3px;line-height:1.5}
 
-/* ══ FIX: Education & Certifications — match Work History alignment ══ */
+/* ── Education & Cert alignment fix ── */
 .re-edu{margin-bottom:12px;break-inside:avoid;padding-left:0;margin-left:0}
 .re-edu-deg{display:block;font-weight:700;font-size:13px}
 .re-edu-sch{display:block;font-size:11.5px;color:#3b82f6;margin:1px 0}
@@ -372,8 +227,10 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
 .re-cert-name{display:block;font-weight:600;font-size:12px;line-height:1.4}
 .re-cert-yr{display:block;font-size:11px;color:#3b82f6;margin-top:2px}
 
-.re-lang-item{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
-.re-lang-dots{display:flex;gap:4px}
+/* ── Language dots — centered next to name ── */
+.re-lang-item{display:flex;align-items:center;margin-bottom:7px}
+.re-lang-name{flex:0 0 auto;min-width:55px;max-width:90px;font-size:12px;color:#555}
+.re-lang-dots{display:flex;gap:4px;margin-left:14px;margin-right:28px}
 .re-dot{width:10px;height:10px;border-radius:50%;background:#d1d5db;border:1.5px solid #c4c9d0}
 .re-dot.on{background:#3b82f6;border-color:#2563eb}
 
@@ -406,14 +263,10 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
   .projects-header{flex-direction:column;align-items:flex-start}
 }
 
-/* ── ENTRANCE ANIMATIONS ── */
 @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
 .anim{opacity:0;animation:fadeUp 0.65s cubic-bezier(0.16,1,0.3,1) forwards;animation-play-state:paused}
 .d1{animation-delay:0.05s}.d2{animation-delay:0.15s}.d3{animation-delay:0.25s}.d4{animation-delay:0.35s}
 
-/* ════════════════════════════════════════════
-   PROJECT MODAL
-   ════════════════════════════════════════════ */
 .proj-modal-overlay{position:fixed;inset:0;z-index:900;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity 0.3s;background:rgba(2,4,18,0.7);backdrop-filter:blur(16px) saturate(160%)}
 .proj-modal-overlay.open{opacity:1;pointer-events:all}
 .proj-modal{position:relative;background:linear-gradient(145deg,#0f1535 0%,#0b0f1e 60%,#1a0a3d 100%);border:1px solid rgba(99,102,241,0.25);border-radius:24px;width:100%;max-width:820px;max-height:88vh;overflow-y:auto;box-shadow:0 0 0 1px rgba(99,102,241,0.12),0 40px 120px rgba(0,0,0,0.7),0 0 80px rgba(99,102,241,0.08),inset 0 1px 0 rgba(255,255,255,0.06);transform:translateY(40px) scale(0.97);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);scrollbar-width:thin;scrollbar-color:rgba(99,102,241,0.2) transparent}
@@ -459,14 +312,10 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
 .pm-iso-bar-bg{height:4px;background:rgba(255,255,255,0.07);border-radius:2px;overflow:hidden}
 .pm-iso-bar-fill{height:100%;border-radius:2px;background:var(--g-accent);transition:width 1s cubic-bezier(0.4,0,0.2,1) 0.2s;width:0}
 .pm-iso-score{font-family:var(--font-d);font-size:17px;font-weight:700;color:var(--text);margin-top:6px}
-
-/* ════ PROJECT FILTER ANIMATION ════ */
 .proj-card{transition:opacity 0.35s ease,transform 0.35s cubic-bezier(0.4,0,0.2,1)}
 .proj-card.hiding{opacity:0;transform:scale(0.92) translateY(8px);pointer-events:none}
 .proj-card.hidden{display:none}
 .proj-card.showing{opacity:0;transform:scale(0.92) translateY(8px)}
-
-/* ════ HERO SWIRL ════ */
 .hero-swirl{position:absolute;top:-10%;right:-4%;width:52%;height:120%;pointer-events:none;z-index:1;opacity:0.12;overflow:hidden}
 .hero-swirl svg{width:100%;height:100%}
 .hero-swirl-2{position:absolute;top:15%;right:10%;width:32%;height:65%;pointer-events:none;z-index:1;opacity:0.06;overflow:hidden}
@@ -493,10 +342,8 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
 </head>
 <body>
 
-<!-- ── SCROLL PROGRESS ── -->
 <div id="scroll-progress"></div>
 
-<!-- ════════ NAVBAR ════════ -->
 <nav class="navbar">
   <a class="nav-brand" href="<?= base_url() ?>">
     <div class="nav-avatar">
@@ -522,12 +369,10 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
   <div class="nav-hamburger" onclick="toggleMobileNav(this)"><span></span><span></span><span></span></div>
 </nav>
 
-<!-- ════════ HERO ════════ -->
 <section class="hero" id="hero">
   <div class="hero-orb hero-orb-1"></div>
   <div class="hero-orb hero-orb-2"></div>
   <div class="hero-orb hero-orb-3"></div>
-
   <div class="hero-swirl" aria-hidden="true">
     <svg viewBox="0 0 600 800" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
       <path class="swirl-path" d="M300,400 C160,180 500,80 440,300 C380,520 100,470 160,270 C220,70 540,130 510,360 C480,590 120,570 140,380 C160,190 560,220 530,450 C500,680 90,650 110,430" stroke="#8b5cf6" stroke-width="30"/>
@@ -572,31 +417,22 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
   <div class="hero-text">
     <div class="hero-mono">Full-Stack Developer</div>
     <?php $np=explode(' ',trim($header['name']??'Your Name'),2); ?>
-    <h1 class="hero-name">
-      <?= esc($np[0]) ?><br>
-      <span class="hero-name-accent"><?= esc($np[1]??'') ?></span>
-    </h1>
+    <h1 class="hero-name"><?= esc($np[0]) ?><br><span class="hero-name-accent"><?= esc($np[1]??'') ?></span></h1>
     <div class="hero-pill"><i class="fas fa-code" style="font-size:10px"></i><?= esc($about['tagline']??'Full-Stack Web Developer') ?></div>
-
     <div class="cred-row">
       <span class="cred-badge"><i class="fas fa-check-circle"></i> Civil Service Professional Eligible</span>
       <span class="cred-badge dost"><i class="fas fa-award"></i> DOST-JLSS Scholar</span>
       <span class="cred-badge award"><i class="fas fa-star"></i> Academic Excellence 2022–2025</span>
     </div>
-
     <p class="hero-bio"><?= nl2br(esc($about['bio']??'')) ?></p>
-
     <div class="hero-btns">
-      <a href="#" class="btn-primary" onclick="openResumeModal(event)">
-        <i class="fas fa-file-alt"></i><?= esc($about['cv_label']??'View Resume') ?>
-      </a>
+      <a href="#" class="btn-primary" onclick="openResumeModal(event)"><i class="fas fa-file-alt"></i><?= esc($about['cv_label']??'View Resume') ?></a>
       <?php if(!empty($about['btn_contact_email'])): ?>
       <a href="mailto:<?= esc($about['btn_contact_email']) ?>" class="btn-ghost"><?= esc($about['btn_contact_label']??'Hire Me') ?></a>
       <?php else: ?>
       <a href="#contact" class="btn-ghost"><?= esc($about['btn_contact_label']??'Hire Me') ?></a>
       <?php endif; ?>
     </div>
-
     <div class="hero-socials">
       <?php if(!empty($about['github'])): ?><a href="<?= esc($about['github']) ?>" target="_blank" class="social-icon" title="GitHub"><i class="fab fa-github"></i></a><?php endif; ?>
       <?php if(!empty($about['linkedin_url'])): ?><a href="<?= esc($about['linkedin_url']) ?>" target="_blank" class="social-icon" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a><?php endif; ?>
@@ -604,34 +440,14 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
       <?php if(!empty($about['facebook'])): ?><a href="<?= esc($about['facebook']) ?>" target="_blank" class="social-icon" title="Facebook"><i class="fab fa-facebook-f"></i></a><?php endif; ?>
       <?php if(!empty($header['email'])): ?><a href="mailto:<?= esc($header['email']) ?>" class="social-icon" title="Email"><i class="fas fa-envelope"></i></a><?php endif; ?>
     </div>
-
     <div class="counters-row" id="counters">
-      <div class="counter-chip">
-        <div class="counter-icon blue"><i class="fas fa-briefcase"></i></div>
-        <div>
-          <div class="counter-val" data-target="2" data-suffix="">0</div>
-          <div class="counter-lbl">OJT Experiences</div>
-        </div>
-      </div>
-      <div class="counter-chip">
-        <div class="counter-icon cyan"><i class="fas fa-code"></i></div>
-        <div>
-          <div class="counter-val" data-target="9" data-suffix="">0</div>
-          <div class="counter-lbl">Technologies</div>
-        </div>
-      </div>
-      <div class="counter-chip">
-        <div class="counter-icon green"><i class="fas fa-flask"></i></div>
-        <div>
-          <div class="counter-val" data-target="1" data-suffix="">0</div>
-          <div class="counter-lbl">Research Thesis</div>
-        </div>
-      </div>
+      <div class="counter-chip"><div class="counter-icon blue"><i class="fas fa-briefcase"></i></div><div><div class="counter-val" data-target="2" data-suffix="">0</div><div class="counter-lbl">OJT Experiences</div></div></div>
+      <div class="counter-chip"><div class="counter-icon cyan"><i class="fas fa-code"></i></div><div><div class="counter-val" data-target="9" data-suffix="">0</div><div class="counter-lbl">Technologies</div></div></div>
+      <div class="counter-chip"><div class="counter-icon green"><i class="fas fa-flask"></i></div><div><div class="counter-val" data-target="1" data-suffix="">0</div><div class="counter-lbl">Research Thesis</div></div></div>
     </div>
   </div>
 </section>
 
-<!-- ════════ SERVICES ════════ -->
 <?php if(!empty($services)): ?>
 <div class="services-section" id="services">
   <div class="services-header">
@@ -650,7 +466,6 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
 </div>
 <?php endif; ?>
 
-<!-- ════════ PROJECTS ════════ -->
 <section class="projects-section" id="projects">
   <div class="projects-header">
     <div>
@@ -665,7 +480,6 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
       <button class="proj-filter" onclick="filterProjects('personal',this)">Personal</button>
     </div>
   </div>
-
   <div class="proj-grid" id="proj-grid">
     <?php
     $thumbBg   = ['thesis'=>'proj-thumb-thesis','ojt'=>'proj-thumb-ot','lgu'=>'proj-thumb-lgu','personal'=>'proj-thumb-personal'];
@@ -673,13 +487,11 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
     $tagClass  = ['thesis'=>'tag-thesis','ojt'=>'tag-ot','lgu'=>'tag-lgu','personal'=>'tag-personal'];
     $tagLabel  = ['thesis'=>'&#9733; Thesis','ojt'=>'OJT','lgu'=>'LGU','personal'=>'Personal'];
     foreach($projects as $i => $proj):
-        $cat   = $proj['category'] ?? 'personal';
-        $projTech  = json_decode($proj['tech'] ?? '[]', true) ?: [];
+        $cat = $proj['category'] ?? 'personal';
+        $projTech = json_decode($proj['tech'] ?? '[]', true) ?: [];
         $delay = 'd'.min($i+1,4);
     ?>
-    <div class="proj-card <?= $cat==='thesis'?'featured':'' ?> anim <?= $delay ?>"
-         data-category="<?= esc($cat) ?>"
-         data-project="<?= $proj['id'] ?>">
+    <div class="proj-card <?= $cat==='thesis'?'featured':'' ?> anim <?= $delay ?>" data-category="<?= esc($cat) ?>" data-project="<?= $proj['id'] ?>">
       <div class="proj-thumb <?= $thumbBg[$cat]??'proj-thumb-personal' ?>">
         <i class="<?= esc($proj['icon']) ?> proj-thumb-icon <?= $iconColor[$cat]??'personal' ?>"></i>
         <span class="proj-type-tag <?= $tagClass[$cat]??'tag-personal' ?>"><?= $tagLabel[$cat]??$cat ?></span>
@@ -688,22 +500,17 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
         <div class="proj-title"><?= esc($proj['title']) ?></div>
         <div class="proj-desc"><?= esc($proj['description']) ?></div>
         <?php if(!empty($projTech)): ?>
-        <div class="proj-tech-row">
-          <?php foreach($projTech as $t): ?><span class="proj-tech"><?= esc($t) ?></span><?php endforeach; ?>
-        </div>
+        <div class="proj-tech-row"><?php foreach($projTech as $t): ?><span class="proj-tech"><?= esc($t) ?></span><?php endforeach; ?></div>
         <?php endif; ?>
       </div>
       <div class="proj-footer" style="justify-content:flex-end">
-        <span class="proj-link" style="color:var(--text-3);font-size:11px">
-          <i class="fas fa-arrow-up-right-from-square" style="font-size:9px"></i> Click to explore
-        </span>
+        <span class="proj-link" style="color:var(--text-3);font-size:11px"><i class="fas fa-arrow-up-right-from-square" style="font-size:9px"></i> Click to explore</span>
       </div>
     </div>
     <?php endforeach; ?>
   </div>
 </section>
 
-<!-- ════════ TESTIMONIALS ════════ -->
 <?php if(!empty($testimonials)): ?>
 <section class="testi-section" id="testimonials">
   <div class="section-eyebrow ey-purple">Kind Words</div>
@@ -715,10 +522,7 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
       <p class="testi-text"><?= nl2br(esc($t['quote'])) ?></p>
       <div class="testi-author">
         <div class="testi-avatar"><?= strtoupper(substr($t['author'],0,1)) ?></div>
-        <div>
-          <div class="testi-name"><?= esc($t['author']) ?></div>
-          <div class="testi-role"><?= esc($t['role']) ?></div>
-        </div>
+        <div><div class="testi-name"><?= esc($t['author']) ?></div><div class="testi-role"><?= esc($t['role']) ?></div></div>
       </div>
     </div>
     <?php endforeach; ?>
@@ -726,36 +530,26 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
 </section>
 <?php endif; ?>
 
-<!-- ════════ RESUME CTA ════════ -->
 <div class="resume-strip">
   <h2 class="rs-title">Ready to collaborate?</h2>
   <p class="rs-sub">View my full resume — work history, skills, projects, and certifications.</p>
-  <a href="#" class="btn-resume" onclick="openResumeModal(event)">
-    <i class="fas fa-file-alt"></i> View Full Resume
-  </a>
+  <a href="#" class="btn-resume" onclick="openResumeModal(event)"><i class="fas fa-file-alt"></i> View Full Resume</a>
 </div>
 
-<!-- ════════ CONTACT ════════ -->
 <section class="contact-section" id="contact">
   <div class="contact-inner">
     <h2>Let's Build <span style="background:var(--g-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Something</span></h2>
     <p>Have a project in mind, an opportunity to share, or a problem to solve? I'd love to hear from you.</p>
     <?php $email=$about['btn_contact_email']?:($header['email']??''); ?>
     <?php if(!empty($email)): ?>
-    <a href="mailto:<?= esc($email) ?>" class="btn-email">
-      <i class="fas fa-envelope"></i><?= esc($email) ?>
-    </a>
+    <a href="mailto:<?= esc($email) ?>" class="btn-email"><i class="fas fa-envelope"></i><?= esc($email) ?></a>
     <?php endif; ?>
   </div>
 </section>
 
-<!-- ════════ FOOTER ════════ -->
 <footer>
   <div class="footer-inner">
-    <div class="footer-brand">
-      <span class="footer-dot"></span>
-      <span>&copy; <?= date('Y') ?> <?= esc($header['name']??'') ?></span>
-    </div>
+    <div class="footer-brand"><span class="footer-dot"></span><span>&copy; <?= date('Y') ?> <?= esc($header['name']??'') ?></span></div>
     <?php if(!empty($isLoggedIn)): ?>
     <div class="footer-admin">
       <a href="<?= base_url('admin') ?>" class="footer-admin-link"><i class="fas fa-cog"></i> Dashboard</a>
@@ -768,7 +562,6 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
   </div>
 </footer>
 
-<!-- ════════ PROJECT MODAL ════════ -->
 <div class="proj-modal-overlay" id="projModal" onclick="closeProjModalOnOverlay(event)">
   <div class="proj-modal" id="projModalBox">
     <div class="pm-header">
@@ -782,7 +575,6 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
   </div>
 </div>
 
-<!-- ════════ RESUME MODAL ════════ -->
 <div class="modal-overlay" id="resumeModal">
   <div class="modal-box">
     <div class="modal-bar">
@@ -827,7 +619,14 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
             <?php if(!empty($languages)): ?>
             <div class="re-section"><div class="re-section-title">Languages</div>
               <?php foreach($languages as $lang): ?>
-              <div class="re-lang-item"><span><?= esc($lang['language']) ?></span><div class="re-lang-dots"><?php for($i=1;$i<=5;$i++): ?><span class="re-dot <?= ($lang['mastery']/20)>=$i?'on':'' ?>"></span><?php endfor; ?></div></div>
+              <div class="re-lang-item">
+                <span class="re-lang-name"><?= esc($lang['language']) ?></span>
+                <div class="re-lang-dots">
+                  <?php for($i=1;$i<=5;$i++): ?>
+                  <span class="re-dot <?= ($lang['mastery']/20)>=$i?'on':'' ?>"></span>
+                  <?php endfor; ?>
+                </div>
+              </div>
               <?php endforeach; ?>
             </div>
             <?php endif; ?>
@@ -861,41 +660,31 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
 </div>
 
 <script>
-// ── SCROLL PROGRESS ──
 window.addEventListener('scroll', () => {
   const el = document.getElementById('scroll-progress');
   const pct = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
   el.style.width = Math.min(pct, 100) + '%';
 }, { passive: true });
 
-// ── MODAL ──
 function openResumeModal(e) { e&&e.preventDefault(); document.getElementById('resumeModal').classList.add('open'); document.body.style.overflow='hidden'; }
 function closeResumeModal() { document.getElementById('resumeModal').classList.remove('open'); document.body.style.overflow=''; }
 document.getElementById('resumeModal').addEventListener('click', function(e) { if(e.target===this) closeResumeModal(); });
-document.addEventListener('keydown', e => { if(e.key==='Escape') closeResumeModal(); });
 function printResume() { document.getElementById('resumeModal').classList.add('open'); setTimeout(()=>window.print(),300); }
-
-// ── LOGOUT ──
 function confirmLogout(e) { e.preventDefault(); if(confirm('Are you sure you want to logout?')) window.location.href='<?= base_url('logout') ?>'; }
-
-// ── MOBILE NAV ──
 function toggleMobileNav(el) {
   const links = document.querySelector('.nav-links');
   const isOpen = links.style.display === 'flex';
   links.style.cssText = isOpen ? '' : 'display:flex;flex-direction:column;position:fixed;top:70px;left:0;right:0;background:rgba(5,8,16,0.97);backdrop-filter:blur(20px);padding:16px 24px 28px;border-bottom:1px solid rgba(255,255,255,0.07);box-shadow:0 20px 60px rgba(0,0,0,0.5);gap:4px;z-index:499';
 }
 
-// ── PROJECT FILTER ──
 function filterProjects(cat, btn) {
   document.querySelectorAll('.proj-filter').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   const cards = document.querySelectorAll('.proj-card');
   const toShow = [], toHide = [];
   cards.forEach(card => {
-    const cats = card.dataset.category || '';
-    const visible = cat === 'all' || cats.includes(cat);
-    if (visible) toShow.push(card);
-    else toHide.push(card);
+    const visible = cat === 'all' || (card.dataset.category || '').includes(cat);
+    if (visible) toShow.push(card); else toHide.push(card);
   });
   toHide.forEach(card => { card.classList.remove('showing'); card.classList.add('hiding'); });
   setTimeout(() => {
@@ -905,7 +694,6 @@ function filterProjects(cat, btn) {
   }, 280);
 }
 
-// ── INTERSECTION OBSERVER ──
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if(!entry.isIntersecting) return;
@@ -915,10 +703,9 @@ const observer = new IntersectionObserver(entries => {
         const target = parseInt(el.dataset.target);
         const suffix = el.dataset.suffix || '';
         let start = 0;
-        const duration = 1400;
         const step = (timestamp) => {
           if(!start) start = timestamp;
-          const progress = Math.min((timestamp - start) / duration, 1);
+          const progress = Math.min((timestamp - start) / 1400, 1);
           const ease = 1 - Math.pow(1 - progress, 3);
           el.textContent = Math.round(ease * target) + suffix;
           if(progress < 1) requestAnimationFrame(step);
@@ -929,14 +716,10 @@ const observer = new IntersectionObserver(entries => {
     observer.unobserve(entry.target);
   });
 }, { threshold: 0.15 });
-
 document.querySelectorAll('.anim').forEach(el => { el.style.animationPlayState = 'paused'; observer.observe(el); });
 const countersEl = document.getElementById('counters');
 if(countersEl) observer.observe(countersEl);
 
-// ════════════════════════════════════════════════
-// PROJECT MODAL
-// ════════════════════════════════════════════════
 const PROJECTS = {
   <?php
   $typeStyles = [
@@ -985,40 +768,9 @@ function openProject(id) {
   document.getElementById('pm-type-tag').textContent = p.type;
   document.getElementById('pm-type-tag').style.cssText = p.typeStyle;
   document.getElementById('pm-title').textContent = p.title;
-  let body = `
-    <p class="pm-desc">${p.desc}</p>
-    <div class="pm-tech-row">${p.tech.map(t => `<span class="pm-tech">${t}</span>`).join('')}</div>
-    <div class="pm-links">
-      ${p.github ? `<a href="${p.github}" class="pm-link-btn pm-link-github" target="_blank"><i class="fab fa-github"></i> View on GitHub</a>` : ''}
-      ${p.demo ? `<a href="${p.demo}" class="pm-link-btn pm-link-demo" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>` : ''}
-    </div>`;
+  let body = `<p class="pm-desc">${p.desc}</p><div class="pm-tech-row">${p.tech.map(t=>`<span class="pm-tech">${t}</span>`).join('')}</div><div class="pm-links">${p.github?`<a href="${p.github}" class="pm-link-btn pm-link-github" target="_blank"><i class="fab fa-github"></i> View on GitHub</a>`:''}${p.demo?`<a href="${p.demo}" class="pm-link-btn pm-link-demo" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>`:''}</div>`;
   if(p.extra === 'thesis') {
-    body += `
-      <div class="pm-divider"></div>
-      <div class="pm-section-label">Development Methodology — Iterative Incremental Model</div>
-      <div class="pm-accordion">
-        ${THESIS_PHASES.map((ph,i) => `
-          <div class="pm-phase${i===0?' open':''}">
-            <div class="pm-phase-header" onclick="togglePmPhase(this)">
-              <div class="pm-phase-num">${ph.num}</div>
-              <div class="pm-phase-title">${ph.title}</div>
-              <i class="fas fa-chevron-down pm-phase-chevron"></i>
-            </div>
-            <div class="pm-phase-body">
-              <div class="pm-phase-content">${ph.content}</div>
-            </div>
-          </div>`).join('')}
-      </div>
-      <div class="pm-divider"></div>
-      <div class="pm-section-label">ISO 25010 Evaluation Results</div>
-      <div class="pm-iso-grid">
-        ${ISO_SCORES.map(s => `
-          <div class="pm-iso-card">
-            <div class="pm-iso-label">${s.label}</div>
-            <div class="pm-iso-bar-bg"><div class="pm-iso-bar-fill" data-w="${s.score}"></div></div>
-            <div class="pm-iso-score">${s.score}%</div>
-          </div>`).join('')}
-      </div>`;
+    body += `<div class="pm-divider"></div><div class="pm-section-label">Development Methodology — Iterative Incremental Model</div><div class="pm-accordion">${THESIS_PHASES.map((ph,i)=>`<div class="pm-phase${i===0?' open':''}"><div class="pm-phase-header" onclick="togglePmPhase(this)"><div class="pm-phase-num">${ph.num}</div><div class="pm-phase-title">${ph.title}</div><i class="fas fa-chevron-down pm-phase-chevron"></i></div><div class="pm-phase-body"><div class="pm-phase-content">${ph.content}</div></div></div>`).join('')}</div><div class="pm-divider"></div><div class="pm-section-label">ISO 25010 Evaluation Results</div><div class="pm-iso-grid">${ISO_SCORES.map(s=>`<div class="pm-iso-card"><div class="pm-iso-label">${s.label}</div><div class="pm-iso-bar-bg"><div class="pm-iso-bar-fill" data-w="${s.score}"></div></div><div class="pm-iso-score">${s.score}%</div></div>`).join('')}</div>`;
   }
   document.getElementById('pm-body').innerHTML = body;
   document.getElementById('projModal').classList.add('open');
@@ -1040,9 +792,7 @@ function togglePmPhase(header) {
   document.querySelectorAll('.pm-phase').forEach(p => p.classList.remove('open'));
   if(!isOpen) phase.classList.add('open');
 }
-
 document.addEventListener('keydown', e => { if(e.key === 'Escape') { closeProjModal(); closeResumeModal(); } });
-
 document.getElementById('proj-grid').addEventListener('click', function(e) {
   const card = e.target.closest('.proj-card');
   if(!card) return;
@@ -1050,7 +800,6 @@ document.getElementById('proj-grid').addEventListener('click', function(e) {
   if(id) openProject(id);
 });
 
-// ── NAVBAR ACTIVE ON SCROLL ──
 const navSections = ['hero','services','projects','testimonials','contact'];
 window.addEventListener('scroll', () => {
   const y = window.scrollY + 90;

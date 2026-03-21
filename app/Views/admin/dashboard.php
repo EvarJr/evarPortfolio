@@ -227,62 +227,19 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
 .ep-footer .btn-cancel-soft{padding:11px 20px;font-size:14px}
 
 /* ══ DELETE CONFIRM MODAL ══ */
-.del-modal-overlay {
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0.45);
-    z-index: 1000; display: flex;
-    align-items: center; justify-content: center;
-    opacity: 0; pointer-events: none;
-    transition: opacity 0.15s;
-}
-.del-modal-overlay.open { opacity: 1; pointer-events: all; }
-.del-modal {
-    background: #1e293b;
-    border-radius: 8px;
-    padding: 22px 24px 18px;
-    min-width: 300px; max-width: 360px;
-    width: 90%;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-    transform: translateY(-4px);
-    transition: transform 0.15s;
-}
-.del-modal-overlay.open .del-modal { transform: translateY(0); }
-.del-modal-icon { display: none; }
-.del-modal h3 {
-    font-size: 13px; font-weight: 600;
-    color: #fff; margin-bottom: 8px;
-}
-.del-modal p {
-    font-size: 13px; color: #94a3b8;
-    margin-bottom: 20px; line-height: 1.5;
-}
-.del-modal p strong { color: #cbd5e1; font-weight: 400; }
-.del-modal-btns {
-    display: flex; gap: 8px;
-    justify-content: flex-end;
-}
-.btn-del-cancel {
-    padding: 7px 18px;
-    background: #334155;
-    color: #cbd5e1;
-    border: none; border-radius: 5px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px; font-weight: 500;
-    cursor: pointer; transition: background 0.15s;
-}
-.btn-del-cancel:hover { background: #475569; }
-.btn-del-confirm {
-    padding: 7px 18px;
-    background: #ef4444;
-    color: #fff; border: none;
-    border-radius: 5px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px; font-weight: 500;
-    cursor: pointer; transition: background 0.15s;
-    display: inline-flex; align-items: center; gap: 6px;
-}
-.btn-del-confirm:hover { background: #dc2626; }
-.btn-del-confirm i { display: none; }
+.del-modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,0.55);z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.2s}
+.del-modal-overlay.open{opacity:1;pointer-events:all}
+.del-modal{background:#fff;border-radius:16px;padding:28px;max-width:400px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.2);transform:scale(0.95);transition:transform 0.2s;text-align:center}
+.del-modal-overlay.open .del-modal{transform:scale(1)}
+.del-modal-icon{width:52px;height:52px;border-radius:50%;background:#fee2e2;display:flex;align-items:center;justify-content:center;color:#ef4444;font-size:22px;margin:0 auto 16px}
+.del-modal h3{font-size:17px;font-weight:700;margin-bottom:8px;color:var(--text)}
+.del-modal p{font-size:13px;color:var(--muted);margin-bottom:24px;line-height:1.6}
+.del-modal p strong{color:var(--text)}
+.del-modal-btns{display:flex;gap:10px;justify-content:center}
+.btn-del-confirm{padding:10px 24px;background:#ef4444;color:#fff;border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:background 0.2s;display:flex;align-items:center;gap:7px}
+.btn-del-confirm:hover{background:#dc2626}
+.btn-del-cancel{padding:10px 24px;background:#fff;color:var(--text);border:1.5px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all 0.2s}
+.btn-del-cancel:hover{border-color:var(--accent);color:var(--accent)}
 
 /* ══ ENHANCED TOAST ══ */
 #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1e293b;color:#fff;padding:12px 18px;border-radius:12px;font-size:13px;font-weight:500;display:flex;align-items:center;gap:10px;box-shadow:0 8px 32px rgba(0,0,0,0.2);z-index:2000;transition:transform 0.3s ease;max-width:420px;white-space:nowrap}
@@ -745,6 +702,7 @@ body.dark .dark-toggle:hover { border-color:#fbbf24; }
             <div class="fg"><label>Phone</label><input type="text" id="h-phone" value="<?= esc($header['phone']??'') ?>" placeholder="555-0000"></div>
             <div class="fg"><label>Location</label><input type="text" id="h-location" value="<?= esc($header['location']??'') ?>" placeholder="City, State, Country"></div>
             <div class="fg"><label>LinkedIn</label><input type="text" id="h-linkedin" value="<?= esc($header['linkedin']??'') ?>" placeholder="linkedin.com/in/you"></div>
+            <div class="fg"><label>Portfolio URL <span style="font-size:11px;color:var(--muted);font-weight:400;text-transform:none">(shows in resume — make it clickable)</span></label><input type="text" id="h-portfolio-url" value="<?= esc($header['portfolio_url']??'') ?>" placeholder="https://evarsanglitan.up.railway.app"></div>
           </div>
           <button class="btn-primary" onclick="saveHeader()"><i class="fas fa-save"></i> Save Header</button>
         </div>
@@ -1127,6 +1085,7 @@ async function saveHeader() {
         phone: document.getElementById('h-phone').value,
         location: document.getElementById('h-location').value,
         linkedin: document.getElementById('h-linkedin').value,
+        portfolio_url: document.getElementById('h-portfolio-url').value.trim(),
     });
     r.success ? toast('Header saved!') : toast(r.message || 'Error', 'err');
 }

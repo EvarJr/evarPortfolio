@@ -20,6 +20,7 @@ class ProjectController extends BaseApiController
             'tech'        => $tech,
             'github_url'  => $d['github_url']  ?? '',
             'demo_url'    => $d['demo_url']    ?? '',
+            'media_urls'  => $d['media_urls']  ?? '',
             'is_featured' => isset($d['is_featured']) ? (int)$d['is_featured'] : 1,
             'sort_order'  => $m->nextSortOrder(),
         ]);
@@ -39,6 +40,7 @@ class ProjectController extends BaseApiController
             'icon'        => $d['icon']        ?? 'fas fa-code',
             'github_url'  => $d['github_url']  ?? '',
             'demo_url'    => $d['demo_url']    ?? '',
+            'media_urls'  => $d['media_urls']  ?? '',
             'is_featured' => isset($d['is_featured']) ? (int)$d['is_featured'] : 1,
         ];
         if ($tech !== null) $data['tech'] = $tech;

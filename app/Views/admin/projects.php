@@ -578,13 +578,14 @@ async function saveProject() {
   const icon     = document.getElementById('pf-icon').value;
   const github   = document.getElementById('pf-github').value.trim();
   const demo     = document.getElementById('pf-demo').value.trim();
+  const media    = document.getElementById('pf-media')?.value.trim() || '';
   const techRaw  = document.getElementById('pf-tech').value;
   let tech = [];
   try { tech = JSON.parse(techRaw); } catch(e) {}
 
   if (!title) { toast('Title is required.', 'err'); return; }
 
-  const payload = { title, description:desc, category:cat, icon, tech, github_url:github, demo_url:demo, is_featured:feat };
+  const payload = { title, description:desc, category:cat, icon, tech, github_url:github, demo_url:demo, media_urls:media, is_featured:feat };
   const path = currentEditId ? `/api/project/update/${currentEditId}` : '/api/project/add';
   const r = await api(path, payload);
 

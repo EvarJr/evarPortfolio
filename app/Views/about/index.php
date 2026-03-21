@@ -141,10 +141,61 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .proj-filter:hover{border-color:rgba(99,102,241,0.35);color:var(--text-2)}
 .proj-filter.active{background:var(--g-accent);border-color:transparent;color:#fff;box-shadow:0 4px 16px rgba(99,102,241,0.35)}
 .proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,420px));gap:18px;justify-content:center}
-.proj-card{background:rgba(255,255,255,0.03);border:1px solid rgba(99,102,241,0.14);border-radius:var(--radius);overflow:hidden;transition:all 0.3s;display:flex;flex-direction:column;cursor:pointer}
-.proj-card:hover{border-color:rgba(99,102,241,0.32);transform:translateY(-4px);box-shadow:0 20px 56px rgba(0,0,0,0.45)}
+/* ── FLIP CARD WRAPPER ── */
+.proj-card-wrap{perspective:1200px;border-radius:var(--radius)}
+.proj-card-wrap.hidden{display:none}
+.proj-card{
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(99,102,241,0.14);
+  border-radius:var(--radius);overflow:hidden;
+  transition:transform 0.65s cubic-bezier(0.4,0.2,0.2,1),box-shadow 0.3s,border-color 0.3s;
+  display:flex;flex-direction:column;cursor:pointer;
+  transform-style:preserve-3d;position:relative;
+  min-height:290px;
+}
+.proj-card:not(.has-media):hover{border-color:rgba(99,102,241,0.32);transform:translateY(-4px);box-shadow:0 20px 56px rgba(0,0,0,0.45)}
+.proj-card-wrap:hover .proj-card.has-media{transform:rotateY(180deg);box-shadow:0 28px 70px rgba(0,0,0,0.6)}
 .proj-card.featured{border-color:rgba(139,92,246,0.35);box-shadow:0 0 0 1px rgba(139,92,246,0.12)}
-.proj-card.featured:hover{border-color:rgba(139,92,246,0.55);box-shadow:0 20px 56px rgba(139,92,246,0.2)}
+.proj-card-wrap:not(:hover) .proj-card.featured:hover{border-color:rgba(139,92,246,0.55);box-shadow:0 20px 56px rgba(139,92,246,0.2)}
+
+/* ── FRONT / BACK FACES ── */
+.proj-face{
+  position:absolute;inset:0;
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border-radius:var(--radius);overflow:hidden;
+  display:flex;flex-direction:column;
+}
+.proj-face-front{z-index:2}
+.proj-face-back{
+  transform:rotateY(180deg);
+  background:linear-gradient(145deg,#0f1535,#0b0f1e);
+  border:1px solid rgba(99,102,241,0.3);
+  z-index:1;
+}
+
+/* ── BACK FACE — VIDEO ── */
+.proj-back-video{width:100%;height:100%;object-fit:cover;border-radius:var(--radius)}
+.proj-back-iframe{width:100%;height:100%;border:none;border-radius:var(--radius)}
+.proj-back-video-wrap{position:relative;flex:1;overflow:hidden;border-radius:var(--radius) var(--radius) 0 0}
+.proj-back-video-wrap iframe,.proj-back-video-wrap video{width:100%;height:100%;object-fit:cover;border:none}
+
+/* ── BACK FACE — PHOTO CAROUSEL ── */
+.proj-carousel{position:relative;flex:1;overflow:hidden;border-radius:var(--radius) var(--radius) 0 0}
+.proj-carousel-track{display:flex;height:100%;transition:transform 0.5s cubic-bezier(0.4,0,0.2,1)}
+.proj-carousel-slide{min-width:100%;height:100%;flex-shrink:0}
+.proj-carousel-slide img{width:100%;height:100%;object-fit:cover;display:block}
+.proj-carousel-dots{display:flex;justify-content:center;gap:5px;padding:8px 0 4px}
+.proj-carousel-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.25);cursor:pointer;transition:all 0.2s;border:none;padding:0}
+.proj-carousel-dot.active{background:#a5b4fc;transform:scale(1.3)}
+.proj-carousel-arrows{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 8px;pointer-events:none}
+.proj-carousel-arrow{width:28px;height:28px;border-radius:50%;background:rgba(5,8,16,0.7);border:1px solid rgba(255,255,255,0.15);color:#fff;font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;pointer-events:all;transition:all 0.2s;backdrop-filter:blur(8px)}
+.proj-carousel-arrow:hover{background:rgba(99,102,241,0.6);border-color:rgba(99,102,241,0.6)}
+
+/* ── BACK FACE — INFO STRIP ── */
+.proj-back-info{padding:12px 14px;background:rgba(5,8,16,0.85);backdrop-filter:blur(8px);flex-shrink:0}
+.proj-back-title{font-family:var(--font-d);font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.proj-back-hint{font-size:10.5px;color:var(--text-3);display:flex;align-items:center;gap:5px;font-family:var(--font-m)}
+.proj-back-hint i{font-size:9px;color:#a5b4fc}
 .proj-card.hidden{display:none}
 .proj-thumb{height:130px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
 .proj-thumb-thesis{background:linear-gradient(135deg,rgba(139,92,246,0.18),rgba(99,102,241,0.12))}
@@ -342,9 +393,8 @@ a.re-contact-item:hover{color:#fff}
 .pm-iso-bar-bg{height:4px;background:rgba(255,255,255,0.07);border-radius:2px;overflow:hidden}
 .pm-iso-bar-fill{height:100%;border-radius:2px;background:var(--g-accent);transition:width 1s cubic-bezier(0.4,0,0.2,1) 0.2s;width:0}
 .pm-iso-score{font-family:var(--font-d);font-size:17px;font-weight:700;color:var(--text);margin-top:6px}
-.proj-card{transition:opacity 0.35s ease,transform 0.35s cubic-bezier(0.4,0,0.2,1)}
-.proj-card.hiding{opacity:0;transform:scale(0.92) translateY(8px);pointer-events:none}
-.proj-card.hidden{display:none}
+.proj-card.hiding{opacity:0;transform:scale(0.92) translateY(8px);pointer-events:none;transition:opacity 0.35s ease,transform 0.35s}
+.proj-card-wrap.hidden{display:none}
 .proj-card.showing{opacity:0;transform:scale(0.92) translateY(8px)}
 .hero-swirl{position:absolute;top:-10%;right:-4%;width:52%;height:120%;pointer-events:none;z-index:1;opacity:0.12;overflow:hidden}
 .hero-swirl svg{width:100%;height:100%}
@@ -535,20 +585,84 @@ a.re-contact-item:hover{color:#fff}
         $projTech = json_decode($proj['tech'] ?? '[]', true) ?: [];
         $delay = 'd'.min($i+1,4);
     ?>
-    <div class="proj-card <?= $cat==='thesis'?'featured':'' ?> anim <?= $delay ?>" data-category="<?= esc($cat) ?>" data-project="<?= $proj['id'] ?>">
-      <div class="proj-thumb <?= $thumbBg[$cat]??'proj-thumb-personal' ?>">
-        <i class="<?= esc($proj['icon']) ?> proj-thumb-icon <?= $iconColor[$cat]??'personal' ?>"></i>
-        <span class="proj-type-tag <?= $tagClass[$cat]??'tag-personal' ?>"><?= $tagLabel[$cat]??$cat ?></span>
-      </div>
-      <div class="proj-body">
-        <div class="proj-title"><?= esc($proj['title']) ?></div>
-        <div class="proj-desc"><?= esc($proj['description']) ?></div>
-        <?php if(!empty($projTech)): ?>
-        <div class="proj-tech-row"><?php foreach($projTech as $t): ?><span class="proj-tech"><?= esc($t) ?></span><?php endforeach; ?></div>
+    <?php
+      $mediaRaw = $proj['media_urls'] ?? '';
+      $mediaList = array_values(array_filter(array_map('trim', explode(',', $mediaRaw))));
+      $hasMedia = !empty($mediaList);
+      $isVideo = $hasMedia && (
+        strpos($mediaList[0], 'youtube.com') !== false ||
+        strpos($mediaList[0], 'youtu.be') !== false ||
+        preg_match('/\.(mp4|webm|ogg)$/i', $mediaList[0])
+      );
+    ?>
+    <div class="proj-card-wrap <?= $cat==='thesis'?'featured':'' ?> anim <?= $delay ?>" data-category="<?= esc($cat) ?>" data-project="<?= $proj['id'] ?>">
+      <div class="proj-card <?= $cat==='thesis'?'featured':'' ?> <?= $hasMedia?'has-media':'' ?>" style="min-height:290px">
+
+        <!-- FRONT FACE -->
+        <div class="proj-face proj-face-front">
+          <div class="proj-thumb <?= $thumbBg[$cat]??'proj-thumb-personal' ?>">
+            <i class="<?= esc($proj['icon']) ?> proj-thumb-icon <?= $iconColor[$cat]??'personal' ?>"></i>
+            <span class="proj-type-tag <?= $tagClass[$cat]??'tag-personal' ?>"><?= $tagLabel[$cat]??$cat ?></span>
+            <?php if($hasMedia): ?><div style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);background:rgba(99,102,241,0.85);border-radius:20px;padding:3px 10px;font-size:9.5px;font-weight:700;color:#fff;font-family:var(--font-d);letter-spacing:0.3px;display:flex;align-items:center;gap:4px;backdrop-filter:blur(8px)"><i class="fas fa-<?= $isVideo?'play':'images' ?>" style="font-size:8px"></i><?= $isVideo?'Video preview':'Hover to view' ?></div><?php endif; ?>
+          </div>
+          <div class="proj-body">
+            <div class="proj-title"><?= esc($proj['title']) ?></div>
+            <div class="proj-desc"><?= esc($proj['description']) ?></div>
+            <?php if(!empty($projTech)): ?>
+            <div class="proj-tech-row"><?php foreach($projTech as $t): ?><span class="proj-tech"><?= esc($t) ?></span><?php endforeach; ?></div>
+            <?php endif; ?>
+          </div>
+          <div class="proj-footer" style="justify-content:flex-end">
+            <span class="proj-link" style="color:var(--text-3);font-size:11px"><i class="fas fa-arrow-up-right-from-square" style="font-size:9px"></i> Click to explore</span>
+          </div>
+        </div>
+
+        <!-- BACK FACE (only if media exists) -->
+        <?php if($hasMedia): ?>
+        <div class="proj-face proj-face-back" onclick="event.stopPropagation(); openProject(<?= $proj['id'] ?>)">
+          <?php if($isVideo):
+            $videoUrl = $mediaList[0];
+            // Convert YouTube URL to embed
+            if(preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/', $videoUrl, $m)) {
+              $embedUrl = 'https://www.youtube.com/embed/'.$m[1].'?autoplay=1&mute=1&loop=1&playlist='.$m[1].'&controls=0&modestbranding=1';
+            } else {
+              $embedUrl = $videoUrl;
+            }
+          ?>
+          <div class="proj-back-video-wrap" style="flex:1">
+            <?php if(strpos($videoUrl,'youtube') !== false || strpos($videoUrl,'youtu.be') !== false): ?>
+            <iframe src="<?= esc($embedUrl) ?>" allow="autoplay; encrypted-media" allowfullscreen style="width:100%;height:100%;border:none"></iframe>
+            <?php else: ?>
+            <video src="<?= esc($videoUrl) ?>" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover"></video>
+            <?php endif; ?>
+          </div>
+          <?php else: ?>
+          <div class="proj-carousel" data-index="0" id="carousel-<?= $proj['id'] ?>">
+            <div class="proj-carousel-track" id="track-<?= $proj['id'] ?>">
+              <?php foreach($mediaList as $img): ?>
+              <div class="proj-carousel-slide"><img src="<?= esc($img) ?>" alt="<?= esc($proj['title']) ?>" loading="lazy"></div>
+              <?php endforeach; ?>
+            </div>
+            <?php if(count($mediaList) > 1): ?>
+            <div class="proj-carousel-arrows">
+              <button class="proj-carousel-arrow" onclick="event.stopPropagation();carouselPrev(<?= $proj['id'] ?>)"><i class="fas fa-chevron-left"></i></button>
+              <button class="proj-carousel-arrow" onclick="event.stopPropagation();carouselNext(<?= $proj['id'] ?>)"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="proj-carousel-dots" id="dots-<?= $proj['id'] ?>">
+              <?php foreach($mediaList as $di => $img): ?>
+              <button class="proj-carousel-dot <?= $di===0?'active':'' ?>" onclick="event.stopPropagation();carouselGo(<?= $proj['id'] ?>,<?= $di ?>)"></button>
+              <?php endforeach; ?>
+            </div>
+            <?php endif; ?>
+          </div>
+          <?php endif; ?>
+          <div class="proj-back-info">
+            <div class="proj-back-title"><?= esc($proj['title']) ?></div>
+            <div class="proj-back-hint"><i class="fas fa-hand-pointer"></i> Click to view full details</div>
+          </div>
+        </div>
         <?php endif; ?>
-      </div>
-      <div class="proj-footer" style="justify-content:flex-end">
-        <span class="proj-link" style="color:var(--text-3);font-size:11px"><i class="fas fa-arrow-up-right-from-square" style="font-size:9px"></i> Click to explore</span>
+
       </div>
     </div>
     <?php endforeach; ?>
@@ -783,14 +897,15 @@ function filterProjects(cat, btn) {
   const cards = document.querySelectorAll('.proj-card');
   const toShow = [], toHide = [];
   cards.forEach(card => {
+    const wrap = card.closest('.proj-card-wrap') || card;
     const visible = cat === 'all' || (card.dataset.category || '').includes(cat);
-    if (visible) toShow.push(card); else toHide.push(card);
+    if (visible) toShow.push(wrap); else toHide.push(wrap);
   });
-  toHide.forEach(card => { card.classList.remove('showing'); card.classList.add('hiding'); });
+  toHide.forEach(el => { el.classList.remove('showing'); el.classList.add('hiding'); });
   setTimeout(() => {
-    toHide.forEach(card => { card.classList.add('hidden'); card.classList.remove('hiding'); });
-    toShow.forEach(card => { card.classList.remove('hidden'); card.classList.add('showing'); card.offsetHeight; });
-    toShow.forEach((card, i) => { setTimeout(() => { card.classList.remove('showing'); }, i * 60); });
+    toHide.forEach(el => { el.classList.add('hidden'); el.classList.remove('hiding'); });
+    toShow.forEach(el => { el.classList.remove('hidden'); el.classList.add('showing'); el.offsetHeight; });
+    toShow.forEach((el, i) => { setTimeout(() => { el.classList.remove('showing'); }, i * 60); });
   }, 280);
 }
 
@@ -925,9 +1040,13 @@ function togglePmPhase(header) {
 document.addEventListener('keydown', e => { if(e.key === 'Escape') { closeProjModal(); closeResumeModal(); closeMobileMenu(); } });
 
 document.getElementById('proj-grid').addEventListener('click', function(e) {
-  const card = e.target.closest('.proj-card');
-  if(!card) return;
-  const id = parseInt(card.dataset.project);
+  // Don't open modal when clicking carousel arrows/dots
+  if(e.target.closest('.proj-carousel-arrow') || e.target.closest('.proj-carousel-dots')) return;
+  // Don't open modal if clicking on back face (it handles its own click)
+  if(e.target.closest('.proj-face-back')) return;
+  const wrap = e.target.closest('.proj-card-wrap');
+  if(!wrap) return;
+  const id = parseInt(wrap.dataset.project);
   if(id) openProject(id);
 });
 
@@ -946,6 +1065,38 @@ window.addEventListener('scroll', () => {
     }
   });
 }, { passive: true });
+// ── CAROUSEL ──
+function carouselGo(id, idx) {
+  const track = document.getElementById('track-' + id);
+  const dots = document.querySelectorAll('#dots-' + id + ' .proj-carousel-dot');
+  const total = track.children.length;
+  idx = ((idx % total) + total) % total;
+  track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+  dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+  track.closest('.proj-carousel').dataset.index = idx;
+}
+function carouselNext(id) {
+  const carousel = document.getElementById('carousel-' + id);
+  carouselGo(id, parseInt(carousel.dataset.index || 0) + 1);
+}
+function carouselPrev(id) {
+  const carousel = document.getElementById('carousel-' + id);
+  carouselGo(id, parseInt(carousel.dataset.index || 0) - 1);
+}
+
+// Auto-advance carousels on hover
+document.querySelectorAll('.proj-card-wrap').forEach(wrap => {
+  let timer;
+  const id = parseInt(wrap.dataset.project);
+  wrap.addEventListener('mouseenter', () => {
+    const carousel = document.getElementById('carousel-' + id);
+    if(!carousel) return;
+    timer = setInterval(() => carouselNext(id), 2500);
+  });
+  wrap.addEventListener('mouseleave', () => clearInterval(timer));
+});
+
+
 </script>
 </body>
 </html>

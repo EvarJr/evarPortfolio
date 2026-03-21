@@ -12,7 +12,7 @@ class ProjectModel extends Model
     protected $useTimestamps = false;
     protected $allowedFields = [
         'title','description','category','icon',
-        'tech','github_url','demo_url','is_featured','sort_order'
+        'tech','github_url','demo_url','media_urls','is_featured','sort_order'
     ];
 
     public function getAllOrdered(): array

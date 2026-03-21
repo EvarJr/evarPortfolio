@@ -29,4 +29,9 @@ class Filters extends BaseConfig
 
     public array $methods  = [];
     public array $filters  = [];
+
+    public array $except = [
+        'api/*',
+        'api/project/upload-media/*',
+    ];
 }

@@ -225,7 +225,6 @@ body.dark .dark-toggle{background:#111827;border-color:#1e2535;color:#fbbf24}
 .iso-score-input:focus{border-color:var(--accent)}
 .iso-bar{flex:1;height:4px;background:#e5e7eb;border-radius:2px;overflow:hidden;min-width:80px}
 .iso-bar-fill{height:100%;background:linear-gradient(90deg,#3b82f6,#8b5cf6);border-radius:2px;transition:width 0.3s}
-
 </style>
 </head>
 <body>
@@ -329,9 +328,7 @@ body.dark .dark-toggle{background:#111827;border-color:#1e2535;color:#fbbf24}
             <?php $tech = json_decode($p['tech'] ?? '[]', true) ?? []; ?>
             <div class="proj-row" draggable="true" data-id="<?= $p['id'] ?>">
               <div class="proj-row-drag"><i class="fas fa-grip-vertical"></i></div>
-              <div class="proj-row-icon <?= match($p['category']){
-                'thesis'=>'','ojt'=>'','lgu'=>'',default=>''
-              } ?>" style="background:<?= match($p['category']){
+              <div class="proj-row-icon" style="background:<?= match($p['category']){
                 'thesis'=>'rgba(139,92,246,0.15)',
                 'ojt'=>'rgba(6,182,212,0.12)',
                 'lgu'=>'rgba(16,185,129,0.12)',
@@ -355,7 +352,7 @@ body.dark .dark-toggle{background:#111827;border-color:#1e2535;color:#fbbf24}
                 <?= $p['is_featured']?'Shown':'Hidden' ?>
               </button>
               <div class="proj-row-actions">
-                <button class="icon-btn" style="width:auto;padding:0 8px;font-size:11px;gap:4px;color:#7c3aed;border-color:rgba(139,92,246,0.3)" 
+                <button class="icon-btn" style="width:auto;padding:0 8px;font-size:11px;gap:4px;color:#7c3aed;border-color:rgba(139,92,246,0.3)"
                   data-pid="<?= $p['id'] ?>" data-ptitle="<?= esc(htmlspecialchars($p['title'], ENT_QUOTES)) ?>"
                   onclick="openMethodology(parseInt(this.dataset.pid), this.dataset.ptitle)" title="Edit methodology & scores">
                   <i class="fas fa-flask"></i> Methodology
@@ -377,8 +374,7 @@ body.dark .dark-toggle{background:#111827;border-color:#1e2535;color:#fbbf24}
         </div>
       </div>
 
-
-      <!-- ══ PROJECT METHODOLOGY & ISO MANAGEMENT ══ -->
+      <!-- METHODOLOGY & ISO MANAGEMENT -->
       <div class="card thesis-card" id="methodology-card" style="display:none">
         <div class="card-head">
           <div class="card-head-icon" style="background:rgba(139,92,246,0.1);color:#7c3aed"><i class="fas fa-flask"></i></div>
@@ -395,16 +391,12 @@ body.dark .dark-toggle{background:#111827;border-color:#1e2535;color:#fbbf24}
             <button class="thesis-tab active" data-tab="phases" onclick="switchTab(this.dataset.tab,this)"><i class="fas fa-list-ol" style="margin-right:6px"></i>Methodology Phases</button>
             <button class="thesis-tab" data-tab="iso" onclick="switchTab(this.dataset.tab,this)"><i class="fas fa-chart-bar" style="margin-right:6px"></i>ISO / Evaluation Scores</button>
           </div>
-
-          <!-- PHASES PANEL -->
           <div class="thesis-panel active" id="panel-phases">
             <div class="phase-list" id="phase-list"></div>
             <button class="btn-add-item" style="margin-top:12px" onclick="addPhase()">
               <i class="fas fa-plus"></i> Add Phase
             </button>
           </div>
-
-          <!-- ISO PANEL -->
           <div class="thesis-panel" id="panel-iso">
             <div class="iso-list" id="iso-list"></div>
             <div style="display:flex;gap:10px;margin-top:14px;align-items:center">
@@ -421,6 +413,18 @@ body.dark .dark-toggle{background:#111827;border-color:#1e2535;color:#fbbf24}
 
 <script>
 const BASE = '<?= rtrim(base_url(), '/') ?>';
+
+// ── CSRF TOKEN HELPER ──
+// Reads the CI4 CSRF token from the meta tag or cookie
+function getCsrfToken() {
+  // Try meta tag first (add <meta name="csrf-token" content="<?= csrf_hash() ?>"> to your layout)
+  const meta = document.querySelector('meta[name="csrf-token"]');
+  if (meta) return { name: '<?= csrf_token() ?>', value: meta.content };
+  // Fallback: read from cookie
+  const cookieName = '<?= csrf_cookie_name() ?? 'csrf_cookie_name' ?>';
+  const match = document.cookie.match(new RegExp('(?:^|; )' + cookieName + '=([^;]*)'));
+  return { name: '<?= csrf_token() ?>', value: match ? decodeURIComponent(match[1]) : '' };
+}
 
 // ── PROJECT DATA ──
 const PROJECTS_DATA = {
@@ -440,7 +444,6 @@ const PROJECTS_DATA = {
   <?php endforeach; ?>
 };
 
-// All phases keyed by project_id — loaded from DB on page render
 const ALL_PHASES = <?php
     $allPhases = [];
     foreach($projects as $p) {
@@ -451,7 +454,6 @@ const ALL_PHASES = <?php
     echo json_encode($allPhases);
 ?>;
 
-// All ISO scores keyed by project_id
 const ALL_ISO = <?php
     $allIso = [];
     foreach($projects as $p) {
@@ -473,9 +475,18 @@ function toast(msg, type='ok') {
   _toastTimer = setTimeout(() => el.className='', 3000);
 }
 
-// ── API ──
+// ── API (JSON) ──
 async function api(path, data={}) {
-  const r = await fetch(BASE + path, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data)});
+  const csrf = getCsrfToken();
+  const headers = { 'Content-Type': 'application/json' };
+  headers[csrf.name] = csrf.value;
+  const r = await fetch(BASE + path, { method:'POST', headers, body:JSON.stringify(data) });
+  // Refresh CSRF token from response header if provided
+  const newToken = r.headers.get('X-CSRF-TOKEN');
+  if (newToken) {
+    const meta = document.querySelector('meta[name="csrf-token"]');
+    if (meta) meta.content = newToken;
+  }
   return r.json();
 }
 
@@ -494,7 +505,6 @@ function openAddPanel() {
   setTimeout(() => {
     const mediaHidden = document.getElementById('pf-media');
     if (mediaHidden && mediaHidden.value) renderMediaPreviews(mediaHidden.value);
-    // Pre-fill youtube field if first url is YT
     const urls = mediaHidden?.value.split(/[\n,]+/).map(u=>u.trim()).filter(Boolean) || [];
     const yt = urls.find(u => u.includes('youtube') || u.includes('youtu.be'));
     if (yt) { const ytEl = document.getElementById('pf-youtube'); if(ytEl) ytEl.value = yt; }
@@ -514,6 +524,7 @@ function openEditPanel(id) {
   setTimeout(() => {
     initIconPicker(p.icon);
     if (p.tech && p.tech.length) renderTechPills(p.tech);
+    if (p.media_urls) renderMediaPreviews(p.media_urls);
   }, 100);
 }
 
@@ -545,7 +556,6 @@ function buildPanelForm(p) {
         </select>
       </div>
     </div>
-
     <div class="ep-divider"></div>
     <div class="fg"><label>Thumbnail Icon</label>
       <input type="hidden" id="pf-icon" value="${v('icon')||'fas fa-code'}">
@@ -556,7 +566,6 @@ function buildPanelForm(p) {
       <input type="text" class="icon-search-input" placeholder="Search icons… (e.g. microchip, globe)" oninput="filterIcons(this)">
       <div class="icon-grid-wrap" id="icon-grid"></div>
     </div>
-
     <div class="ep-divider"></div>
     <div class="fg"><label>Tech Stack <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">— press Enter or comma to add</span></label>
       <div class="tech-pills-wrap" id="tech-pills-wrap" onclick="document.getElementById('tech-input').focus()">
@@ -565,7 +574,6 @@ function buildPanelForm(p) {
       </div>
       <input type="hidden" id="pf-tech" value="${p ? escHtml(JSON.stringify(p.tech||[])) : '[]'}">
     </div>
-
     <div class="ep-divider"></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
       <div class="fg" style="margin:0"><label><i class="fab fa-github"></i> GitHub URL</label>
@@ -575,24 +583,19 @@ function buildPanelForm(p) {
         <input type="url" id="pf-demo" value="${v('demo_url')}" placeholder="https://your-demo.com">
       </div>
     </div>
-
     <div class="ep-divider"></div>
     <div class="fg">
       <label><i class="fas fa-images" style="color:var(--accent)"></i> Project Media
-        <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);font-size:10.5px"> — card flips on hover to show these</span>
+        <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);font-size:10.5px"> — images &amp; videos shown in project detail</span>
       </label>
-
-      <!-- Uploaded files preview -->
       <div id="media-preview-list" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px"></div>
-
-      <!-- Upload button -->
       <label style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(59,130,246,0.06);border:1.5px dashed var(--accent);border-radius:9px;cursor:pointer;font-size:13px;color:var(--accent);font-weight:500;transition:background 0.2s" id="media-upload-label">
         <i class="fas fa-upload"></i> Upload Photo or Video
         <input type="file" id="media-file-input" accept="image/*,video/mp4,video/webm" multiple style="display:none" onchange="handleMediaUpload(this)">
       </label>
       <div style="font-size:11px;color:var(--muted);margin-top:6px;line-height:1.6">
         <i class="fas fa-circle-info" style="color:var(--accent)"></i>
-        JPG, PNG, GIF, WEBP, MP4, WEBM · Max 10MB each · Multiple files allowed<br>
+        JPG, PNG, GIF, WEBP, MP4, WEBM · Max 50MB each · Multiple files allowed<br>
         You can also paste a <strong>YouTube link</strong> below:
       </div>
       <input type="text" id="pf-youtube" placeholder="https://youtu.be/abc123  (optional YouTube link)" style="margin-top:8px;font-size:12px">
@@ -610,8 +613,7 @@ async function saveProject() {
   const icon     = document.getElementById('pf-icon').value;
   const github   = document.getElementById('pf-github').value.trim();
   const demo     = document.getElementById('pf-demo').value.trim();
-  // Merge any pending YouTube link into media
-  const ytEl = document.getElementById('pf-youtube');
+  const ytEl     = document.getElementById('pf-youtube');
   if (ytEl && ytEl.value.trim()) {
     const hiddenMedia = document.getElementById('pf-media');
     const ytUrl = ytEl.value.trim();
@@ -624,13 +626,10 @@ async function saveProject() {
   const techRaw  = document.getElementById('pf-tech').value;
   let tech = [];
   try { tech = JSON.parse(techRaw); } catch(e) {}
-
   if (!title) { toast('Title is required.', 'err'); return; }
-
   const payload = { title, description:desc, category:cat, icon, tech, github_url:github, demo_url:demo, media_urls:media, is_featured:feat };
   const path = currentEditId ? `/api/project/update/${currentEditId}` : '/api/project/add';
   const r = await api(path, payload);
-
   if (r.success) {
     toast(currentEditId ? 'Project updated!' : 'Project added!');
     closePanel();
@@ -638,14 +637,15 @@ async function saveProject() {
   } else toast(r.message || 'Error saving.', 'err');
 }
 
-// ── MEDIA UPLOAD ──────────────────────────────────────
+// ── MEDIA PREVIEWS ──
 function renderMediaPreviews(mediaUrls) {
   const list = document.getElementById('media-preview-list');
   if (!list) return;
+  // FIX: use proper string split — no literal newline in regex
   const urls = mediaUrls.split(/[\n,]+/).map(u => u.trim()).filter(Boolean);
   if (!urls.length) { list.innerHTML = ''; return; }
   list.innerHTML = urls.map(url => {
-    const isYt = url.includes('youtube') || url.includes('youtu.be');
+    const isYt  = url.includes('youtube') || url.includes('youtu.be');
     const isVid = url.match(/\.(mp4|webm)$/i) || isYt;
     const thumb = isYt
       ? `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#0f1117;color:#f87171"><i class="fab fa-youtube" style="font-size:20px"></i></div>`
@@ -662,23 +662,7 @@ function renderMediaPreviews(mediaUrls) {
   }).join('');
 }
 
-function syncMediaFromYoutube() {
-  if (!currentEditId) return;
-  const ytInput = document.getElementById('pf-youtube');
-  const hiddenMedia = document.getElementById('pf-media');
-  if (!ytInput || !hiddenMedia) return;
-  const ytUrl = ytInput.value.trim();
-  if (!ytUrl) return;
-  const existing = hiddenMedia.value.split(/[\n,]+/).map(u => u.trim()).filter(Boolean);
-  if (!existing.includes(ytUrl)) {
-    existing.push(ytUrl);
-    hiddenMedia.value = existing.join('\n');
-    ytInput.value = '';
-    renderMediaPreviews(hiddenMedia.value);
-    toast('YouTube link added!');
-  }
-}
-
+// ── MEDIA UPLOAD — with CSRF fix ──
 async function handleMediaUpload(input) {
   if (!currentEditId) { toast('Save the project first, then add media.', 'err'); return; }
   const files = Array.from(input.files);
@@ -686,12 +670,40 @@ async function handleMediaUpload(input) {
   const label = document.getElementById('media-upload-label');
   label.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
 
+  const csrf = getCsrfToken();
+
   for (const file of files) {
     const fd = new FormData();
     fd.append('media', file);
+    // Append CSRF token to FormData so CI4 accepts the multipart request
+    fd.append(csrf.name, csrf.value);
+
     try {
-      const r = await fetch(BASE + '/api/project/upload-media/' + currentEditId, { method: 'POST', body: fd });
+      const r = await fetch(BASE + '/api/project/upload-media/' + currentEditId, {
+        method: 'POST',
+        // DO NOT set Content-Type header — browser sets it with boundary for multipart
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+          [csrf.name]: csrf.value,
+        },
+        body: fd,
+      });
+
+      if (!r.ok) {
+        const text = await r.text();
+        toast('Upload failed (' + r.status + '): ' + (text.substring(0, 80) || 'Server error'), 'err');
+        continue;
+      }
+
       const data = await r.json();
+
+      // Refresh CSRF token if server sends new one
+      const newToken = r.headers.get('X-CSRF-TOKEN');
+      if (newToken) {
+        const meta = document.querySelector('meta[name="csrf-token"]');
+        if (meta) meta.content = newToken;
+      }
+
       if (data.success) {
         document.getElementById('pf-media').value = data.media_urls;
         renderMediaPreviews(data.media_urls);
@@ -699,7 +711,9 @@ async function handleMediaUpload(input) {
       } else {
         toast(data.message || 'Upload failed', 'err');
       }
-    } catch(e) { toast('Upload error: ' + e.message, 'err'); }
+    } catch(e) {
+      toast('Upload error: ' + e.message, 'err');
+    }
   }
 
   label.innerHTML = '<i class="fas fa-upload"></i> Upload Photo or Video';
@@ -956,243 +970,229 @@ function toggleDark() {
   if (icon) icon.className = d ? 'fas fa-sun' : 'fas fa-moon';
 })();
 
-// ── ESC KEY ──
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') { closePanel(); closeDelModal(); }
 });
 
-
 // ════════════════════════════════════════════════
-// METHODOLOGY & ISO MANAGEMENT (per-project)
+// METHODOLOGY & ISO MANAGEMENT
 // ════════════════════════════════════════════════
 let _currentMethodologyProjectId = null;
 
 function openMethodology(projectId, projectTitle) {
-    _currentMethodologyProjectId = projectId;
-    document.getElementById('methodology-project-title').textContent = projectTitle;
-    document.getElementById('methodology-card').style.display = 'block';
-    // Scroll to it
-    setTimeout(() => document.getElementById('methodology-card').scrollIntoView({ behavior:'smooth', block:'start' }), 50);
-    // Load data from embedded page data
-    loadPhases(projectId);
-    loadIsoScores(projectId);
+  _currentMethodologyProjectId = projectId;
+  document.getElementById('methodology-project-title').textContent = projectTitle;
+  document.getElementById('methodology-card').style.display = 'block';
+  setTimeout(() => document.getElementById('methodology-card').scrollIntoView({ behavior:'smooth', block:'start' }), 50);
+  loadPhases(projectId);
+  loadIsoScores(projectId);
 }
 
 function closeMethodology() {
-    document.getElementById('methodology-card').style.display = 'none';
-    _currentMethodologyProjectId = null;
+  document.getElementById('methodology-card').style.display = 'none';
+  _currentMethodologyProjectId = null;
 }
 
-// Tab switching
 function switchTab(tab, btn) {
-    document.querySelectorAll('.thesis-tab').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.thesis-panel').forEach(p => p.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('panel-' + tab).classList.add('active');
+  document.querySelectorAll('.thesis-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.thesis-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('panel-' + tab).classList.add('active');
 }
-
-// ── PHASES ──────────────────────────────────────
 
 function loadPhases(projectId) {
-    const phases = ALL_PHASES[projectId] || [];
-    renderPhases(phases);
+  const phases = ALL_PHASES[projectId] || [];
+  renderPhases(phases);
 }
 
 function renderPhases(phases) {
-    const list = document.getElementById('phase-list');
-    if (!phases.length) {
-        list.innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted)"><i class="fas fa-inbox" style="font-size:24px;opacity:0.3;display:block;margin-bottom:8px"></i>No phases yet. Click Add Phase to get started.</div>';
-        return;
-    }
-    list.innerHTML = phases.map(ph => `
-        <div class="phase-row" data-id="${ph.id}" draggable="true">
-          <div class="phase-header" onclick="togglePhaseRow(this)">
-            <i class="fas fa-grip-vertical phase-drag-handle" onclick="event.stopPropagation()"></i>
-            <div class="phase-num-badge">${escHtml(ph.num)}</div>
-            <div class="phase-title-txt">${escHtml(ph.title)}</div>
-            <div style="display:flex;gap:5px;flex-shrink:0" onclick="event.stopPropagation()">
-              <button class="icon-btn del" onclick="deletePhase(${ph.id},this)" title="Delete"><i class="fas fa-trash"></i></button>
-            </div>
-            <i class="fas fa-chevron-down phase-chevron"></i>
+  const list = document.getElementById('phase-list');
+  if (!phases.length) {
+    list.innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted)"><i class="fas fa-inbox" style="font-size:24px;opacity:0.3;display:block;margin-bottom:8px"></i>No phases yet. Click Add Phase to get started.</div>';
+    return;
+  }
+  list.innerHTML = phases.map(ph => `
+    <div class="phase-row" data-id="${ph.id}" draggable="true">
+      <div class="phase-header" onclick="togglePhaseRow(this)">
+        <i class="fas fa-grip-vertical phase-drag-handle" onclick="event.stopPropagation()"></i>
+        <div class="phase-num-badge">${escHtml(ph.num)}</div>
+        <div class="phase-title-txt">${escHtml(ph.title)}</div>
+        <div style="display:flex;gap:5px;flex-shrink:0" onclick="event.stopPropagation()">
+          <button class="icon-btn del" onclick="deletePhase(${ph.id},this)" title="Delete"><i class="fas fa-trash"></i></button>
+        </div>
+        <i class="fas fa-chevron-down phase-chevron"></i>
+      </div>
+      <div class="phase-body">
+        <div style="display:grid;grid-template-columns:80px 1fr;gap:10px;margin:12px 0 10px">
+          <div class="fg" style="margin:0"><label>Number</label>
+            <input type="text" name="ph-num" value="${escHtml(ph.num)}" placeholder="01" maxlength="4">
           </div>
-          <div class="phase-body">
-            <div style="display:grid;grid-template-columns:80px 1fr;gap:10px;margin:12px 0 10px">
-              <div class="fg" style="margin:0"><label>Number</label>
-                <input type="text" name="ph-num" value="${escHtml(ph.num)}" placeholder="01" maxlength="4">
-              </div>
-              <div class="fg" style="margin:0"><label>Phase Title</label>
-                <input type="text" name="ph-title" value="${escHtml(ph.title)}" placeholder="e.g. Planning & Requirement Analysis">
-              </div>
-            </div>
-            <div class="fg" style="margin-bottom:10px">
-              <label>Content <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">(HTML — use &lt;ul&gt;&lt;li&gt; format)</span></label>
-              <textarea name="ph-content" rows="5" style="font-family:monospace;font-size:12px">${escHtml(ph.content)}</textarea>
-            </div>
-            <button class="btn-primary" style="font-size:12px;padding:7px 16px" onclick="savePhase(${ph.id},this)">
-              <i class="fas fa-check"></i> Save Phase
-            </button>
+          <div class="fg" style="margin:0"><label>Phase Title</label>
+            <input type="text" name="ph-title" value="${escHtml(ph.title)}" placeholder="e.g. Planning & Requirement Analysis">
           </div>
-        </div>`).join('');
-    initPhaseDrag();
+        </div>
+        <div class="fg" style="margin-bottom:10px">
+          <label>Content <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">(HTML — use &lt;ul&gt;&lt;li&gt; format)</span></label>
+          <textarea name="ph-content" rows="5" style="font-family:monospace;font-size:12px">${escHtml(ph.content)}</textarea>
+        </div>
+        <button class="btn-primary" style="font-size:12px;padding:7px 16px" onclick="savePhase(${ph.id},this)">
+          <i class="fas fa-check"></i> Save Phase
+        </button>
+      </div>
+    </div>`).join('');
+  initPhaseDrag();
 }
 
 function togglePhaseRow(header) {
-    header.closest('.phase-row').classList.toggle('open');
+  header.closest('.phase-row').classList.toggle('open');
 }
 
 async function savePhase(id, btn) {
-    const row     = btn.closest('.phase-row');
-    const num     = row.querySelector('[name=ph-num]').value.trim();
-    const title   = row.querySelector('[name=ph-title]').value.trim();
-    const content = row.querySelector('[name=ph-content]').value.trim();
-    if (!title) { toast('Phase title is required.', 'err'); return; }
-    const r = await api(`/api/thesis/phase/update/${id}`, { num, title, content });
-    if (r.success) {
-        row.querySelector('.phase-num-badge').textContent = num;
-        row.querySelector('.phase-title-txt').textContent = title;
-        // Update in-memory data
-        if (ALL_PHASES[_currentMethodologyProjectId]) {
-            const ph = ALL_PHASES[_currentMethodologyProjectId].find(p => p.id == id);
-            if (ph) { ph.num = num; ph.title = title; ph.content = content; }
-        }
-        toast('Phase saved!');
-    } else toast(r.message || 'Error', 'err');
+  const row     = btn.closest('.phase-row');
+  const num     = row.querySelector('[name=ph-num]').value.trim();
+  const title   = row.querySelector('[name=ph-title]').value.trim();
+  const content = row.querySelector('[name=ph-content]').value.trim();
+  if (!title) { toast('Phase title is required.', 'err'); return; }
+  const r = await api(`/api/thesis/phase/update/${id}`, { num, title, content });
+  if (r.success) {
+    row.querySelector('.phase-num-badge').textContent = num;
+    row.querySelector('.phase-title-txt').textContent = title;
+    if (ALL_PHASES[_currentMethodologyProjectId]) {
+      const ph = ALL_PHASES[_currentMethodologyProjectId].find(p => p.id == id);
+      if (ph) { ph.num = num; ph.title = title; ph.content = content; }
+    }
+    toast('Phase saved!');
+  } else toast(r.message || 'Error', 'err');
 }
 
 async function addPhase() {
-    if (!_currentMethodologyProjectId) return;
-    const count = document.querySelectorAll('.phase-row').length;
-    const r = await api('/api/thesis/phase/add', {
-        project_id: _currentMethodologyProjectId,
-        num: String(count + 1).padStart(2, '0'),
-        title: 'New Phase',
-        content: '<ul><li>Add content here</li></ul>'
+  if (!_currentMethodologyProjectId) return;
+  const count = document.querySelectorAll('.phase-row').length;
+  const r = await api('/api/thesis/phase/add', {
+    project_id: _currentMethodologyProjectId,
+    num: String(count + 1).padStart(2, '0'),
+    title: 'New Phase',
+    content: '<ul><li>Add content here</li></ul>'
+  });
+  if (r.success) {
+    toast('Phase added!');
+    if (!ALL_PHASES[_currentMethodologyProjectId]) ALL_PHASES[_currentMethodologyProjectId] = [];
+    ALL_PHASES[_currentMethodologyProjectId].push({
+      id: r.id,
+      num: String(count + 1).padStart(2, '0'),
+      title: 'New Phase',
+      content: '<ul><li>Add content here</li></ul>',
+      sort_order: ALL_PHASES[_currentMethodologyProjectId].length + 1
     });
-    if (r.success) {
-        toast('Phase added!');
-        // Add new phase to in-memory data and re-render
-        if (!ALL_PHASES[_currentMethodologyProjectId]) ALL_PHASES[_currentMethodologyProjectId] = [];
-        ALL_PHASES[_currentMethodologyProjectId].push({
-            id: r.id,
-            num: String(count + 1).padStart(2, '0'),
-            title: 'New Phase',
-            content: '<ul><li>Add content here</li></ul>',
-            sort_order: ALL_PHASES[_currentMethodologyProjectId].length + 1
-        });
-        loadPhases(_currentMethodologyProjectId);
-        // Auto-open the new phase
-        setTimeout(() => {
-            const rows = document.querySelectorAll('.phase-row');
-            if (rows.length) rows[rows.length-1].querySelector('.phase-header').click();
-        }, 100);
-    } else toast(r.message || 'Error', 'err');
+    loadPhases(_currentMethodologyProjectId);
+    setTimeout(() => {
+      const rows = document.querySelectorAll('.phase-row');
+      if (rows.length) rows[rows.length-1].querySelector('.phase-header').click();
+    }, 100);
+  } else toast(r.message || 'Error', 'err');
 }
 
 async function deletePhase(id, btn) {
-    const title = btn.closest('.phase-row').querySelector('.phase-title-txt').textContent;
-    document.getElementById('del-msg').innerHTML = `Delete phase <strong>"${title}"</strong>?`;
-    document.getElementById('del-confirm-btn').onclick = async () => {
-        const r = await api(`/api/thesis/phase/delete/${id}`);
-        if (r.success) {
-            closeDelModal();
-            btn.closest('.phase-row').remove();
-            // Update in-memory
-            if (ALL_PHASES[_currentMethodologyProjectId]) {
-                ALL_PHASES[_currentMethodologyProjectId] = ALL_PHASES[_currentMethodologyProjectId].filter(p => p.id != id);
-            }
-            toast('Phase deleted.');
-        } else toast(r.message || 'Error', 'err');
-    };
-    document.getElementById('delModal').classList.add('open');
+  const title = btn.closest('.phase-row').querySelector('.phase-title-txt').textContent;
+  document.getElementById('del-msg').innerHTML = `Delete phase <strong>"${title}"</strong>?`;
+  document.getElementById('del-confirm-btn').onclick = async () => {
+    const r = await api(`/api/thesis/phase/delete/${id}`);
+    if (r.success) {
+      closeDelModal();
+      btn.closest('.phase-row').remove();
+      if (ALL_PHASES[_currentMethodologyProjectId]) {
+        ALL_PHASES[_currentMethodologyProjectId] = ALL_PHASES[_currentMethodologyProjectId].filter(p => p.id != id);
+      }
+      toast('Phase deleted.');
+    } else toast(r.message || 'Error', 'err');
+  };
+  document.getElementById('delModal').classList.add('open');
 }
 
 function initPhaseDrag() {
-    let src = null;
-    const list = document.getElementById('phase-list');
-    if (!list) return;
-    list.querySelectorAll('.phase-row').forEach(row => {
-        row.addEventListener('dragstart', e => { src = row; row.classList.add('dragging'); });
-        row.addEventListener('dragend', () => {
-            list.querySelectorAll('.phase-row').forEach(r => r.classList.remove('dragging','drag-over'));
-            const ids = [...list.querySelectorAll('.phase-row')].map(r => parseInt(r.dataset.id));
-            api('/api/thesis/phase/reorder', { order: ids });
-        });
-        row.addEventListener('dragover', e => {
-            e.preventDefault();
-            if (row !== src) { list.querySelectorAll('.phase-row').forEach(r=>r.classList.remove('drag-over')); row.classList.add('drag-over'); }
-        });
-        row.addEventListener('drop', e => {
-            e.preventDefault();
-            if (src && row !== src) {
-                const rows = [...list.querySelectorAll('.phase-row')];
-                rows.indexOf(src) < rows.indexOf(row) ? list.insertBefore(src, row.nextSibling) : list.insertBefore(src, row);
-                row.classList.remove('drag-over');
-            }
-        });
+  let src = null;
+  const list = document.getElementById('phase-list');
+  if (!list) return;
+  list.querySelectorAll('.phase-row').forEach(row => {
+    row.addEventListener('dragstart', e => { src = row; row.classList.add('dragging'); });
+    row.addEventListener('dragend', () => {
+      list.querySelectorAll('.phase-row').forEach(r => r.classList.remove('dragging','drag-over'));
+      const ids = [...list.querySelectorAll('.phase-row')].map(r => parseInt(r.dataset.id));
+      api('/api/thesis/phase/reorder', { order: ids });
     });
+    row.addEventListener('dragover', e => {
+      e.preventDefault();
+      if (row !== src) { list.querySelectorAll('.phase-row').forEach(r=>r.classList.remove('drag-over')); row.classList.add('drag-over'); }
+    });
+    row.addEventListener('drop', e => {
+      e.preventDefault();
+      if (src && row !== src) {
+        const rows = [...list.querySelectorAll('.phase-row')];
+        rows.indexOf(src) < rows.indexOf(row) ? list.insertBefore(src, row.nextSibling) : list.insertBefore(src, row);
+        row.classList.remove('drag-over');
+      }
+    });
+  });
 }
 
-// ── ISO SCORES ────────────────────────────────────
-
 function loadIsoScores(projectId) {
-    const scores = ALL_ISO[projectId] || [];
-    renderIsoScores(scores);
+  const scores = ALL_ISO[projectId] || [];
+  renderIsoScores(scores);
 }
 
 function renderIsoScores(scores) {
-    const list = document.getElementById('iso-list');
-    if (!scores.length) {
-        list.innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted)"><i class="fas fa-inbox" style="font-size:24px;opacity:0.3;display:block;margin-bottom:8px"></i>No scores yet. Click Add Criterion.</div>';
-        return;
-    }
-    list.innerHTML = scores.map(s => `
-        <div class="iso-row" data-id="${s.id}">
-          <i class="fas fa-grip-vertical" style="color:#d1d5db;font-size:11px;cursor:grab;flex-shrink:0"></i>
-          <input type="text" class="iso-label-input" value="${escHtml(s.label)}" placeholder="Criterion name">
-          <div class="iso-bar"><div class="iso-bar-fill" style="width:${s.score}%"></div></div>
-          <div class="iso-score-wrap">
-            <input type="number" class="iso-score-input" value="${s.score}" min="0" max="100" oninput="updateIsoBar(this)">
-            <span style="font-size:12px;color:var(--muted)">%</span>
-          </div>
-          <button class="icon-btn del" onclick="removeIsoRow(this)" title="Remove"><i class="fas fa-trash"></i></button>
-        </div>`).join('');
+  const list = document.getElementById('iso-list');
+  if (!scores.length) {
+    list.innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted)"><i class="fas fa-inbox" style="font-size:24px;opacity:0.3;display:block;margin-bottom:8px"></i>No scores yet. Click Add Criterion.</div>';
+    return;
+  }
+  list.innerHTML = scores.map(s => `
+    <div class="iso-row" data-id="${s.id}">
+      <i class="fas fa-grip-vertical" style="color:#d1d5db;font-size:11px;cursor:grab;flex-shrink:0"></i>
+      <input type="text" class="iso-label-input" value="${escHtml(s.label)}" placeholder="Criterion name">
+      <div class="iso-bar"><div class="iso-bar-fill" style="width:${s.score}%"></div></div>
+      <div class="iso-score-wrap">
+        <input type="number" class="iso-score-input" value="${s.score}" min="0" max="100" oninput="updateIsoBar(this)">
+        <span style="font-size:12px;color:var(--muted)">%</span>
+      </div>
+      <button class="icon-btn del" onclick="removeIsoRow(this)" title="Remove"><i class="fas fa-trash"></i></button>
+    </div>`).join('');
 }
 
 function updateIsoBar(input) {
-    const val = Math.max(0, Math.min(100, parseInt(input.value) || 0));
-    input.closest('.iso-row').querySelector('.iso-bar-fill').style.width = val + '%';
+  const val = Math.max(0, Math.min(100, parseInt(input.value) || 0));
+  input.closest('.iso-row').querySelector('.iso-bar-fill').style.width = val + '%';
 }
 
 function addIsoRow() {
-    const list = document.getElementById('iso-list');
-    // Remove empty state if present
-    if (list.querySelector('div[style*="padding"]')) list.innerHTML = '';
-    const div = document.createElement('div');
-    div.className = 'iso-row'; div.dataset.id = '0';
-    div.innerHTML = `
-        <i class="fas fa-grip-vertical" style="color:#d1d5db;font-size:11px;cursor:grab;flex-shrink:0"></i>
-        <input type="text" class="iso-label-input" value="New Criterion" placeholder="Criterion name">
-        <div class="iso-bar"><div class="iso-bar-fill" style="width:80%"></div></div>
-        <div class="iso-score-wrap">
-          <input type="number" class="iso-score-input" value="80" min="0" max="100" oninput="updateIsoBar(this)">
-          <span style="font-size:12px;color:var(--muted)">%</span>
-        </div>
-        <button class="icon-btn del" onclick="removeIsoRow(this)" title="Remove"><i class="fas fa-trash"></i></button>`;
-    list.appendChild(div);
+  const list = document.getElementById('iso-list');
+  if (list.querySelector('div[style*="padding"]')) list.innerHTML = '';
+  const div = document.createElement('div');
+  div.className = 'iso-row'; div.dataset.id = '0';
+  div.innerHTML = `
+    <i class="fas fa-grip-vertical" style="color:#d1d5db;font-size:11px;cursor:grab;flex-shrink:0"></i>
+    <input type="text" class="iso-label-input" value="New Criterion" placeholder="Criterion name">
+    <div class="iso-bar"><div class="iso-bar-fill" style="width:80%"></div></div>
+    <div class="iso-score-wrap">
+      <input type="number" class="iso-score-input" value="80" min="0" max="100" oninput="updateIsoBar(this)">
+      <span style="font-size:12px;color:var(--muted)">%</span>
+    </div>
+    <button class="icon-btn del" onclick="removeIsoRow(this)" title="Remove"><i class="fas fa-trash"></i></button>`;
+  list.appendChild(div);
 }
 
 function removeIsoRow(btn) { btn.closest('.iso-row').remove(); }
 
 async function saveIsoScores() {
-    if (!_currentMethodologyProjectId) return;
-    const rows = document.querySelectorAll('#iso-list .iso-row');
-    const scores = [...rows].map(row => ({
-        label: row.querySelector('.iso-label-input').value.trim(),
-        score: parseInt(row.querySelector('.iso-score-input').value) || 0,
-    })).filter(s => s.label);
-    const r = await api('/api/thesis/iso/update', { project_id: _currentMethodologyProjectId, scores });
-    if (r.success) toast('Scores saved!');
-    else toast(r.message || 'Error', 'err');
+  if (!_currentMethodologyProjectId) return;
+  const rows = document.querySelectorAll('#iso-list .iso-row');
+  const scores = [...rows].map(row => ({
+    label: row.querySelector('.iso-label-input').value.trim(),
+    score: parseInt(row.querySelector('.iso-score-input').value) || 0,
+  })).filter(s => s.label);
+  const r = await api('/api/thesis/iso/update', { project_id: _currentMethodologyProjectId, scores });
+  if (r.success) toast('Scores saved!');
+  else toast(r.message || 'Error', 'err');
 }
 
 function escHtml(str) {

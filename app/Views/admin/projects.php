@@ -444,25 +444,8 @@ const PROJECTS_DATA = {
   <?php endforeach; ?>
 };
 
-const ALL_PHASES = <?php
-    $allPhases = [];
-    foreach($projects as $p) {
-        $pid = $p['id'];
-        $phases = (new \App\Models\ThesisPhaseModel())->getForProject($pid);
-        if(!empty($phases)) $allPhases[$pid] = $phases;
-    }
-    echo json_encode($allPhases);
-?>;
-
-const ALL_ISO = <?php
-    $allIso = [];
-    foreach($projects as $p) {
-        $pid = $p['id'];
-        $scores = (new \App\Models\ThesisIsoModel())->getForProject($pid);
-        if(!empty($scores)) $allIso[$pid] = $scores;
-    }
-    echo json_encode($allIso);
-?>;
+const ALL_PHASES = <?= json_encode($projectPhases ?? []) ?>;
+const ALL_ISO    = <?= json_encode($projectIso ?? []) ?>;
 
 // ── TOAST ──
 let _toastTimer;

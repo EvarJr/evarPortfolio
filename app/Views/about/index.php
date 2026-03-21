@@ -350,6 +350,21 @@ a.re-contact-item:hover{color:#fff}
   .re-job,.re-edu,.re-cert{break-inside:avoid !important}
   a.re-contact-item{color:rgba(255,255,255,0.8) !important;text-decoration:underline !important}
   @page{size:A4 portrait;margin:0}
+
+  .re-header{
+  display:flex !important;
+  flex-direction:row !important;
+  justify-content:space-between !important;
+  align-items:center !important;
+  background:#2c3e50 !important;
+  color:#fff !important;
+}
+.re-contacts{
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:flex-end !important;
+  gap:4px !important;
+}
 }
 
 /* ════ MOBILE ════ */

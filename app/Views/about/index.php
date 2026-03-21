@@ -1,4 +1,22 @@
-<!DOCTYPE html>
+<!
+
+const THESIS_PHASES = <?php
+  $thesisPhaseJs = [];
+  foreach(($thesisPhases ?? []) as $ph) {
+      $thesisPhaseJs[] = ['num'=>$ph['num'],'title'=>$ph['title'],'content'=>$ph['content']];
+  }
+  echo json_encode($thesisPhaseJs);
+?>;
+
+const ISO_SCORES = <?php
+  $isoJs = [];
+  foreach(($isoScores ?? []) as $s) {
+      $isoJs[] = ['label'=>$s['label'],'score'=>(int)$s['score']];
+  }
+  echo json_encode($isoJs);
+?>;
+
+DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -877,91 +895,34 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
   </div>
 
   <div class="proj-grid" id="proj-grid">
-
-    <!-- THESIS — Featured -->
-    <div class="proj-card featured anim d1" data-category="thesis" data-project="thesis" onclick="openProject(this.dataset.project)">
-      <div class="proj-thumb proj-thumb-thesis">
-        <i class="fas fa-microchip proj-thumb-icon thesis"></i>
-        <span class="proj-type-tag tag-thesis">★ Thesis</span>
+    <?php
+    $thumbBg   = ['thesis'=>'proj-thumb-thesis','ojt'=>'proj-thumb-ot','lgu'=>'proj-thumb-lgu','personal'=>'proj-thumb-personal'];
+    $iconColor = ['thesis'=>'thesis','ojt'=>'ot','lgu'=>'lgu','personal'=>'personal'];
+    $tagClass  = ['thesis'=>'tag-thesis','ojt'=>'tag-ot','lgu'=>'tag-lgu','personal'=>'tag-personal'];
+    $tagLabel  = ['thesis'=>'&#9733; Thesis','ojt'=>'OJT','lgu'=>'LGU','personal'=>'Personal'];
+    foreach($projects as $i => $proj):
+        $cat = $proj['category'] ?? 'personal';
+        $projTech = json_decode($proj['tech'] ?? '[]', true) ?: [];
+        $delay = 'd'.min($i+1,4);
+    ?>
+    <div class="proj-card <?= $cat==='thesis'?'featured':'' ?> anim <?= $delay ?>" data-category="<?= esc($cat) ?>" data-project="<?= $proj['id'] ?>">
+      <div class="proj-thumb <?= $thumbBg[$cat]??'proj-thumb-personal' ?>">
+        <i class="<?= esc($proj['icon']) ?> proj-thumb-icon <?= $iconColor[$cat]??'personal' ?>"></i>
+        <span class="proj-type-tag <?= $tagClass[$cat]??'tag-personal' ?>"><?= $tagLabel[$cat]??$cat ?></span>
       </div>
       <div class="proj-body">
-        <div class="proj-title">Self-Updating Predictive Maintenance Platform</div>
-        <div class="proj-desc">Intelligent water leakage detection system integrating IoT sensors, Random Forest ML with Genetic Algorithm optimization, and a human-in-the-loop self-retraining framework. Evaluated against ISO 25010.</div>
-        <div class="proj-tech-row">
-          <span class="proj-tech">Laravel 11</span>
-          <span class="proj-tech">React JS</span>
-          <span class="proj-tech">Python</span>
-          <span class="proj-tech">ESP32</span>
-          <span class="proj-tech">Scikit-learn</span>
-          <span class="proj-tech">MySQL</span>
-        </div>
+        <div class="proj-title"><?= esc($proj['title']) ?></div>
+        <div class="proj-desc"><?= esc($proj['description']) ?></div>
+        <?php if(!empty($projTech)): ?>
+        <div class="proj-tech-row"><?php foreach($projTech as $t): ?><span class="proj-tech"><?= esc($t) ?></span><?php endforeach; ?></div>
+        <?php endif; ?>
       </div>
       <div class="proj-footer" style="justify-content:flex-end">
         <span class="proj-link" style="color:var(--text-3);font-size:11px"><i class="fas fa-arrow-up-right-from-square" style="font-size:9px"></i> Click to explore</span>
       </div>
     </div>
-
-    <!-- DOST OJT -->
-    <div class="proj-card anim d2" data-category="ojt" data-project="dost" onclick="openProject(this.dataset.project)">
-      <div class="proj-thumb proj-thumb-ot">
-        <i class="fas fa-file-pdf proj-thumb-icon ot"></i>
-        <span class="proj-type-tag tag-ot">OJT</span>
-      </div>
-      <div class="proj-body">
-        <div class="proj-title">DOST PDF Report Generator</div>
-        <div class="proj-desc">Optimized automated PDF report generation modules for the DOST Project LODI management system. Improved data accuracy and resolved critical system bugs.</div>
-        <div class="proj-tech-row">
-          <span class="proj-tech">Laravel 11</span>
-          <span class="proj-tech">PHP</span>
-          <span class="proj-tech">MySQL</span>
-          <span class="proj-tech">Git</span>
-        </div>
-      </div>
-      <div class="proj-footer" style="justify-content:flex-end">
-        <span class="proj-link" style="color:var(--text-3);font-size:11px"><i class="fas fa-arrow-up-right-from-square" style="font-size:9px"></i> Click to explore</span>
-      </div>
-    </div>
-
-    <!-- LGU Document Tracker -->
-    <div class="proj-card anim d3" data-category="lgu" data-project="lgu" onclick="openProject(this.dataset.project)">
-      <div class="proj-thumb proj-thumb-lgu">
-        <i class="fas fa-qrcode proj-thumb-icon lgu"></i>
-        <span class="proj-type-tag tag-lgu">LGU</span>
-      </div>
-      <div class="proj-body">
-        <div class="proj-title">Municipal QR Document Tracker</div>
-        <div class="proj-desc">QR-coded document tracking system for the Municipality of Tangalan. Automated record-keeping under ICT and Administrative department supervision.</div>
-        <div class="proj-tech-row">
-          <span class="proj-tech">Google Apps Script</span>
-          <span class="proj-tech">QR Code</span>
-          <span class="proj-tech">Google Sheets</span>
-        </div>
-      </div>
-      <div class="proj-footer" style="justify-content:flex-end">
-        <span class="proj-link" style="color:var(--text-3);font-size:11px"><i class="fas fa-arrow-up-right-from-square" style="font-size:9px"></i> Click to explore</span>
-      </div>
-    </div>
-
-    <!-- Attendance Tracker -->
-    <div class="proj-card anim d4" data-category="ojt lgu" data-project="attendance" onclick="openProject(this.dataset.project)">
-      <div class="proj-thumb proj-thumb-ot" style="background:linear-gradient(135deg,rgba(251,191,36,0.1),rgba(249,115,22,0.07))">
-        <i class="fas fa-calendar-check proj-thumb-icon" style="color:#fde68a;opacity:0.5"></i>
-        <span class="proj-type-tag" style="background:rgba(251,191,36,0.16);color:#fde68a;border:1px solid rgba(251,191,36,0.22)">OJT</span>
-      </div>
-      <div class="proj-body">
-        <div class="proj-title">Automated Attendance Tracker</div>
-        <div class="proj-desc">Data integration system using Google Workspace tools to streamline administrative workflows and automate attendance tracking for government operations.</div>
-        <div class="proj-tech-row">
-          <span class="proj-tech">Google Workspace</span>
-          <span class="proj-tech">Apps Script</span>
-          <span class="proj-tech">Google Forms</span>
-        </div>
-      </div>
-      <div class="proj-footer" style="justify-content:flex-end">
-        <span class="proj-link" style="color:var(--text-3);font-size:11px"><i class="fas fa-arrow-up-right-from-square" style="font-size:9px"></i> Click to explore</span>
-      </div>
-    </div>
-
+    <?php endforeach; ?>
+  </div>
   </div>
 </section>
 
@@ -1239,183 +1200,30 @@ if(isoGridEl)observer.observe(isoGridEl);
 // PROJECT MODAL
 // ════════════════════════════════════════════════
 const PROJECTS = {
-  thesis: {
-    type: '★ Thesis',
-    typeStyle: 'background:rgba(139,92,246,0.28);color:#d8b4fe;border:1px solid rgba(139,92,246,0.3)',
-    title: 'Self-Updating Predictive Maintenance Platform',
-    desc: 'An intelligent web-based platform for water leakage detection that integrates IoT sensors with a self-updating machine learning model. The system uses a human-in-the-loop framework where stakeholder validation serves as ground truth to continuously retrain the Random Forest classifier, improving accuracy over time. Evaluated against ISO 25010 software quality standards.',
-    tech: ['Laravel 11','React JS','Python','Scikit-learn','ESP32','Random Forest','Genetic Algorithm','Human-in-the-loop','MySQL','ISO 25010'],
-    github: '#',
-    demo: null,
-    extra: 'thesis'
+  <?php
+  $typeStyles = [
+    'thesis'  =>'background:rgba(139,92,246,0.28);color:#d8b4fe;border:1px solid rgba(139,92,246,0.3)',
+    'ojt'     =>'background:rgba(6,182,212,0.18);color:#67e8f9;border:1px solid rgba(6,182,212,0.25)',
+    'lgu'     =>'background:rgba(16,185,129,0.16);color:#6ee7b7;border:1px solid rgba(16,185,129,0.22)',
+    'personal'=>'background:rgba(251,191,36,0.16);color:#fde68a;border:1px solid rgba(251,191,36,0.22)',
+  ];
+  $typeLabels=['thesis'=>'★ Thesis','ojt'=>'OJT','lgu'=>'LGU','personal'=>'Personal'];
+  foreach($projects as $proj):
+    $cat = $proj['category'] ?? 'personal';
+    $projTech = json_decode($proj['tech'] ?? '[]', true) ?: [];
+  ?>
+  <?= $proj['id'] ?>: {
+    type: <?= json_encode($typeLabels[$cat] ?? $cat) ?>,
+    typeStyle: <?= json_encode($typeStyles[$cat] ?? $typeStyles['personal']) ?>,
+    title: <?= json_encode($proj['title']) ?>,
+    desc: <?= json_encode($proj['description']) ?>,
+    tech: <?= json_encode($projTech) ?>,
+    github: <?= json_encode($proj['github_url'] ?: null) ?>,
+    demo: <?= json_encode($proj['demo_url'] ?: null) ?>,
+    extra: <?= json_encode($cat==='thesis' ? 'thesis' : null) ?>,
   },
-  dost: {
-    type: 'OJT',
-    typeStyle: 'background:rgba(6,182,212,0.18);color:#67e8f9;border:1px solid rgba(6,182,212,0.25)',
-    title: 'DOST PDF Report Generator',
-    desc: 'Optimized and enhanced automated PDF report generation modules for the DOST Project LODI project management system using Laravel 11. Identified and resolved critical system bugs to improve overall data accuracy and functionality. Collaborated fully remotely using Git/GitHub for version control and Google Workspace for daily coordination.',
-    tech: ['Laravel 11','PHP','MySQL','Git / GitHub','Google Workspace'],
-    github: '#',
-    demo: null,
-    extra: null
-  },
-  lgu: {
-    type: 'LGU',
-    typeStyle: 'background:rgba(16,185,129,0.16);color:#6ee7b7;border:1px solid rgba(16,185,129,0.22)',
-    title: 'Municipal QR Document Tracker',
-    desc: 'Designed and built a QR-coded Document Tracker system for the Municipality of Tangalan using Google Apps Script to fully automate municipal record-keeping under the ICT and Administrative department. Significantly reduced manual tracking overhead by digitizing document workflows for local government operations.',
-    tech: ['Google Apps Script','QR Code API','Google Sheets','Google Drive'],
-    github: '#',
-    demo: null,
-    extra: null
-  },
-  attendance: {
-    type: 'OJT',
-    typeStyle: 'background:rgba(251,191,36,0.16);color:#fde68a;border:1px solid rgba(251,191,36,0.22)',
-    title: 'Automated Attendance Tracker',
-    desc: 'Built a comprehensive data integration system using Google Workspace tools to streamline administrative workflows and automate attendance tracking for both the DOST and Municipality of Tangalan. The system integrates Google Forms, Sheets, and Apps Script to create seamless end-to-end data pipelines for government operations.',
-    tech: ['Google Workspace','Google Apps Script','Google Forms','Google Sheets','Data Automation'],
-    github: '#',
-    demo: null,
-    extra: null
-  }
-};
-
-const THESIS_PHASES = [
-  {
-    num:'01', title:'Planning & Requirement Analysis',
-    content:`<ul>
-      <li>Analyzed requirements from water utility providers and defined system scope</li>
-      <li>Designed Data Flow Diagrams to visualize information movement through the platform</li>
-      <li>Defined IoT sensor requirements — flow rate, pressure sensors, solenoid valve status</li>
-      <li>Aligned with SDG 6 — clean water and water use efficiency through predictive maintenance</li>
-    </ul>`
-  },
-  {
-    num:'02', title:'Hardware & IoT Design',
-    content:`<ul>
-      <li>Designed IoT pipeline prototype with ESP32 microcontroller managing flow and pressure sensors</li>
-      <li>Implemented SIMON block cipher for sensor data encryption and security</li>
-      <li>Built simulated household pipeline connections for testing and data acquisition</li>
-      <li>Configured real-time data transmission pipeline from sensors to web platform</li>
-    </ul>`
-  },
-  {
-    num:'03', title:'ML Model & Self-Updating Framework',
-    content:`<ul>
-      <li>Implemented Random Forest Classifier optimized via Genetic Algorithms in Python + Scikit-learn</li>
-      <li>Human-in-the-loop retraining: admin validates alerts → validated data becomes ground truth → model retrains</li>
-      <li>Integrated Laravel ↔ Python via Symfony Process — web app triggers ML scripts directly</li>
-      <li>Simulation testing using synthetic telemetry data to stress test the model</li>
-    </ul>`
-  },
-  {
-    num:'04', title:'Web Platform Development',
-    content:`<ul>
-      <li>Laravel 11 REST API backend — data ingestion, decryption, preprocessing, prediction endpoints</li>
-      <li>React JS frontend — geo-tagged monitoring dashboard with interactive mapping</li>
-      <li>Administrative modules for system control, household management, and automated reporting</li>
-      <li>Real-time leak alerts, location predictions, and system health score visualization</li>
-    </ul>`
-  },
-  {
-    num:'05', title:'ISO 25010 Evaluation & Testing',
-    content:`<ul>
-      <li>Unit testing on individual code components and integration testing for Laravel ↔ Python pipeline</li>
-      <li>User Acceptance Testing with field technicians on dashboard usability</li>
-      <li>Evaluated against 5 ISO 25010 criteria — Functionality, Reliability, Security, Maintainability, Performance</li>
-    </ul>`
-  }
-];
-
-const ISO_SCORES = [
-  {label:'Functionality', score:92},
-  {label:'Reliability',   score:88},
-  {label:'Security',      score:85},
-  {label:'Maintainability',score:87},
-  {label:'Performance',   score:90},
-];
-
-function openProject(id) {
-  const p = PROJECTS[id];
-  if(!p) return;
-
-  document.getElementById('pm-type-tag').textContent = p.type;
-  document.getElementById('pm-type-tag').style.cssText = p.typeStyle;
-  document.getElementById('pm-title').textContent = p.title;
-
-  let body = `
-    <p class="pm-desc">${p.desc}</p>
-    <div class="pm-tech-row">${p.tech.map(t => `<span class="pm-tech">${t}</span>`).join('')}</div>
-    <div class="pm-links">
-      ${p.github ? `<a href="${p.github}" class="pm-link-btn pm-link-github" target="_blank"><i class="fab fa-github"></i> View on GitHub</a>` : ''}
-      ${p.demo ? `<a href="${p.demo}" class="pm-link-btn pm-link-demo" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>` : ''}
-    </div>`;
-
-  if(p.extra === 'thesis') {
-    body += `
-      <div class="pm-divider"></div>
-      <div class="pm-section-label">Development Methodology — Iterative Incremental Model</div>
-      <div class="pm-accordion">
-        ${THESIS_PHASES.map((ph,i) => `
-          <div class="pm-phase${i===0?' open':''}">
-            <div class="pm-phase-header" onclick="togglePmPhase(this)">
-              <div class="pm-phase-num">${ph.num}</div>
-              <div class="pm-phase-title">${ph.title}</div>
-              <i class="fas fa-chevron-down pm-phase-chevron"></i>
-            </div>
-            <div class="pm-phase-body">
-              <div class="pm-phase-content">${ph.content}</div>
-            </div>
-          </div>`).join('')}
-      </div>
-      <div class="pm-divider"></div>
-      <div class="pm-section-label">ISO 25010 Evaluation Results</div>
-      <div class="pm-iso-grid">
-        ${ISO_SCORES.map(s => `
-          <div class="pm-iso-card">
-            <div class="pm-iso-label">${s.label}</div>
-            <div class="pm-iso-bar-bg"><div class="pm-iso-bar-fill" data-w="${s.score}"></div></div>
-            <div class="pm-iso-score">${s.score}%</div>
-          </div>`).join('')}
-      </div>`;
-  }
-
-  document.getElementById('pm-body').innerHTML = body;
-  document.getElementById('projModal').classList.add('open');
-  document.body.style.overflow = 'hidden';
-
-  // Animate ISO bars after render
-  if(p.extra === 'thesis') {
-    setTimeout(() => {
-      document.querySelectorAll('.pm-iso-bar-fill[data-w]').forEach((bar,i) => {
-        setTimeout(() => { bar.style.width = bar.dataset.w + '%'; }, i * 100);
-      });
-    }, 200);
-  }
+  <?php endforeach; ?>
 }
-
-
-const THESIS_PHASES = <?php
-  $thesisPhaseJs = [];
-  foreach(($thesisPhases ?? []) as $ph) {
-      $thesisPhaseJs[] = ['num'=>$ph['num'],'title'=>$ph['title'],'content'=>$ph['content']];
-  }
-  echo json_encode($thesisPhaseJs);
-?>;
-
-const ISO_SCORES = <?php
-  $isoJs = [];
-  foreach(($isoScores ?? []) as $s) {
-      $isoJs[] = ['label'=>$s['label'],'score'=>(int)$s['score']];
-  }
-  echo json_encode($isoJs);
-?>;
-
-
-function closeProjModal() {
-  document.getElementById('projModal').classList.remove('open');
-  document.body.style.overflow = '';
 }
 
 function closeProjModalOnOverlay(e) {

@@ -419,7 +419,7 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
 .re-cert{margin-bottom:10px;break-inside:avoid}
 .re-cert-name{font-weight:600;font-size:12px;line-height:1.4}
 .re-cert-yr{font-size:11px;color:#3b82f6;margin-top:2px}
-.re-lang-item{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
+.re-lang-item{display:flex;align-items:center;gap:12px;margin-bottom:7px}
 .re-lang-dots{display:flex;gap:4px}
 .re-dot{width:10px;height:10px;border-radius:50%;background:#d1d5db;border:1.5px solid #c4c9d0}
 .re-dot.on{background:#3b82f6;border-color:#2563eb}

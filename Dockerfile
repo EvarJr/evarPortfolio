@@ -47,13 +47,14 @@ RUN chmod +x /start.sh
 # 7. Install PHP dependencies
 RUN composer install --optimize-autoloader --no-scripts --no-interaction
 
-# 8. Set permissions for CI4 writable folders
+# 8. Set permissions for CI4 writable folders + symlink uploads for direct Apache serving
 RUN mkdir -p writable/cache \
              writable/logs \
              writable/session \
-             writable/uploads \
+             writable/uploads/projects \
     && chmod -R 777 writable/ \
-    && chown -R www-data:www-data /var/www/html
+    && chown -R www-data:www-data /var/www/html \
+    && ln -sf /var/www/html/writable/uploads /var/www/html/public/uploads
 
 EXPOSE 8080
 

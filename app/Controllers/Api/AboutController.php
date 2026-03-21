@@ -31,8 +31,19 @@ class AboutController extends BaseApiController
     {
         $file = $this->request->getFile('photo');
 
-        if (! $file || ! $file->isValid()) {
-            return $this->jsonError('No valid file uploaded.');
+        if (!$file) {
+            return $this->jsonError('No file received.');
+        }
+        if ($file->getError() !== UPLOAD_ERR_OK) {
+            $errors = [
+                UPLOAD_ERR_INI_SIZE  => 'File exceeds server limit (' . ini_get('upload_max_filesize') . ')',
+                UPLOAD_ERR_FORM_SIZE => 'File exceeds form limit',
+                UPLOAD_ERR_PARTIAL   => 'File only partially uploaded',
+                UPLOAD_ERR_NO_FILE   => 'No file was uploaded',
+                UPLOAD_ERR_NO_TMP_DIR=> 'Missing temp folder on server',
+                UPLOAD_ERR_CANT_WRITE=> 'Failed to write file to disk',
+            ];
+            return $this->jsonError($errors[$file->getError()] ?? 'Upload error: ' . $file->getError());
         }
 
         $allowed = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];

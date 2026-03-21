@@ -209,6 +209,9 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
 .re-contacts{display:flex;flex-direction:column;gap:4px;align-items:flex-end}
 .re-contact-item{display:flex;align-items:center;gap:6px;font-size:11px;color:rgba(255,255,255,0.8)}
 .re-contact-item i{color:#3b82f6;font-size:10px}
+/* Clickable links in resume header */
+a.re-contact-item{text-decoration:underline;cursor:pointer}
+a.re-contact-item:hover{color:#fff}
 .re-body{column-count:2;column-gap:0;background:linear-gradient(to right,#ffffff 50%,#f9fafb 50%);column-rule:2px solid #f0f2f4;display:block;padding:0 0 28px;border-radius:0 0 20px 20px}
 .re-col-l,.re-col-r{display:contents}
 .re-section{break-inside:avoid;margin-bottom:16px;padding:16px 20px 0;box-sizing:border-box}
@@ -220,7 +223,7 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
 .re-ul{padding-left:14px;margin-top:3px;margin-bottom:0}
 .re-ul li{font-size:12px;color:#555;margin-bottom:3px;line-height:1.5}
 
-/* ── Education & Cert alignment fix ── */
+/* ── Education & Cert alignment ── */
 .re-edu{margin-bottom:12px;break-inside:avoid;padding-left:0;margin-left:0}
 .re-edu-deg{display:block;font-weight:700;font-size:13px}
 .re-edu-sch{display:block;font-size:11.5px;color:#3b82f6;margin:1px 0}
@@ -249,6 +252,8 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
   .re-section{break-inside:avoid !important;padding:12px 16px 0 !important}
   .re-header{background:#2c3e50 !important;color:#fff !important}
   .re-job,.re-edu,.re-cert{break-inside:avoid !important}
+  /* Keep links clickable in PDF */
+  a.re-contact-item{color:rgba(255,255,255,0.8) !important;text-decoration:underline !important}
 }
 
 /* ── MOBILE ── */
@@ -596,11 +601,32 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
             <div class="re-position"><?= esc($header['position']??'') ?></div>
           </div>
           <div class="re-contacts">
-            <?php if(!empty($header['email'])): ?><span class="re-contact-item"><i class="fas fa-envelope"></i><?= esc($header['email']) ?></span><?php endif; ?>
-            <?php if(!empty($header['phone'])): ?><span class="re-contact-item"><i class="fas fa-phone"></i><?= esc($header['phone']) ?></span><?php endif; ?>
-            <?php if(!empty($header['location'])): ?><span class="re-contact-item"><i class="fas fa-map-marker-alt"></i><?= esc($header['location']) ?></span><?php endif; ?>
-            <?php if(!empty($header['linkedin'])): ?><span class="re-contact-item"><i class="fab fa-linkedin"></i><?= esc($header['linkedin']) ?></span><?php endif; ?>
-            <?php if(!empty($header['portfolio_url'])): ?><a class="re-contact-item" href="<?= esc($header['portfolio_url']) ?>" target="_blank" style="color:rgba(255,255,255,0.8);text-decoration:none"><i class="fas fa-globe" style="color:#06b6d4;font-size:10px"></i><?= esc($header['portfolio_url']) ?></a><?php endif; ?>
+            <?php if(!empty($header['email'])): ?>
+            <a class="re-contact-item" href="mailto:<?= esc($header['email']) ?>" style="color:rgba(255,255,255,0.8);text-decoration:none">
+              <i class="fas fa-envelope"></i><?= esc($header['email']) ?>
+            </a>
+            <?php endif; ?>
+            <?php if(!empty($header['phone'])): ?>
+            <span class="re-contact-item"><i class="fas fa-phone"></i><?= esc($header['phone']) ?></span>
+            <?php endif; ?>
+            <?php if(!empty($header['location'])): ?>
+            <span class="re-contact-item"><i class="fas fa-map-marker-alt"></i><?= esc($header['location']) ?></span>
+            <?php endif; ?>
+            <?php if(!empty($header['portfolio_url'])): ?>
+            <a class="re-contact-item" href="<?= esc($header['portfolio_url']) ?>" target="_blank" style="color:rgba(255,255,255,0.8);text-decoration:underline">
+              <i class="fas fa-globe" style="color:#06b6d4;font-size:10px"></i><?= esc($header['portfolio_url']) ?>
+            </a>
+            <?php endif; ?>
+            <?php if(!empty($header['linkedin'])): ?>
+            <a class="re-contact-item" href="<?= esc($header['linkedin_url'] ?? '#') ?>" target="_blank" style="color:rgba(255,255,255,0.8);text-decoration:underline">
+              <i class="fab fa-linkedin" style="color:#0ea5e9;font-size:10px"></i><?= esc($header['linkedin']) ?>
+            </a>
+            <?php endif; ?>
+            <?php if(!empty($about['github'])): ?>
+            <a class="re-contact-item" href="<?= esc($about['github']) ?>" target="_blank" style="color:rgba(255,255,255,0.8);text-decoration:underline">
+              <i class="fab fa-github" style="color:#a5b4fc;font-size:10px"></i><?= esc($about['github']) ?>
+            </a>
+            <?php endif; ?>
           </div>
         </div>
         <div class="re-body">
@@ -663,30 +689,23 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
 </div>
 
 <script>
-// ── SCROLL PROGRESS ──
 window.addEventListener('scroll', () => {
   const el = document.getElementById('scroll-progress');
   const pct = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
   el.style.width = Math.min(pct, 100) + '%';
 }, { passive: true });
 
-// ── RESUME MODAL ──
 function openResumeModal(e) { e&&e.preventDefault(); document.getElementById('resumeModal').classList.add('open'); document.body.style.overflow='hidden'; }
 function closeResumeModal() { document.getElementById('resumeModal').classList.remove('open'); document.body.style.overflow=''; }
 document.getElementById('resumeModal').addEventListener('click', function(e) { if(e.target===this) closeResumeModal(); });
 function printResume() { document.getElementById('resumeModal').classList.add('open'); setTimeout(()=>window.print(),300); }
-
-// ── LOGOUT ──
 function confirmLogout(e) { e.preventDefault(); if(confirm('Are you sure you want to logout?')) window.location.href='<?= base_url('logout') ?>'; }
-
-// ── MOBILE NAV ──
 function toggleMobileNav(el) {
   const links = document.querySelector('.nav-links');
   const isOpen = links.style.display === 'flex';
   links.style.cssText = isOpen ? '' : 'display:flex;flex-direction:column;position:fixed;top:70px;left:0;right:0;background:rgba(5,8,16,0.97);backdrop-filter:blur(20px);padding:16px 24px 28px;border-bottom:1px solid rgba(255,255,255,0.07);box-shadow:0 20px 60px rgba(0,0,0,0.5);gap:4px;z-index:499';
 }
 
-// ── PROJECT FILTER ──
 function filterProjects(cat, btn) {
   document.querySelectorAll('.proj-filter').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
@@ -704,7 +723,6 @@ function filterProjects(cat, btn) {
   }, 280);
 }
 
-// ── INTERSECTION OBSERVER ──
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if(!entry.isIntersecting) return;
@@ -727,12 +745,10 @@ const observer = new IntersectionObserver(entries => {
     observer.unobserve(entry.target);
   });
 }, { threshold: 0.15 });
-
 document.querySelectorAll('.anim').forEach(el => { el.style.animationPlayState = 'paused'; observer.observe(el); });
 const countersEl = document.getElementById('counters');
 if(countersEl) observer.observe(countersEl);
 
-// ── PROJECT MODAL ──
 const PROJECTS = {
   <?php
   $typeStyles = [
@@ -815,7 +831,6 @@ document.getElementById('proj-grid').addEventListener('click', function(e) {
   if(id) openProject(id);
 });
 
-// ── NAVBAR ACTIVE ON SCROLL ──
 const navSections = ['hero','services','projects','testimonials','contact'];
 window.addEventListener('scroll', () => {
   const y = window.scrollY + 90;

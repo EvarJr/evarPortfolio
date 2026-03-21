@@ -37,16 +37,7 @@ body{font-family:var(--font-b);background:var(--ink);color:var(--text);overflow-
 body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");opacity:0.35}
 
 /* ════ NAVBAR ════ */
-.navbar{
-  position:fixed;top:0;left:0;right:0;z-index:500;
-  height:var(--nav-h);
-  background:rgba(5,8,16,0.92);
-  backdrop-filter:blur(20px) saturate(180%);
-  border-bottom:1px solid var(--border);
-  display:flex;align-items:center;
-  padding:0 5vw;
-  justify-content:space-between;
-}
+.navbar{position:fixed;top:0;left:0;right:0;z-index:500;height:var(--nav-h);background:rgba(5,8,16,0.92);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 5vw;justify-content:space-between;}
 .nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
 .nav-avatar{width:36px;height:36px;border-radius:10px;background:var(--g-accent);display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--font-d);font-size:14px;font-weight:700;overflow:hidden;flex-shrink:0;box-shadow:0 0 0 1px rgba(139,92,246,0.4),0 4px 16px rgba(99,102,241,0.3)}
 .nav-avatar img{width:100%;height:100%;object-fit:cover}
@@ -57,71 +48,19 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .nav-link:hover,.nav-link.active{color:var(--text);background:rgba(255,255,255,0.06)}
 .nav-btn{padding:8px 20px;background:var(--g-accent);color:#fff;border-radius:50px;font-size:12.5px;font-weight:700;font-family:var(--font-d);text-decoration:none;margin-left:8px;transition:all 0.2s;box-shadow:0 4px 20px rgba(99,102,241,0.4);letter-spacing:0.3px}
 .nav-btn:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(99,102,241,0.5)}
-
-/* ── Mobile hamburger ── */
-.nav-hamburger{
-  display:none;
-  width:38px;height:38px;
-  border-radius:10px;
-  background:rgba(255,255,255,0.06);
-  border:1px solid var(--border);
-  cursor:pointer;
-  flex-direction:column;
-  align-items:center;justify-content:center;
-  gap:5px;
-  flex-shrink:0;
-}
+.nav-hamburger{display:none;width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.06);border:1px solid var(--border);cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px;flex-shrink:0;}
 .nav-hamburger span{display:block;width:18px;height:2px;background:var(--text-2);border-radius:2px;transition:all 0.3s}
 .nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
 .nav-hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
 .nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-
-/* ── Mobile slide-down menu ── */
-.mobile-menu{
-  display:none;
-  position:fixed;
-  top:var(--nav-h);left:0;right:0;
-  z-index:499;
-  background:rgba(5,8,16,0.97);
-  backdrop-filter:blur(24px);
-  border-bottom:1px solid rgba(99,102,241,0.2);
-  padding:12px 5vw 20px;
-  flex-direction:column;
-  gap:4px;
-  box-shadow:0 20px 60px rgba(0,0,0,0.6);
-  transform:translateY(-8px);
-  opacity:0;
-  transition:transform 0.25s cubic-bezier(0.16,1,0.3,1), opacity 0.25s ease;
-}
-.mobile-menu.open{
-  display:flex;
-  transform:translateY(0);
-  opacity:1;
-}
-.mobile-menu .nav-link{
-  padding:12px 16px;
-  border-radius:12px;
-  font-size:15px;
-  font-weight:500;
-  color:var(--text-2);
-  display:flex;align-items:center;gap:10px;
-}
-.mobile-menu .nav-link:hover,.mobile-menu .nav-link.active{
-  background:rgba(99,102,241,0.1);
-  color:var(--text);
-}
+.mobile-menu{display:none;position:fixed;top:var(--nav-h);left:0;right:0;z-index:499;background:rgba(5,8,16,0.97);backdrop-filter:blur(24px);border-bottom:1px solid rgba(99,102,241,0.2);padding:12px 5vw 20px;flex-direction:column;gap:4px;box-shadow:0 20px 60px rgba(0,0,0,0.6);transform:translateY(-8px);opacity:0;transition:transform 0.25s cubic-bezier(0.16,1,0.3,1), opacity 0.25s ease;}
+.mobile-menu.open{display:flex;transform:translateY(0);opacity:1;}
+.mobile-menu .nav-link{padding:12px 16px;border-radius:12px;font-size:15px;font-weight:500;color:var(--text-2);display:flex;align-items:center;gap:10px;}
+.mobile-menu .nav-link:hover,.mobile-menu .nav-link.active{background:rgba(99,102,241,0.1);color:var(--text);}
 .mobile-menu .nav-link i{width:18px;text-align:center;font-size:13px;color:var(--text-3)}
 .mobile-menu .nav-link.active i{color:#a5b4fc}
 .mobile-menu-divider{height:1px;background:var(--border);margin:8px 0}
-.mobile-menu .nav-btn{
-  margin:4px 0 0;
-  padding:13px 20px;
-  border-radius:12px;
-  font-size:14px;
-  text-align:center;
-  justify-content:center;
-  display:flex;align-items:center;gap:8px;
-}
+.mobile-menu .nav-btn{margin:4px 0 0;padding:13px 20px;border-radius:12px;font-size:14px;text-align:center;justify-content:center;display:flex;align-items:center;gap:8px;}
 
 /* ════ HERO ════ */
 .hero{position:relative;min-height:100vh;margin-top:var(--nav-h);background:var(--g-hero);display:flex;align-items:center;padding:60px 8vw 120px;gap:72px;overflow:visible;max-width:100%}
@@ -271,14 +210,11 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
 .modal-bar h3{font-family:'Cabinet Grotesk',sans-serif;font-size:14px;font-weight:700;color:#0f172a}
 .modal-bar-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .btn-print{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;border:none;border-radius:8px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:'Cabinet Grotesk',sans-serif;white-space:nowrap}
-
-/* ── Print settings row ── */
 .print-settings{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .print-setting-group{display:flex;align-items:center;gap:5px;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:7px;padding:5px 10px}
 .print-setting-group label{font-size:11px;font-weight:600;color:#64748b;font-family:'Cabinet Grotesk',sans-serif;white-space:nowrap}
 .print-setting-group select{font-size:11.5px;color:#0f172a;border:none;background:transparent;font-family:'Cabinet Grotesk',sans-serif;cursor:pointer;outline:none;font-weight:500}
 .print-setting-group input[type=number]{width:46px;font-size:11.5px;color:#0f172a;border:none;background:transparent;font-family:'Cabinet Grotesk',sans-serif;text-align:center;outline:none;font-weight:500}
-
 .btn-close-modal{width:32px;height:32px;border-radius:8px;border:1px solid #e2e8f0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;color:#64748b;transition:all 0.15s;flex-shrink:0}
 .btn-close-modal:hover{background:#fee2e2;border-color:#fca5a5;color:#ef4444}
 .modal-body{padding:0 0 28px;border-radius:0 0 20px 20px;overflow:hidden}
@@ -294,8 +230,6 @@ a.re-contact-item:hover{color:#fff}
 .re-body{display:grid;grid-template-columns:1fr 0.65fr;background:none;padding:0 0 28px;border-radius:0 0 20px 20px}
 .re-col-l{display:block;background:#fff;border-right:2px solid #f0f2f4}
 .re-col-r{display:block;background:#f9fafb}
-.re-col-l{display:block}
-.re-col-r{display:block}
 .re-section{break-inside:avoid;margin-bottom:16px;padding:16px 20px 0;box-sizing:border-box}
 .re-section-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#2c3e50;padding-bottom:4px;border-bottom:2px solid #3b82f6;margin-bottom:10px}
 .re-summary{font-size:12.5px;color:#555;line-height:1.75}
@@ -318,53 +252,22 @@ a.re-contact-item:hover{color:#fff}
 .re-dot{width:10px;height:10px;border-radius:50%;background:#d1d5db;border:1.5px solid #c4c9d0}
 .re-dot.on{background:#3b82f6;border-color:#2563eb}
 
-/* ════ PRINT — A4, no margins, preserves links ════ */
+/* ════ PRINT ════ */
 @media print{
   *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
   #scroll-progress,.navbar,.mobile-menu,.hero,.services-section,.projects-section,.testi-section,.resume-strip,.contact-section,footer,.modal-bar{display:none !important}
   body{background:#fff !important;margin:0 !important;padding:0 !important;overflow:visible !important}
   .modal-overlay.open{display:block !important;position:absolute !important;inset:0 !important;background:#fff !important;padding:0 !important;overflow:visible !important;opacity:1 !important;z-index:9999 !important}
   .modal-box{max-width:100% !important;width:100% !important;border-radius:0 !important;box-shadow:none !important;animation:none !important}
-
-  /* ── Two-column grid for print ── */
-  .re-body{
-    display:grid !important;
-    grid-template-columns:1fr 0.65fr !important;
-    column-count:unset !important;
-    background:none !important;
-    padding:0 !important;
-    border-radius:0 !important;
-  }
-  .re-col-l{
-    display:block !important;
-    border-right:2px solid #f0f2f4 !important;
-    background:#fff !important;
-  }
-  .re-col-r{
-    display:block !important;
-    background:#f9fafb !important;
-  }
-
+  .re-body{display:grid !important;grid-template-columns:1fr 0.65fr !important;background:none !important;padding:0 !important;border-radius:0 !important;}
+  .re-col-l{display:block !important;border-right:2px solid #f0f2f4 !important;background:#fff !important;}
+  .re-col-r{display:block !important;background:#f9fafb !important;}
   .re-section{break-inside:avoid !important;padding:12px 16px 0 !important}
-  .re-header{background:#2c3e50 !important;color:#fff !important}
+  .re-header{background:#2c3e50 !important;color:#fff !important;display:flex !important;flex-direction:row !important;justify-content:space-between !important;align-items:center !important;}
+  .re-contacts{display:flex !important;flex-direction:column !important;align-items:flex-end !important;gap:4px !important;}
   .re-job,.re-edu,.re-cert{break-inside:avoid !important}
   a.re-contact-item{color:rgba(255,255,255,0.8) !important;text-decoration:underline !important}
   @page{size:A4 portrait;margin:0}
-
-  .re-header{
-  display:flex !important;
-  flex-direction:row !important;
-  justify-content:space-between !important;
-  align-items:center !important;
-  background:#2c3e50 !important;
-  color:#fff !important;
-}
-.re-contacts{
-  display:flex !important;
-  flex-direction:column !important;
-  align-items:flex-end !important;
-  gap:4px !important;
-}
 }
 
 /* ════ MOBILE ════ */
@@ -471,7 +374,6 @@ a.re-contact-item:hover{color:#fff}
 
 <div id="scroll-progress"></div>
 
-<!-- ════ NAVBAR ════ -->
 <nav class="navbar">
   <a class="nav-brand" href="<?= base_url() ?>">
     <div class="nav-avatar">
@@ -486,8 +388,6 @@ a.re-contact-item:hover{color:#fff}
       <strong><?= esc($np[0]) ?></strong><?= isset($np[1])?' <span>'.esc($np[1]).'</span>':'' ?>
     </div>
   </a>
-
-  <!-- Desktop links -->
   <div class="nav-links">
     <a class="nav-link active" href="#hero">About</a>
     <a class="nav-link" href="#services">Services</a>
@@ -496,14 +396,11 @@ a.re-contact-item:hover{color:#fff}
     <a class="nav-link" href="#contact">Contact</a>
     <a class="nav-btn" href="#" onclick="openResumeModal(event)">Resume</a>
   </div>
-
-  <!-- Mobile hamburger -->
   <button class="nav-hamburger" id="navHamburger" onclick="toggleMobileMenu()" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
 
-<!-- ════ MOBILE MENU ════ -->
 <div class="mobile-menu" id="mobileMenu">
   <a class="nav-link active" href="#hero" onclick="closeMobileMenu()"><i class="fas fa-user"></i> About</a>
   <a class="nav-link" href="#services" onclick="closeMobileMenu()"><i class="fas fa-briefcase"></i> Services</a>
@@ -516,7 +413,6 @@ a.re-contact-item:hover{color:#fff}
   <a class="nav-btn" href="#" onclick="openResumeModal(event);closeMobileMenu()"><i class="fas fa-file-alt"></i> View Resume</a>
 </div>
 
-<!-- ════ HERO ════ -->
 <section class="hero" id="hero">
   <div class="hero-orb hero-orb-1"></div>
   <div class="hero-orb hero-orb-2"></div>
@@ -728,22 +624,14 @@ a.re-contact-item:hover{color:#fff}
     <div class="modal-bar">
       <h3><i class="fas fa-file-alt" style="color:#3b82f6;margin-right:8px"></i>Resume — <?= esc($header['name']??'') ?></h3>
       <div class="modal-bar-actions">
-        <!-- Print settings (desktop only) -->
         <div class="print-settings">
           <div class="print-setting-group">
             <label>Size</label>
-            <select id="printSize">
-              <option value="A4" selected>A4</option>
-              <option value="Letter">Letter</option>
-              <option value="Legal">Legal</option>
-            </select>
+            <select id="printSize"><option value="A4" selected>A4</option><option value="Letter">Letter</option><option value="Legal">Legal</option></select>
           </div>
           <div class="print-setting-group">
             <label>Orientation</label>
-            <select id="printOrientation">
-              <option value="portrait" selected>Portrait</option>
-              <option value="landscape">Landscape</option>
-            </select>
+            <select id="printOrientation"><option value="portrait" selected>Portrait</option><option value="landscape">Landscape</option></select>
           </div>
           <div class="print-setting-group">
             <label>Scale %</label>
@@ -854,62 +742,33 @@ function toggleMobileMenu() {
   const menu = document.getElementById('mobileMenu');
   const btn = document.getElementById('navHamburger');
   const isOpen = menu.classList.contains('open');
-  if(isOpen) {
-    menu.classList.remove('open');
-    btn.classList.remove('open');
-    document.body.style.overflow = '';
-  } else {
-    menu.classList.add('open');
-    btn.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
+  if(isOpen) { menu.classList.remove('open'); btn.classList.remove('open'); document.body.style.overflow = ''; }
+  else { menu.classList.add('open'); btn.classList.add('open'); document.body.style.overflow = 'hidden'; }
 }
 function closeMobileMenu() {
   document.getElementById('mobileMenu').classList.remove('open');
   document.getElementById('navHamburger').classList.remove('open');
   document.body.style.overflow = '';
 }
-// Close mobile menu on outside click
 document.addEventListener('click', e => {
   const menu = document.getElementById('mobileMenu');
   const btn = document.getElementById('navHamburger');
-  if(menu.classList.contains('open') && !menu.contains(e.target) && !btn.contains(e.target)) {
-    closeMobileMenu();
-  }
+  if(menu.classList.contains('open') && !menu.contains(e.target) && !btn.contains(e.target)) closeMobileMenu();
 });
 
 // ── RESUME MODAL ──
-function openResumeModal(e) {
-  e&&e.preventDefault();
-  document.getElementById('resumeModal').classList.add('open');
-  document.body.style.overflow='hidden';
-}
-function closeResumeModal() {
-  document.getElementById('resumeModal').classList.remove('open');
-  document.body.style.overflow='';
-}
+function openResumeModal(e) { e&&e.preventDefault(); document.getElementById('resumeModal').classList.add('open'); document.body.style.overflow='hidden'; }
+function closeResumeModal() { document.getElementById('resumeModal').classList.remove('open'); document.body.style.overflow=''; }
 document.getElementById('resumeModal').addEventListener('click', function(e) { if(e.target===this) closeResumeModal(); });
 
-// ── PRINT WITH SETTINGS ──
+// ── PRINT ──
 function printResume() {
   const size = document.getElementById('printSize')?.value || 'A4';
   const orientation = document.getElementById('printOrientation')?.value || 'portrait';
   const scale = document.getElementById('printScale')?.value || '100';
-
-  // Inject dynamic @page rule
   let styleEl = document.getElementById('dynamicPrintStyle');
-  if(!styleEl) {
-    styleEl = document.createElement('style');
-    styleEl.id = 'dynamicPrintStyle';
-    document.head.appendChild(styleEl);
-  }
-  styleEl.textContent = `
-    @media print {
-      @page { size: ${size} ${orientation}; margin: 0; }
-      #resumeContent { transform: scale(${scale/100}); transform-origin: top left; width: ${10000/scale}%; }
-    }
-  `;
-
+  if(!styleEl) { styleEl = document.createElement('style'); styleEl.id = 'dynamicPrintStyle'; document.head.appendChild(styleEl); }
+  styleEl.textContent = `@media print { @page { size: ${size} ${orientation}; margin: 0; } #resumeContent { transform: scale(${scale/100}); transform-origin: top left; width: ${10000/scale}%; } }`;
   document.getElementById('resumeModal').classList.add('open');
   setTimeout(() => window.print(), 300);
 }
@@ -962,7 +821,7 @@ document.querySelectorAll('.anim').forEach(el => { el.style.animationPlayState =
 const countersEl = document.getElementById('counters');
 if(countersEl) observer.observe(countersEl);
 
-// ── PROJECT MODAL ──
+// ── PROJECT DATA ──
 const PROJECTS = {
   <?php
   $typeStyles = [
@@ -984,37 +843,68 @@ const PROJECTS = {
     tech: <?= json_encode($projTech) ?>,
     github: <?= json_encode($proj['github_url'] ?: null) ?>,
     demo: <?= json_encode($proj['demo_url'] ?: null) ?>,
-    extra: <?= json_encode($cat==='thesis' ? 'thesis' : null) ?>,
   },
   <?php endforeach; ?>
 };
 
+// Phases and ISO scores for thesis (legacy fallback)
 const THESIS_PHASES = <?php
   $js = [];
   foreach(($thesisPhases ?? []) as $ph) { $js[] = ['num'=>$ph['num'],'title'=>$ph['title'],'content'=>$ph['content']]; }
   echo json_encode($js);
 ?>;
-
 const ISO_SCORES = <?php
   $js = [];
   foreach(($isoScores ?? []) as $s) { $js[] = ['label'=>$s['label'],'score'=>(int)$s['score']]; }
   echo json_encode($js);
 ?>;
 
+// All phases keyed by project_id (supports all categories)
+const ALL_PHASES = <?php
+  $allPhasesJs = [];
+  foreach(($allThesisPhases ?? []) as $pid => $phases) {
+    $allPhasesJs[$pid] = array_map(fn($ph) => [
+      'num'=>$ph['num'],'title'=>$ph['title'],'content'=>$ph['content']
+    ], $phases);
+  }
+  echo json_encode($allPhasesJs);
+?>;
+const ALL_ISO = <?php
+  $allIsoJs = [];
+  foreach(($allIsoScores ?? []) as $pid => $scores) {
+    $allIsoJs[$pid] = array_map(fn($s) => [
+      'label'=>$s['label'],'score'=>(int)$s['score']
+    ], $scores);
+  }
+  echo json_encode($allIsoJs);
+?>;
+
+// ── PROJECT MODAL ──
 function openProject(id) {
   const p = PROJECTS[id];
   if(!p) return;
   document.getElementById('pm-type-tag').textContent = p.type;
   document.getElementById('pm-type-tag').style.cssText = p.typeStyle;
   document.getElementById('pm-title').textContent = p.title;
+
+  // Use per-project data from ALL_PHASES/ALL_ISO, fall back to THESIS_PHASES/ISO_SCORES
+  const projPhases = (ALL_PHASES && ALL_PHASES[id]) ? ALL_PHASES[id] : THESIS_PHASES;
+  const projIso    = (ALL_ISO    && ALL_ISO[id])    ? ALL_ISO[id]    : ISO_SCORES;
+
   let body = `<p class="pm-desc">${p.desc}</p><div class="pm-tech-row">${p.tech.map(t=>`<span class="pm-tech">${t}</span>`).join('')}</div><div class="pm-links">${p.github?`<a href="${p.github}" class="pm-link-btn pm-link-github" target="_blank"><i class="fab fa-github"></i> View on GitHub</a>`:''}${p.demo?`<a href="${p.demo}" class="pm-link-btn pm-link-demo" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>`:''}</div>`;
-  if(p.extra === 'thesis') {
-    body += `<div class="pm-divider"></div><div class="pm-section-label">Development Methodology</div><div class="pm-accordion">${THESIS_PHASES.map((ph,i)=>`<div class="pm-phase${i===0?' open':''}"><div class="pm-phase-header" onclick="togglePmPhase(this)"><div class="pm-phase-num">${ph.num}</div><div class="pm-phase-title">${ph.title}</div><i class="fas fa-chevron-down pm-phase-chevron"></i></div><div class="pm-phase-body"><div class="pm-phase-content">${ph.content}</div></div></div>`).join('')}</div><div class="pm-divider"></div><div class="pm-section-label">ISO 25010 Evaluation</div><div class="pm-iso-grid">${ISO_SCORES.map(s=>`<div class="pm-iso-card"><div class="pm-iso-label">${s.label}</div><div class="pm-iso-bar-bg"><div class="pm-iso-bar-fill" data-w="${s.score}"></div></div><div class="pm-iso-score">${s.score}%</div></div>`).join('')}</div>`;
+
+  if(projPhases.length > 0) {
+    body += `<div class="pm-divider"></div><div class="pm-section-label">Development Methodology</div><div class="pm-accordion">${projPhases.map((ph,i)=>`<div class="pm-phase${i===0?' open':''}"><div class="pm-phase-header" onclick="togglePmPhase(this)"><div class="pm-phase-num">${ph.num}</div><div class="pm-phase-title">${ph.title}</div><i class="fas fa-chevron-down pm-phase-chevron"></i></div><div class="pm-phase-body"><div class="pm-phase-content">${ph.content}</div></div></div>`).join('')}</div>`;
   }
+  if(projIso.length > 0) {
+    body += `<div class="pm-divider"></div><div class="pm-section-label">ISO 25010 Evaluation</div><div class="pm-iso-grid">${projIso.map(s=>`<div class="pm-iso-card"><div class="pm-iso-label">${s.label}</div><div class="pm-iso-bar-bg"><div class="pm-iso-bar-fill" data-w="${s.score}"></div></div><div class="pm-iso-score">${s.score}%</div></div>`).join('')}</div>`;
+  }
+
   document.getElementById('pm-body').innerHTML = body;
   document.getElementById('projModal').classList.add('open');
   document.body.style.overflow = 'hidden';
-  if(p.extra === 'thesis') {
+
+  if(projIso.length > 0) {
     setTimeout(() => {
       document.querySelectorAll('.pm-iso-bar-fill[data-w]').forEach((bar,i) => {
         setTimeout(() => { bar.style.width = bar.dataset.w + '%'; }, i * 100);

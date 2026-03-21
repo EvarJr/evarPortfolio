@@ -35,28 +35,40 @@ class AboutController extends BaseController
 
     private function aboutData(): array
     {
-        $projects = (new ProjectModel())->getFeatured();
+        $projects      = (new ProjectModel())->getFeatured();
+        $phaseModel    = new ThesisPhaseModel();
+        $isoModel      = new ThesisIsoModel();
 
-        // Find thesis project and load its content
+        // Load phases + ISO scores for ALL projects (keyed by project_id)
+        $allPhases = [];
+        $allIso    = [];
+        foreach ($projects as $p) {
+            $pid = (int)$p['id'];
+            $phases = $phaseModel->getForProject($pid);
+            $scores = $isoModel->getForProject($pid);
+            if (!empty($phases)) $allPhases[$pid] = $phases;
+            if (!empty($scores)) $allIso[$pid]    = $scores;
+        }
+
+        // Keep backwards-compatible single thesis vars for any legacy code
         $thesisProject = null;
         foreach ($projects as $p) {
             if ($p['category'] === 'thesis') { $thesisProject = $p; break; }
         }
-        $thesisPhases = $thesisProject
-            ? (new ThesisPhaseModel())->getForProject((int)$thesisProject['id'])
-            : [];
-        $isoScores = $thesisProject
-            ? (new ThesisIsoModel())->getForProject((int)$thesisProject['id'])
-            : [];
+        $thesisId     = $thesisProject ? (int)$thesisProject['id'] : 0;
+        $thesisPhases = $allPhases[$thesisId] ?? [];
+        $isoScores    = $allIso[$thesisId]    ?? [];
 
         return [
-            'about'         => (new AboutModel())->getAbout(),
-            'services'      => (new AboutServiceModel())->getAllOrdered(),
-            'testimonials'  => (new AboutTestimonialModel())->getAllOrdered(),
-            'projects'      => $projects,
-            'thesisPhases'  => $thesisPhases,
-            'isoScores'     => $isoScores,
-            'isLoggedIn'    => $this->isLoggedIn(),
+            'about'           => (new AboutModel())->getAbout(),
+            'services'        => (new AboutServiceModel())->getAllOrdered(),
+            'testimonials'    => (new AboutTestimonialModel())->getAllOrdered(),
+            'projects'        => $projects,
+            'thesisPhases'    => $thesisPhases,
+            'isoScores'       => $isoScores,
+            'allThesisPhases' => $allPhases,
+            'allIsoScores'    => $allIso,
+            'isLoggedIn'      => $this->isLoggedIn(),
         ];
     }
 

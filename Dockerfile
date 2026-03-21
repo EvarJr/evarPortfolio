@@ -19,6 +19,13 @@ RUN docker-php-ext-install \
     zip \
     gd
 
+# 2b. PHP upload/execution limits
+RUN echo "upload_max_filesize = 100M" > /usr/local/etc/php/conf.d/uploads.ini \
+ && echo "post_max_size = 105M" >> /usr/local/etc/php/conf.d/uploads.ini \
+ && echo "memory_limit = 256M" >> /usr/local/etc/php/conf.d/uploads.ini \
+ && echo "max_execution_time = 300" >> /usr/local/etc/php/conf.d/uploads.ini \
+ && echo "max_input_time = 300" >> /usr/local/etc/php/conf.d/uploads.ini
+
 # 3. FIX MPM *after* PHP extensions (order matters!)
 RUN a2dismod mpm_event mpm_worker || true \
     && a2enmod mpm_prefork rewrite

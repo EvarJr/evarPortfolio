@@ -89,32 +89,47 @@ class ProjectController extends BaseApiController
         if (!$m->find($id)) return $this->jsonError('Project not found.', 404);
 
         $file = $this->request->getFile('media');
-        if (!$file || !$file->isValid()) {
-            return $this->jsonError('No valid file uploaded.');
+
+        // Debug: return file info if something is wrong
+        if (!$file) {
+            return $this->jsonError('No file received by server.');
         }
 
-        // Validate type
-        $allowed = ['image/jpeg','image/png','image/gif','image/webp','video/mp4','video/webm'];
-        if (!in_array($file->getMimeType(), $allowed)) {
-            return $this->jsonError('Unsupported file type. Use JPG, PNG, GIF, WEBP, MP4 or WEBM.');
+        // Check for upload errors directly (more reliable than isValid())
+        if ($file->getError() !== UPLOAD_ERR_OK) {
+            $errors = [
+                UPLOAD_ERR_INI_SIZE   => 'File exceeds server upload_max_filesize (' . ini_get('upload_max_filesize') . ')',
+                UPLOAD_ERR_FORM_SIZE  => 'File exceeds form MAX_FILE_SIZE',
+                UPLOAD_ERR_PARTIAL    => 'File only partially uploaded',
+                UPLOAD_ERR_NO_FILE    => 'No file was uploaded',
+                UPLOAD_ERR_NO_TMP_DIR => 'Missing temp folder',
+                UPLOAD_ERR_CANT_WRITE => 'Failed to write file to disk',
+                UPLOAD_ERR_EXTENSION  => 'Upload stopped by PHP extension',
+            ];
+            return $this->jsonError($errors[$file->getError()] ?? 'Upload error code: ' . $file->getError());
         }
 
-        // Max 10MB
-        if ($file->getSize() > 10 * 1024 * 1024) {
-            return $this->jsonError('File too large. Maximum 10MB.');
+        // Validate by extension (more reliable than mime for videos)
+        $allowedExts = ['jpg','jpeg','png','gif','webp','mp4','webm'];
+        $ext = strtolower($file->getClientExtension());
+        if (!in_array($ext, $allowedExts)) {
+            return $this->jsonError('Unsupported file type: ' . $ext . '. Use JPG, PNG, GIF, WEBP, MP4 or WEBM.');
         }
 
-        // Save to writable/uploads/projects/
+        // Max 50MB
+        if ($file->getSize() > 50 * 1024 * 1024) {
+            return $this->jsonError('File too large. Maximum 50MB. File size: ' . round($file->getSize()/1024/1024, 2) . 'MB');
+        }
+
+        // Save file
         $uploadPath = WRITEPATH . 'uploads/projects/';
         if (!is_dir($uploadPath)) mkdir($uploadPath, 0777, true);
 
-        $newName = 'proj_' . $id . '_' . uniqid() . '.' . $file->getClientExtension();
+        $newName = 'proj_' . $id . '_' . uniqid() . '.' . $ext;
         $file->move($uploadPath, $newName);
 
-        // Build public URL
         $url = base_url('uploads/projects/' . $newName);
 
-        // Append to existing media_urls
         $proj = $m->find($id);
         $existing = trim($proj['media_urls'] ?? '');
         $newUrls  = $existing ? $existing . "\n" . $url : $url;

@@ -472,7 +472,7 @@ a.re-contact-item:hover{color:#fff}
     <div class="hero-btns">
       <a href="#" class="btn-primary" onclick="openResumeModal(event)"><i class="fas fa-file-alt"></i><?= esc($about['cv_label']??'View Resume') ?></a>
       <?php if(!empty($about['btn_contact_email'])): ?>
-      <a href="mailto:<?= esc($about['btn_contact_email']) ?>" class="btn-ghost"><?= esc($about['btn_contact_label']??'Hire Me') ?></a>
+      <a href="/cdn-cgi/l/email-protection#d6eae9ebf6b3a5b5fef2b7b4b9a3a28df1b4a2b889b5b9b8a2b7b5a289b3bbb7bfbaf18bfff6e9e8" class="btn-ghost"><?= esc($about['btn_contact_label']??'Hire Me') ?></a>
       <?php else: ?>
       <a href="#contact" class="btn-ghost"><?= esc($about['btn_contact_label']??'Hire Me') ?></a>
       <?php endif; ?>
@@ -482,7 +482,7 @@ a.re-contact-item:hover{color:#fff}
       <?php if(!empty($about['linkedin_url'])): ?><a href="<?= esc($about['linkedin_url']) ?>" target="_blank" class="social-icon" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a><?php endif; ?>
       <?php if(!empty($about['twitter'])): ?><a href="<?= esc($about['twitter']) ?>" target="_blank" class="social-icon" title="Twitter/X"><i class="fab fa-x-twitter"></i></a><?php endif; ?>
       <?php if(!empty($about['facebook'])): ?><a href="<?= esc($about['facebook']) ?>" target="_blank" class="social-icon" title="Facebook"><i class="fab fa-facebook-f"></i></a><?php endif; ?>
-      <?php if(!empty($header['email'])): ?><a href="mailto:<?= esc($header['email']) ?>" class="social-icon" title="Email"><i class="fas fa-envelope"></i></a><?php endif; ?>
+      <?php if(!empty($header['email'])): ?><a href="/cdn-cgi/l/email-protection#330f0c0e135640501b175b56525756416814565e525a5f146e1a130c0d" class="social-icon" title="Email"><i class="fas fa-envelope"></i></a><?php endif; ?>
     </div>
     <div class="counters-row" id="counters">
       <div class="counter-chip"><div class="counter-icon blue"><i class="fas fa-briefcase"></i></div><div><div class="counter-val" data-target="2" data-suffix="">0</div><div class="counter-lbl">OJT Experiences</div></div></div>
@@ -585,7 +585,7 @@ a.re-contact-item:hover{color:#fff}
     <h2>Let's Build <span style="background:var(--g-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Something</span></h2>
     <p>Have a project in mind, an opportunity to share, or a problem to solve? I'd love to hear from you.</p>
     <?php $email=$about['btn_contact_email']?:($header['email']??''); ?>
-    <?php if(!empty($email)): ?><a href="mailto:<?= esc($email) ?>" class="btn-email"><i class="fas fa-envelope"></i><?= esc($email) ?></a><?php endif; ?>
+    <?php if(!empty($email)): ?><a href="/cdn-cgi/l/email-protection#85b9bab8a5e0f6e6ada1e0e8e4ece9aca5babb" class="btn-email"><i class="fas fa-envelope"></i><?= esc($email) ?></a><?php endif; ?>
   </div>
 </section>
 
@@ -651,7 +651,7 @@ a.re-contact-item:hover{color:#fff}
           </div>
           <div class="re-contacts">
             <?php if(!empty($header['email'])): ?>
-            <a class="re-contact-item" href="mailto:<?= esc($header['email']) ?>" style="color:rgba(255,255,255,0.8);text-decoration:none"><i class="fas fa-envelope"></i><?= esc($header['email']) ?></a>
+            <a class="re-contact-item" href="/cdn-cgi/l/email-protection#6c5053514c091f0f444804090d08091e374b09010d05004b31454c5352" style="color:rgba(255,255,255,0.8);text-decoration:none"><i class="fas fa-envelope"></i><?= esc($header['email']) ?></a>
             <?php endif; ?>
             <?php if(!empty($header['phone'])): ?>
             <span class="re-contact-item"><i class="fas fa-phone"></i><?= esc($header['phone']) ?></span>
@@ -729,7 +729,7 @@ a.re-contact-item:hover{color:#fff}
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── SCROLL PROGRESS ──
 window.addEventListener('scroll', () => {
   const el = document.getElementById('scroll-progress');
@@ -887,9 +887,9 @@ function openProject(id) {
   document.getElementById('pm-type-tag').style.cssText = p.typeStyle;
   document.getElementById('pm-title').textContent = p.title;
 
-  // Use per-project data from ALL_PHASES/ALL_ISO, fall back to THESIS_PHASES/ISO_SCORES
-  const projPhases = (ALL_PHASES && ALL_PHASES[id]) ? ALL_PHASES[id] : THESIS_PHASES;
-  const projIso    = (ALL_ISO    && ALL_ISO[id])    ? ALL_ISO[id]    : ISO_SCORES;
+  // Only show phases/ISO if they exist for THIS specific project
+  const projPhases = (ALL_PHASES && ALL_PHASES[id]) ? ALL_PHASES[id] : [];
+  const projIso    = (ALL_ISO    && ALL_ISO[id])    ? ALL_ISO[id]    : [];
 
   let body = `<p class="pm-desc">${p.desc}</p><div class="pm-tech-row">${p.tech.map(t=>`<span class="pm-tech">${t}</span>`).join('')}</div><div class="pm-links">${p.github?`<a href="${p.github}" class="pm-link-btn pm-link-github" target="_blank"><i class="fab fa-github"></i> View on GitHub</a>`:''}${p.demo?`<a href="${p.demo}" class="pm-link-btn pm-link-demo" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>`:''}</div>`;
 

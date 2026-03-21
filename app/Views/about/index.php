@@ -322,7 +322,26 @@ a.re-contact-item:hover{color:#fff}
   body{background:#fff !important;margin:0 !important;padding:0 !important;overflow:visible !important}
   .modal-overlay.open{display:block !important;position:absolute !important;inset:0 !important;background:#fff !important;padding:0 !important;overflow:visible !important;opacity:1 !important;z-index:9999 !important}
   .modal-box{max-width:100% !important;width:100% !important;border-radius:0 !important;box-shadow:none !important;animation:none !important}
-  .re-body{column-count:2 !important;display:block !important;background:linear-gradient(to right,#ffffff 50%,#f9fafb 50%) !important;padding:0 !important;border-radius:0 !important}
+  .re-body{
+  display:grid !important;
+  grid-template-columns:1fr 0.65fr !important;
+  column-count:unset !important;
+  background:none !important;
+  padding:0 !important;
+  border-radius:0 !important;
+  column-rule:none !important;
+}
+.re-col-l{
+  display:block !important;
+  border-right:2px solid #f0f2f4 !important;
+  background:#fff !important;
+  padding:0 !important;
+}
+.re-col-r{
+  display:block !important;
+  background:#f9fafb !important;
+  padding:0 !important;
+}
   .re-col-l,.re-col-r{display:contents !important}
   .re-section{break-inside:avoid !important;padding:12px 16px 0 !important}
   .re-header{background:#2c3e50 !important;color:#fff !important}

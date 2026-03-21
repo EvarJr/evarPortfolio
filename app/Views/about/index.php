@@ -412,13 +412,18 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
 .re-job-meta{display:block;font-size:11px;color:#3b82f6;font-style:italic;margin:1px 0 4px}
 .re-ul{padding-left:14px;margin-top:3px;margin-bottom:0}
 .re-ul li{font-size:12px;color:#555;margin-bottom:3px;line-height:1.5}
-.re-edu{margin-bottom:12px;break-inside:avoid;padding-left:0}
-.re-edu-deg{font-weight:700;font-size:13px}
-.re-edu-sch{font-size:11.5px;color:#3b82f6;margin:1px 0}
-.re-edu-dt{font-size:11px;color:#888;margin-bottom:4px}
-.re-cert{margin-bottom:10px;break-inside:avoid;padding-left:0}
-.re-cert-name{font-weight:600;font-size:12px;line-height:1.4}
-.re-cert-yr{font-size:11px;color:#3b82f6;margin-top:2px}
+
+/* ══ FIX: Education & Cert alignment — match Work History ══ */
+.re-edu{margin-bottom:12px;break-inside:avoid;padding:0;margin-left:0}
+.re-edu-deg{display:block;font-weight:700;font-size:13px}
+.re-edu-sch{display:block;font-size:11px;color:#3b82f6;font-style:italic;margin:1px 0 1px}
+.re-edu-dt{display:block;font-size:11px;color:#888;margin-bottom:4px}
+.re-edu .re-ul{padding-left:14px}
+
+.re-cert{margin-bottom:10px;break-inside:avoid;padding:0;margin-left:0}
+.re-cert-name{display:block;font-weight:600;font-size:12px;line-height:1.4}
+.re-cert-yr{display:block;font-size:11px;color:#3b82f6;margin-top:2px}
+
 .re-lang-list{display:inline-grid;grid-template-columns:max-content auto;align-items:center;gap:8px 20px;width:100%}
 .re-lang-item{display:contents}
 .re-lang-name{white-space:nowrap}
@@ -470,7 +475,6 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
   padding:24px;
   opacity:0;pointer-events:none;
   transition:opacity 0.3s;
-  /* Frosted glass backdrop */
   background:rgba(2,4,18,0.7);
   backdrop-filter:blur(16px) saturate(160%);
 }
@@ -497,14 +501,12 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
 .proj-modal-overlay.open .proj-modal{
   transform:translateY(0) scale(1);
 }
-/* Cloud glow rings */
 .proj-modal::before{
   content:'';position:absolute;
   inset:-1px;border-radius:25px;
   background:linear-gradient(135deg,rgba(99,102,241,0.3) 0%,transparent 40%,transparent 60%,rgba(6,182,212,0.2) 100%);
   z-index:-1;pointer-events:none;
 }
-/* Floating particle dots */
 .proj-modal::after{
   content:'';position:absolute;
   top:-40px;left:-40px;right:-40px;bottom:-40px;
@@ -585,7 +587,6 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
   color:var(--text);margin-bottom:14px;letter-spacing:-0.2px;
 }
 
-/* Thesis-specific: accordion inside modal */
 .pm-accordion{display:flex;flex-direction:column;gap:8px;margin-bottom:24px}
 .pm-phase{
   background:rgba(255,255,255,0.02);
@@ -621,7 +622,6 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
 .pm-phase-content ul{padding-left:14px}
 .pm-phase-content li{margin-bottom:4px}
 
-/* ISO scores inside modal */
 .pm-iso-grid{
   display:grid;
   grid-template-columns:repeat(5,1fr);
@@ -651,10 +651,8 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
   font-weight:700;color:var(--text);margin-top:6px;
 }
 
-/* Click cursor on proj cards */
 .proj-card{cursor:pointer}
 .proj-card:hover .proj-thumb-icon{transform:scale(1.12);transition:transform 0.3s}
-
 
 /* ════ PROJECT FILTER ANIMATION ════ */
 .proj-card {
@@ -673,7 +671,7 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
   transform: scale(0.92) translateY(8px);
 }
 
-/* ════ HERO SWIRL — Animated background ════ */
+/* ════ HERO SWIRL ════ */
 .hero-swirl{position:absolute;top:-10%;right:-4%;width:52%;height:120%;pointer-events:none;z-index:1;opacity:0.12;overflow:hidden}
 .hero-swirl svg{width:100%;height:100%}
 .hero-swirl-2{position:absolute;top:15%;right:10%;width:32%;height:65%;pointer-events:none;z-index:1;opacity:0.06;overflow:hidden}
@@ -785,7 +783,6 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
     </h1>
     <div class="hero-pill"><i class="fas fa-code" style="font-size:10px"></i><?= esc($about['tagline']??'Full-Stack Web Developer') ?></div>
 
-    <!-- CREDENTIAL BADGES -->
     <div class="cred-row">
       <span class="cred-badge"><i class="fas fa-check-circle"></i> Civil Service Professional Eligible</span>
       <span class="cred-badge dost"><i class="fas fa-award"></i> DOST-JLSS Scholar</span>
@@ -813,7 +810,6 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
       <?php if(!empty($header['email'])): ?><a href="mailto:<?= esc($header['email']) ?>" class="social-icon" title="Email"><i class="fas fa-envelope"></i></a><?php endif; ?>
     </div>
 
-    <!-- ANIMATED COUNTERS -->
     <div class="counters-row" id="counters">
       <div class="counter-chip">
         <div class="counter-icon blue"><i class="fas fa-briefcase"></i></div>
@@ -866,7 +862,6 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
       <div class="section-eyebrow ey-cyan">Portfolio</div>
       <h2 class="section-title">Featured <span>Work</span></h2>
     </div>
-    <!-- FILTER TABS -->
     <div class="proj-filters">
       <button class="proj-filter active" onclick="filterProjects('all',this)">All</button>
       <button class="proj-filter" onclick="filterProjects('thesis',this)">Thesis</button>
@@ -877,8 +872,6 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
   </div>
 
   <div class="proj-grid" id="proj-grid">
-
-    <!-- THESIS — Featured -->
     <div class="proj-card featured anim d1" data-category="thesis" data-project="thesis" onclick="openProject(this.dataset.project)">
       <div class="proj-thumb proj-thumb-thesis">
         <i class="fas fa-microchip proj-thumb-icon thesis"></i>
@@ -901,7 +894,6 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
       </div>
     </div>
 
-    <!-- DOST OJT -->
     <div class="proj-card anim d2" data-category="ojt" data-project="dost" onclick="openProject(this.dataset.project)">
       <div class="proj-thumb proj-thumb-ot">
         <i class="fas fa-file-pdf proj-thumb-icon ot"></i>
@@ -922,7 +914,6 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
       </div>
     </div>
 
-    <!-- LGU Document Tracker -->
     <div class="proj-card anim d3" data-category="lgu" data-project="lgu" onclick="openProject(this.dataset.project)">
       <div class="proj-thumb proj-thumb-lgu">
         <i class="fas fa-qrcode proj-thumb-icon lgu"></i>
@@ -942,7 +933,6 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
       </div>
     </div>
 
-    <!-- Attendance Tracker -->
     <div class="proj-card anim d4" data-category="ojt lgu" data-project="attendance" onclick="openProject(this.dataset.project)">
       <div class="proj-thumb proj-thumb-ot" style="background:linear-gradient(135deg,rgba(251,191,36,0.1),rgba(249,115,22,0.07))">
         <i class="fas fa-calendar-check proj-thumb-icon" style="color:#fde68a;opacity:0.5"></i>
@@ -961,7 +951,6 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
         <span class="proj-link" style="color:var(--text-3);font-size:11px"><i class="fas fa-arrow-up-right-from-square" style="font-size:9px"></i> Click to explore</span>
       </div>
     </div>
-
   </div>
 </section>
 
@@ -1030,11 +1019,9 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
   </div>
 </footer>
 
-
 <!-- ════════ PROJECT MODALS ════════ -->
 <div class="proj-modal-overlay" id="projModal" onclick="closeProjModalOnOverlay(event)">
   <div class="proj-modal" id="projModalBox">
-
     <div class="pm-header">
       <div class="pm-header-left">
         <div class="pm-type-tag" id="pm-type-tag"></div>
@@ -1042,11 +1029,7 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
       </div>
       <button class="pm-close" onclick="closeProjModal()"><i class="fas fa-times"></i></button>
     </div>
-
-    <div class="pm-body" id="pm-body">
-      <!-- Filled by JS per project -->
-    </div>
-
+    <div class="pm-body" id="pm-body"></div>
   </div>
 </div>
 
@@ -1103,11 +1086,25 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
             <?php if(!empty($education)): ?>
             <div class="re-section"><div class="re-section-title">Education</div>
               <?php foreach($education as $edu): ?>
-              <div class="re-edu"><div class="re-edu-deg"><?= esc($edu['degree']) ?></div><div class="re-edu-sch"><?= esc($edu['school']) ?></div><div class="re-edu-dt"><?= esc($edu['start_month']) ?> <?= esc($edu['start_year']) ?> &ndash; <?= esc($edu['end_month']) ?> <?= esc($edu['end_year']) ?></div><?php if(!empty($edu['bullets'])): ?><ul class="re-ul"><?php foreach($edu['bullets'] as $b): ?><li><?= esc($b['content']) ?></li><?php endforeach; ?></ul><?php endif; ?></div>
+              <div class="re-edu">
+                <div class="re-edu-deg"><?= esc($edu['degree']) ?></div>
+                <div class="re-edu-sch"><?= esc($edu['school']) ?></div>
+                <div class="re-edu-dt"><?= esc($edu['start_month']) ?> <?= esc($edu['start_year']) ?> &ndash; <?= esc($edu['end_month']) ?> <?= esc($edu['end_year']) ?></div>
+                <?php if(!empty($edu['bullets'])): ?><ul class="re-ul"><?php foreach($edu['bullets'] as $b): ?><li><?= esc($b['content']) ?></li><?php endforeach; ?></ul><?php endif; ?>
+              </div>
               <?php endforeach; ?>
             </div>
             <?php endif; ?>
-            <?php if(!empty($certifications)): ?><div class="re-section"><div class="re-section-title">Certifications</div><?php foreach($certifications as $cert): ?><div class="re-cert"><div class="re-cert-name"><?= esc($cert['name']) ?></div><div class="re-cert-yr"><?= esc($cert['year']) ?></div></div><?php endforeach; ?></div><?php endif; ?>
+            <?php if(!empty($certifications)): ?>
+            <div class="re-section"><div class="re-section-title">Certifications</div>
+              <?php foreach($certifications as $cert): ?>
+              <div class="re-cert">
+                <div class="re-cert-name"><?= esc($cert['name']) ?></div>
+                <div class="re-cert-yr"><?= esc($cert['year']) ?></div>
+              </div>
+              <?php endforeach; ?>
+            </div>
+            <?php endif; ?>
           </div>
         </div>
       </div>
@@ -1144,65 +1141,27 @@ function toggleMobileNav(el) {
 function filterProjects(cat, btn) {
   document.querySelectorAll('.proj-filter').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-
   const cards = document.querySelectorAll('.proj-card');
   const toShow = [], toHide = [];
-
   cards.forEach(card => {
     const cats = card.dataset.category || '';
     const visible = cat === 'all' || cats.includes(cat);
     if (visible) toShow.push(card);
     else toHide.push(card);
   });
-
-  // Step 1: fade out cards that need to hide
-  toHide.forEach(card => {
-    card.classList.remove('showing');
-    card.classList.add('hiding');
-  });
-
-  // Step 2: after fade out, hide them and reveal new ones
+  toHide.forEach(card => { card.classList.remove('showing'); card.classList.add('hiding'); });
   setTimeout(() => {
-    toHide.forEach(card => {
-      card.classList.add('hidden');
-      card.classList.remove('hiding');
-    });
-
-    toShow.forEach(card => {
-      card.classList.remove('hidden');
-      card.classList.add('showing');
-      // Force reflow so transition fires
-      card.offsetHeight;
-    });
-
-    // Step 3: animate new cards in with stagger
-    toShow.forEach((card, i) => {
-      setTimeout(() => {
-        card.classList.remove('showing');
-      }, i * 60);
-    });
+    toHide.forEach(card => { card.classList.add('hidden'); card.classList.remove('hiding'); });
+    toShow.forEach(card => { card.classList.remove('hidden'); card.classList.add('showing'); card.offsetHeight; });
+    toShow.forEach((card, i) => { setTimeout(() => { card.classList.remove('showing'); }, i * 60); });
   }, 280);
 }
 
-// ── THESIS ACCORDION ──
-function togglePhase(header) {
-  const phase = header.closest('.thesis-phase');
-  const isOpen = phase.classList.contains('open');
-  document.querySelectorAll('.thesis-phase').forEach(p => p.classList.remove('open'));
-  if(!isOpen) phase.classList.add('open');
-}
-
-// ── INTERSECTION OBSERVER — scroll animations + counters + ISO bars ──
+// ── INTERSECTION OBSERVER ──
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if(!entry.isIntersecting) return;
-
-    // Entrance animations
-    if(entry.target.classList.contains('anim')) {
-      entry.target.style.animationPlayState = 'running';
-    }
-
-    // Counter animation
+    if(entry.target.classList.contains('anim')) { entry.target.style.animationPlayState = 'running'; }
     if(entry.target.id === 'counters') {
       entry.target.querySelectorAll('.counter-val[data-target]').forEach(el => {
         const target = parseInt(el.dataset.target);
@@ -1219,20 +1178,15 @@ const observer = new IntersectionObserver(entries => {
         requestAnimationFrame(step);
       });
     }
-
     observer.unobserve(entry.target);
   });
 }, { threshold: 0.15 });
 
-document.querySelectorAll('.anim').forEach(el => {
-  el.style.animationPlayState = 'paused';
-  observer.observe(el);
-});
+document.querySelectorAll('.anim').forEach(el => { el.style.animationPlayState = 'paused'; observer.observe(el); });
 const countersEl=document.getElementById('counters');
 const isoGridEl=document.getElementById('iso-grid');
 if(countersEl)observer.observe(countersEl);
 if(isoGridEl)observer.observe(isoGridEl);
-
 
 // ════════════════════════════════════════════════
 // PROJECT MODAL
@@ -1281,50 +1235,11 @@ const PROJECTS = {
 };
 
 const THESIS_PHASES = [
-  {
-    num:'01', title:'Planning & Requirement Analysis',
-    content:`<ul>
-      <li>Analyzed requirements from water utility providers and defined system scope</li>
-      <li>Designed Data Flow Diagrams to visualize information movement through the platform</li>
-      <li>Defined IoT sensor requirements — flow rate, pressure sensors, solenoid valve status</li>
-      <li>Aligned with SDG 6 — clean water and water use efficiency through predictive maintenance</li>
-    </ul>`
-  },
-  {
-    num:'02', title:'Hardware & IoT Design',
-    content:`<ul>
-      <li>Designed IoT pipeline prototype with ESP32 microcontroller managing flow and pressure sensors</li>
-      <li>Implemented SIMON block cipher for sensor data encryption and security</li>
-      <li>Built simulated household pipeline connections for testing and data acquisition</li>
-      <li>Configured real-time data transmission pipeline from sensors to web platform</li>
-    </ul>`
-  },
-  {
-    num:'03', title:'ML Model & Self-Updating Framework',
-    content:`<ul>
-      <li>Implemented Random Forest Classifier optimized via Genetic Algorithms in Python + Scikit-learn</li>
-      <li>Human-in-the-loop retraining: admin validates alerts → validated data becomes ground truth → model retrains</li>
-      <li>Integrated Laravel ↔ Python via Symfony Process — web app triggers ML scripts directly</li>
-      <li>Simulation testing using synthetic telemetry data to stress test the model</li>
-    </ul>`
-  },
-  {
-    num:'04', title:'Web Platform Development',
-    content:`<ul>
-      <li>Laravel 11 REST API backend — data ingestion, decryption, preprocessing, prediction endpoints</li>
-      <li>React JS frontend — geo-tagged monitoring dashboard with interactive mapping</li>
-      <li>Administrative modules for system control, household management, and automated reporting</li>
-      <li>Real-time leak alerts, location predictions, and system health score visualization</li>
-    </ul>`
-  },
-  {
-    num:'05', title:'ISO 25010 Evaluation & Testing',
-    content:`<ul>
-      <li>Unit testing on individual code components and integration testing for Laravel ↔ Python pipeline</li>
-      <li>User Acceptance Testing with field technicians on dashboard usability</li>
-      <li>Evaluated against 5 ISO 25010 criteria — Functionality, Reliability, Security, Maintainability, Performance</li>
-    </ul>`
-  }
+  { num:'01', title:'Planning & Requirement Analysis', content:`<ul><li>Analyzed requirements from water utility providers and defined system scope</li><li>Designed Data Flow Diagrams to visualize information movement through the platform</li><li>Defined IoT sensor requirements — flow rate, pressure sensors, solenoid valve status</li><li>Aligned with SDG 6 — clean water and water use efficiency through predictive maintenance</li></ul>` },
+  { num:'02', title:'Hardware & IoT Design', content:`<ul><li>Designed IoT pipeline prototype with ESP32 microcontroller managing flow and pressure sensors</li><li>Implemented SIMON block cipher for sensor data encryption and security</li><li>Built simulated household pipeline connections for testing and data acquisition</li><li>Configured real-time data transmission pipeline from sensors to web platform</li></ul>` },
+  { num:'03', title:'ML Model & Self-Updating Framework', content:`<ul><li>Implemented Random Forest Classifier optimized via Genetic Algorithms in Python + Scikit-learn</li><li>Human-in-the-loop retraining: admin validates alerts → validated data becomes ground truth → model retrains</li><li>Integrated Laravel ↔ Python via Symfony Process — web app triggers ML scripts directly</li><li>Simulation testing using synthetic telemetry data to stress test the model</li></ul>` },
+  { num:'04', title:'Web Platform Development', content:`<ul><li>Laravel 11 REST API backend — data ingestion, decryption, preprocessing, prediction endpoints</li><li>React JS frontend — geo-tagged monitoring dashboard with interactive mapping</li><li>Administrative modules for system control, household management, and automated reporting</li><li>Real-time leak alerts, location predictions, and system health score visualization</li></ul>` },
+  { num:'05', title:'ISO 25010 Evaluation & Testing', content:`<ul><li>Unit testing on individual code components and integration testing for Laravel ↔ Python pipeline</li><li>User Acceptance Testing with field technicians on dashboard usability</li><li>Evaluated against 5 ISO 25010 criteria — Functionality, Reliability, Security, Maintainability, Performance</li></ul>` }
 ];
 
 const ISO_SCORES = [
@@ -1338,11 +1253,9 @@ const ISO_SCORES = [
 function openProject(id) {
   const p = PROJECTS[id];
   if(!p) return;
-
   document.getElementById('pm-type-tag').textContent = p.type;
   document.getElementById('pm-type-tag').style.cssText = p.typeStyle;
   document.getElementById('pm-title').textContent = p.title;
-
   let body = `
     <p class="pm-desc">${p.desc}</p>
     <div class="pm-tech-row">${p.tech.map(t => `<span class="pm-tech">${t}</span>`).join('')}</div>
@@ -1350,7 +1263,6 @@ function openProject(id) {
       ${p.github ? `<a href="${p.github}" class="pm-link-btn pm-link-github" target="_blank"><i class="fab fa-github"></i> View on GitHub</a>` : ''}
       ${p.demo ? `<a href="${p.demo}" class="pm-link-btn pm-link-demo" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>` : ''}
     </div>`;
-
   if(p.extra === 'thesis') {
     body += `
       <div class="pm-divider"></div>
@@ -1379,12 +1291,9 @@ function openProject(id) {
           </div>`).join('')}
       </div>`;
   }
-
   document.getElementById('pm-body').innerHTML = body;
   document.getElementById('projModal').classList.add('open');
   document.body.style.overflow = 'hidden';
-
-  // Animate ISO bars after render
   if(p.extra === 'thesis') {
     setTimeout(() => {
       document.querySelectorAll('.pm-iso-bar-fill[data-w]').forEach((bar,i) => {
@@ -1394,15 +1303,8 @@ function openProject(id) {
   }
 }
 
-function closeProjModal() {
-  document.getElementById('projModal').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function closeProjModalOnOverlay(e) {
-  if(e.target === document.getElementById('projModal')) closeProjModal();
-}
-
+function closeProjModal() { document.getElementById('projModal').classList.remove('open'); document.body.style.overflow = ''; }
+function closeProjModalOnOverlay(e) { if(e.target === document.getElementById('projModal')) closeProjModal(); }
 function togglePmPhase(header) {
   const phase = header.closest('.pm-phase');
   const isOpen = phase.classList.contains('open');
@@ -1410,24 +1312,13 @@ function togglePmPhase(header) {
   if(!isOpen) phase.classList.add('open');
 }
 
-// Close on Escape
-document.addEventListener('keydown', e => {
-  if(e.key === 'Escape') { closeProjModal(); closeResumeModal(); }
-});
+document.addEventListener('keydown', e => { if(e.key === 'Escape') { closeProjModal(); closeResumeModal(); } });
 
-// ════ PROJECT CARD CLICK — Event delegation ════
 document.getElementById('proj-grid').addEventListener('click', function(e) {
-    const card = e.target.closest('.proj-card');
-    if(!card) return;
-    const id = card.dataset.project;
-    if(id) openProject(id);
-});
-
-document.getElementById('proj-grid').addEventListener('click',function(e){
-    const card=e.target.closest('.proj-card');
-    if(!card)return;
-    const id=card.dataset.project;
-    if(id)openProject(id);
+  const card = e.target.closest('.proj-card');
+  if(!card) return;
+  const id = card.dataset.project;
+  if(id) openProject(id);
 });
 
 // ── NAVBAR ACTIVE ON SCROLL ──

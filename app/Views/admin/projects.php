@@ -415,15 +415,11 @@ body.dark .dark-toggle{background:#111827;border-color:#1e2535;color:#fbbf24}
 const BASE = '<?= rtrim(base_url(), '/') ?>';
 
 // ── CSRF TOKEN HELPER ──
-// Reads the CI4 CSRF token from the meta tag or cookie
 function getCsrfToken() {
-  // Try meta tag first (add <meta name="csrf-token" content="<?= csrf_hash() ?>"> to your layout)
-  const meta = document.querySelector('meta[name="csrf-token"]');
-  if (meta) return { name: '<?= csrf_token() ?>', value: meta.content };
-  // Fallback: read from cookie
-  const cookieName = '<?= csrf_cookie_name() ?? 'csrf_cookie_name' ?>';
-  const match = document.cookie.match(new RegExp('(?:^|; )' + cookieName + '=([^;]*)'));
-  return { name: '<?= csrf_token() ?>', value: match ? decodeURIComponent(match[1]) : '' };
+  return {
+    name:  '<?= csrf_token() ?>',
+    value: '<?= csrf_hash() ?>',
+  };
 }
 
 // ── PROJECT DATA ──

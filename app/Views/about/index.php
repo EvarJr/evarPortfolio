@@ -291,8 +291,11 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
 .re-contact-item i{color:#3b82f6;font-size:10px}
 a.re-contact-item{text-decoration:underline;cursor:pointer}
 a.re-contact-item:hover{color:#fff}
-.re-body{column-count:2;column-gap:0;background:linear-gradient(to right,#ffffff 50%,#f9fafb 50%);column-rule:2px solid #f0f2f4;display:block;padding:0 0 28px;border-radius:0 0 20px 20px}
-.re-col-l,.re-col-r{display:contents}
+.re-body{display:grid;grid-template-columns:1fr 0.65fr;background:none;padding:0 0 28px;border-radius:0 0 20px 20px}
+.re-col-l{display:block;background:#fff;border-right:2px solid #f0f2f4}
+.re-col-r{display:block;background:#f9fafb}
+.re-col-l{display:block}
+.re-col-r{display:block}
 .re-section{break-inside:avoid;margin-bottom:16px;padding:16px 20px 0;box-sizing:border-box}
 .re-section-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#2c3e50;padding-bottom:4px;border-bottom:2px solid #3b82f6;margin-bottom:10px}
 .re-summary{font-size:12.5px;color:#555;line-height:1.75}
@@ -322,27 +325,26 @@ a.re-contact-item:hover{color:#fff}
   body{background:#fff !important;margin:0 !important;padding:0 !important;overflow:visible !important}
   .modal-overlay.open{display:block !important;position:absolute !important;inset:0 !important;background:#fff !important;padding:0 !important;overflow:visible !important;opacity:1 !important;z-index:9999 !important}
   .modal-box{max-width:100% !important;width:100% !important;border-radius:0 !important;box-shadow:none !important;animation:none !important}
+
+  /* ── Two-column grid for print ── */
   .re-body{
-  display:grid !important;
-  grid-template-columns:1fr 0.65fr !important;
-  column-count:unset !important;
-  background:none !important;
-  padding:0 !important;
-  border-radius:0 !important;
-  column-rule:none !important;
-}
-.re-col-l{
-  display:block !important;
-  border-right:2px solid #f0f2f4 !important;
-  background:#fff !important;
-  padding:0 !important;
-}
-.re-col-r{
-  display:block !important;
-  background:#f9fafb !important;
-  padding:0 !important;
-}
-  .re-col-l,.re-col-r{display:contents !important}
+    display:grid !important;
+    grid-template-columns:1fr 0.65fr !important;
+    column-count:unset !important;
+    background:none !important;
+    padding:0 !important;
+    border-radius:0 !important;
+  }
+  .re-col-l{
+    display:block !important;
+    border-right:2px solid #f0f2f4 !important;
+    background:#fff !important;
+  }
+  .re-col-r{
+    display:block !important;
+    background:#f9fafb !important;
+  }
+
   .re-section{break-inside:avoid !important;padding:12px 16px 0 !important}
   .re-header{background:#2c3e50 !important;color:#fff !important}
   .re-job,.re-edu,.re-cert{break-inside:avoid !important}

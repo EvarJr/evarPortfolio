@@ -419,8 +419,10 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
 .re-cert{margin-bottom:10px;break-inside:avoid}
 .re-cert-name{font-weight:600;font-size:12px;line-height:1.4}
 .re-cert-yr{font-size:11px;color:#3b82f6;margin-top:2px}
-.re-lang-item{display:grid;grid-template-columns:max-content auto;align-items:center;gap:16px;margin-bottom:7px}
-.re-lang-dots{display:flex;gap:4px}
+.re-lang-list{display:inline-grid;grid-template-columns:max-content auto;align-items:center;gap:8px 20px;width:100%}
+.re-lang-item{display:contents}
+.re-lang-name{white-space:nowrap}
+.re-lang-dots{display:flex;gap:4px;margin-right:30%}
 .re-dot{width:10px;height:10px;border-radius:50%;background:#d1d5db;border:1.5px solid #c4c9d0}
 .re-dot.on{background:#3b82f6;border-color:#2563eb}
 
@@ -1092,8 +1094,9 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
             <?php if(!empty($tech)): ?><div class="re-section"><div class="re-section-title">Stack of Technologies</div><ul class="re-ul"><?php foreach($tech as $t): ?><li><?= esc($t['content']) ?></li><?php endforeach; ?></ul></div><?php endif; ?>
             <?php if(!empty($languages)): ?>
             <div class="re-section"><div class="re-section-title">Languages</div>
+              <div class="re-lang-list">
               <?php foreach($languages as $lang): ?>
-              <div class="re-lang-item"><span><?= esc($lang['language']) ?></span><div class="re-lang-dots"><?php for($i=1;$i<=5;$i++): ?><span class="re-dot <?= ($lang['mastery']/20)>=$i?'on':'' ?>"></span><?php endfor; ?></div></div>
+              <div class="re-lang-item"><span class="re-lang-name"><?= esc($lang['language']) ?></span><div class="re-lang-dots"><?php for($i=1;$i<=5;$i++): ?><span class="re-dot <?= ($lang['mastery']/20)>=$i?'on':'' ?>"></span><?php endfor; ?></div></div>
               <?php endforeach; ?>
             </div>
             <?php endif; ?>

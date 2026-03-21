@@ -26,10 +26,10 @@ class Database extends Config
      */
     public array $default = [
     'DSN'          => '',
-    'hostname'     => 'localhost',
-    'username'     => '',
-    'password'     => '',
-    'database'     => '',
+    'hostname'     => 'mysql.railway.internal',
+    'username'     => 'root',
+    'password'     => 'XKaflYJFyaxkiKXZvwbCWlYZKYUvxruB',
+    'database'     => 'railway',
     'DBDriver'     => 'MySQLi',
     'DBPrefix'     => '',
     'pConnect'     => false,

@@ -431,10 +431,11 @@ const PROJECTS_DATA = {
     description: <?= json_encode($p['description']) ?>,
     category: <?= json_encode($p['category']) ?>,
     icon: <?= json_encode($p['icon']) ?>,
-    tech: <?= $p['tech'] ?: '[]' ?>,
-    github_url: <?= json_encode($p['github_url']) ?>,
-    demo_url: <?= json_encode($p['demo_url']) ?>,
-    is_featured: <?= $p['is_featured'] ?>,
+    tech: <?= json_encode(json_decode($p['tech'] ?: '[]', true) ?: []) ?>,
+    github_url: <?= json_encode($p['github_url'] ?? '') ?>,
+    demo_url: <?= json_encode($p['demo_url'] ?? '') ?>,
+    media_urls: <?= json_encode($p['media_urls'] ?? '') ?>,
+    is_featured: <?= (int)$p['is_featured'] ?>,
   },
   <?php endforeach; ?>
 };
@@ -597,7 +598,7 @@ function buildPanelForm(p) {
       <input type="text" id="pf-youtube" placeholder="https://youtu.be/abc123  (optional YouTube link)" style="margin-top:8px;font-size:12px">
       <input type="hidden" id="pf-media" value="${v('media_urls')}">
     </div>
-  \`;
+  `;
 }
 
 // ── SAVE PROJECT ──

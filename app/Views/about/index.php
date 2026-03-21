@@ -1395,6 +1395,24 @@ function openProject(id) {
   }
 }
 
+
+const THESIS_PHASES = <?php
+  $thesisPhaseJs = [];
+  foreach(($thesisPhases ?? []) as $ph) {
+      $thesisPhaseJs[] = ['num'=>$ph['num'],'title'=>$ph['title'],'content'=>$ph['content']];
+  }
+  echo json_encode($thesisPhaseJs);
+?>;
+
+const ISO_SCORES = <?php
+  $isoJs = [];
+  foreach(($isoScores ?? []) as $s) {
+      $isoJs[] = ['label'=>$s['label'],'score'=>(int)$s['score']];
+  }
+  echo json_encode($isoJs);
+?>;
+
+
 function closeProjModal() {
   document.getElementById('projModal').classList.remove('open');
   document.body.style.overflow = '';
@@ -1439,7 +1457,7 @@ window.addEventListener('scroll', () => {
     const el = document.getElementById(id);
     if(!el) return;
     const link = document.querySelector(`.nav-link[href="#${id}"]`);
-    if(!link
+    if(!link) return;
     const link = document.querySelector(`.nav-link[href="#${id}"]`);
     if(!link) return;
     if(el.offsetTop <= y && el.offsetTop + el.offsetHeight > y) {

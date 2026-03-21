@@ -116,4 +116,7 @@ $routes->post('api/thesis/phase/delete/(:num)',    'Api\ThesisContentController:
 $routes->post('api/thesis/phase/reorder',          'Api\ThesisContentController::reorderPhases', ['filter'=>'auth']);
 $routes->post('api/thesis/iso/update',             'Api\ThesisContentController::updateIso',     ['filter'=>'auth']);
 
+$routes->get('uploads/projects/(:any)',          'ProjectMediaController::serve/$1');
+$routes->post('api/project/upload-media/(:num)', 'Api\ProjectController::uploadMedia/$1', ['filter'=>'auth']);
+$routes->post('api/project/delete-media/(:num)', 'Api\ProjectController::deleteMedia/$1', ['filter'=>'auth']);
 

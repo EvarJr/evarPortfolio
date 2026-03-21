@@ -490,6 +490,14 @@ function openAddPanel() {
   document.getElementById('editPanel').classList.add('open');
   document.body.style.overflow = 'hidden';
   setTimeout(() => initIconPicker('fas fa-code'), 100);
+  setTimeout(() => {
+    const mediaHidden = document.getElementById('pf-media');
+    if (mediaHidden && mediaHidden.value) renderMediaPreviews(mediaHidden.value);
+    // Pre-fill youtube field if first url is YT
+    const urls = mediaHidden?.value.split(/[\n,]+/).map(u=>u.trim()).filter(Boolean) || [];
+    const yt = urls.find(u => u.includes('youtube') || u.includes('youtu.be'));
+    if (yt) { const ytEl = document.getElementById('pf-youtube'); if(ytEl) ytEl.value = yt; }
+  }, 150);
 }
 
 function openEditPanel(id) {
@@ -566,7 +574,30 @@ function buildPanelForm(p) {
         <input type="url" id="pf-demo" value="${v('demo_url')}" placeholder="https://your-demo.com">
       </div>
     </div>
-  `;
+
+    <div class="ep-divider"></div>
+    <div class="fg">
+      <label><i class="fas fa-images" style="color:var(--accent)"></i> Project Media
+        <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);font-size:10.5px"> — card flips on hover to show these</span>
+      </label>
+
+      <!-- Uploaded files preview -->
+      <div id="media-preview-list" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px"></div>
+
+      <!-- Upload button -->
+      <label style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(59,130,246,0.06);border:1.5px dashed var(--accent);border-radius:9px;cursor:pointer;font-size:13px;color:var(--accent);font-weight:500;transition:background 0.2s" id="media-upload-label">
+        <i class="fas fa-upload"></i> Upload Photo or Video
+        <input type="file" id="media-file-input" accept="image/*,video/mp4,video/webm" multiple style="display:none" onchange="handleMediaUpload(this)">
+      </label>
+      <div style="font-size:11px;color:var(--muted);margin-top:6px;line-height:1.6">
+        <i class="fas fa-circle-info" style="color:var(--accent)"></i>
+        JPG, PNG, GIF, WEBP, MP4, WEBM · Max 10MB each · Multiple files allowed<br>
+        You can also paste a <strong>YouTube link</strong> below:
+      </div>
+      <input type="text" id="pf-youtube" placeholder="https://youtu.be/abc123  (optional YouTube link)" style="margin-top:8px;font-size:12px">
+      <input type="hidden" id="pf-media" value="${v('media_urls')}">
+    </div>
+  \`;
 }
 
 // ── SAVE PROJECT ──
@@ -578,6 +609,16 @@ async function saveProject() {
   const icon     = document.getElementById('pf-icon').value;
   const github   = document.getElementById('pf-github').value.trim();
   const demo     = document.getElementById('pf-demo').value.trim();
+  // Merge any pending YouTube link into media
+  const ytEl = document.getElementById('pf-youtube');
+  if (ytEl && ytEl.value.trim()) {
+    const hiddenMedia = document.getElementById('pf-media');
+    const ytUrl = ytEl.value.trim();
+    const existing = (hiddenMedia?.value || '').split(/[\n,]+/).map(u=>u.trim()).filter(Boolean);
+    if (!existing.includes(ytUrl)) existing.push(ytUrl);
+    if (hiddenMedia) hiddenMedia.value = existing.join('\n');
+    ytEl.value = '';
+  }
   const media    = document.getElementById('pf-media')?.value.trim() || '';
   const techRaw  = document.getElementById('pf-tech').value;
   let tech = [];
@@ -594,6 +635,85 @@ async function saveProject() {
     closePanel();
     setTimeout(() => location.reload(), 800);
   } else toast(r.message || 'Error saving.', 'err');
+}
+
+// ── MEDIA UPLOAD ──────────────────────────────────────
+function renderMediaPreviews(mediaUrls) {
+  const list = document.getElementById('media-preview-list');
+  if (!list) return;
+  const urls = mediaUrls.split(/[
+,]+/).map(u => u.trim()).filter(Boolean);
+  if (!urls.length) { list.innerHTML = ''; return; }
+  list.innerHTML = urls.map(url => {
+    const isYt = url.includes('youtube') || url.includes('youtu.be');
+    const isVid = url.match(/\.(mp4|webm)$/i) || isYt;
+    const thumb = isYt
+      ? `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#0f1117;color:#f87171"><i class="fab fa-youtube" style="font-size:20px"></i></div>`
+      : isVid
+        ? `<video src="${url}" style="width:100%;height:100%;object-fit:cover" muted></video>`
+        : `<img src="${url}" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.parentElement.style.display='none'">`;
+    return `<div style="position:relative;width:80px;height:80px;border-radius:8px;overflow:hidden;border:1.5px solid var(--border);flex-shrink:0">
+      ${thumb}
+      <button onclick="deleteMediaItem('${url.replace(/'/g, "\\'")}')"
+        style="position:absolute;top:3px;right:3px;width:20px;height:20px;border-radius:50%;background:rgba(239,68,68,0.9);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>`;
+  }).join('');
+}
+
+function syncMediaFromYoutube() {
+  if (!currentEditId) return;
+  const ytInput = document.getElementById('pf-youtube');
+  const hiddenMedia = document.getElementById('pf-media');
+  if (!ytInput || !hiddenMedia) return;
+  const ytUrl = ytInput.value.trim();
+  if (!ytUrl) return;
+  const existing = hiddenMedia.value.split(/[\n,]+/).map(u => u.trim()).filter(Boolean);
+  if (!existing.includes(ytUrl)) {
+    existing.push(ytUrl);
+    hiddenMedia.value = existing.join('\n');
+    ytInput.value = '';
+    renderMediaPreviews(hiddenMedia.value);
+    toast('YouTube link added!');
+  }
+}
+
+async function handleMediaUpload(input) {
+  if (!currentEditId) { toast('Save the project first, then add media.', 'err'); return; }
+  const files = Array.from(input.files);
+  if (!files.length) return;
+  const label = document.getElementById('media-upload-label');
+  label.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
+
+  for (const file of files) {
+    const fd = new FormData();
+    fd.append('media', file);
+    try {
+      const r = await fetch(BASE + '/api/project/upload-media/' + currentEditId, { method: 'POST', body: fd });
+      const data = await r.json();
+      if (data.success) {
+        document.getElementById('pf-media').value = data.media_urls;
+        renderMediaPreviews(data.media_urls);
+        toast('Uploaded: ' + file.name);
+      } else {
+        toast(data.message || 'Upload failed', 'err');
+      }
+    } catch(e) { toast('Upload error: ' + e.message, 'err'); }
+  }
+
+  label.innerHTML = '<i class="fas fa-upload"></i> Upload Photo or Video';
+  input.value = '';
+}
+
+async function deleteMediaItem(url) {
+  if (!currentEditId) return;
+  const r = await api('/api/project/delete-media/' + currentEditId, { url });
+  if (r.success) {
+    document.getElementById('pf-media').value = r.media_urls;
+    renderMediaPreviews(r.media_urls);
+    toast('Media removed.');
+  } else toast(r.message || 'Error', 'err');
 }
 
 // ── TOGGLE FEATURED ──

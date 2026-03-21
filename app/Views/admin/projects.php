@@ -642,8 +642,7 @@ async function saveProject() {
 function renderMediaPreviews(mediaUrls) {
   const list = document.getElementById('media-preview-list');
   if (!list) return;
-  const urls = mediaUrls.split(/[
-,]+/).map(u => u.trim()).filter(Boolean);
+  const urls = mediaUrls.split(/[\n,]+/).map(u => u.trim()).filter(Boolean);
   if (!urls.length) { list.innerHTML = ''; return; }
   list.innerHTML = urls.map(url => {
     const isYt = url.includes('youtube') || url.includes('youtu.be');

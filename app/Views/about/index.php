@@ -189,9 +189,12 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
 .footer-admin-link{font-size:11px;color:rgba(255,255,255,0.13);text-decoration:none;transition:color 0.2s;font-family:var(--font-m)}
 .footer-admin-link:hover{color:var(--blue-v)}
 .footer-divider{color:var(--border);font-size:11px}
+
+/* ════ RESUME MODAL ════ */
 .modal-overlay{position:fixed;inset:0;background:rgba(2,4,12,0.9);backdrop-filter:blur(8px);z-index:800;display:flex;align-items:flex-start;justify-content:center;padding:24px;overflow-y:auto;opacity:0;pointer-events:none;transition:opacity 0.3s}
 .modal-overlay.open{opacity:1;pointer-events:all}
-.modal-box{background:#fff;border-radius:20px;max-width:980px;width:100%;position:relative;animation:modalIn 0.35s cubic-bezier(0.16,1,0.3,1) both;box-shadow:0 40px 120px rgba(0,0,0,0.7)}
+/* rounded on all four corners, overflow hidden so content respects the radius */
+.modal-box{background:#fff;border-radius:20px;max-width:980px;width:100%;position:relative;animation:modalIn 0.35s cubic-bezier(0.16,1,0.3,1) both;box-shadow:0 40px 120px rgba(0,0,0,0.7);overflow:hidden}
 @keyframes modalIn{from{transform:translateY(40px) scale(0.97);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
 .modal-bar{display:flex;align-items:center;justify-content:space-between;padding:15px 22px;border-bottom:1px solid #e2e8f0;background:#fafafa;border-radius:20px 20px 0 0}
 .modal-bar h3{font-family:'Cabinet Grotesk',sans-serif;font-size:14.5px;font-weight:700;color:#0f172a}
@@ -199,7 +202,8 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
 .btn-print{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Cabinet Grotesk',sans-serif}
 .btn-close-modal{width:34px;height:34px;border-radius:8px;border:1px solid #e2e8f0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;color:#64748b;transition:all 0.15s}
 .btn-close-modal:hover{background:#fee2e2;border-color:#fca5a5;color:#ef4444}
-.modal-body{padding:0}
+/* bottom padding + rounded bottom corners */
+.modal-body{padding:0 0 28px;border-radius:0 0 20px 20px;overflow:hidden}
 .resume-embed{font-family:'DM Sans',sans-serif;color:#2c3e50;font-size:13px;line-height:1.55}
 .re-header{background:#2c3e50;color:#fff;padding:22px 28px;display:flex;justify-content:space-between;align-items:center;gap:20px}
 .re-name{font-family:'Sora',sans-serif;font-size:24px;font-weight:700;line-height:1.1}
@@ -207,7 +211,8 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
 .re-contacts{display:flex;flex-direction:column;gap:4px;align-items:flex-end}
 .re-contact-item{display:flex;align-items:center;gap:6px;font-size:11px;color:rgba(255,255,255,0.8)}
 .re-contact-item i{color:#3b82f6;font-size:10px}
-.re-body{column-count:2;column-gap:0;background:linear-gradient(to right,#ffffff 50%,#f9fafb 50%);column-rule:2px solid #f0f2f4;display:block;padding:0}
+/* bottom padding + rounded bottom corners on the two-column body */
+.re-body{column-count:2;column-gap:0;background:linear-gradient(to right,#ffffff 50%,#f9fafb 50%);column-rule:2px solid #f0f2f4;display:block;padding:0 0 28px;border-radius:0 0 20px 20px}
 .re-col-l,.re-col-r{display:contents}
 .re-section{break-inside:avoid;margin-bottom:16px;padding:16px 20px 0}
 .re-section-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#2c3e50;padding-bottom:4px;border-bottom:2px solid #3b82f6;margin-bottom:10px}
@@ -227,7 +232,7 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
 .re-cert-name{display:block;font-weight:600;font-size:12px;line-height:1.4}
 .re-cert-yr{display:block;font-size:11px;color:#3b82f6;margin-top:2px}
 
-/* ── Language dots — centered next to name ── */
+/* ── Language dots ── */
 .re-lang-item{display:flex;align-items:center;margin-bottom:7px}
 .re-lang-name{flex:0 0 auto;min-width:55px;max-width:90px;font-size:12px;color:#555}
 .re-lang-dots{display:flex;gap:4px;margin-left:14px;margin-right:28px}
@@ -241,7 +246,7 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
   body{background:#fff !important;margin:0 !important;padding:0 !important;overflow:visible !important}
   .modal-overlay.open{display:block !important;position:absolute !important;inset:0 !important;background:#fff !important;padding:0 !important;overflow:visible !important;opacity:1 !important;z-index:9999 !important}
   .modal-box{max-width:100% !important;width:100% !important;border-radius:0 !important;box-shadow:none !important;animation:none !important}
-  .re-body{column-count:2 !important;display:block !important;background:linear-gradient(to right,#ffffff 50%,#f9fafb 50%) !important}
+  .re-body{column-count:2 !important;display:block !important;background:linear-gradient(to right,#ffffff 50%,#f9fafb 50%) !important;padding:0 !important;border-radius:0 !important}
   .re-col-l,.re-col-r{display:contents !important}
   .re-section{break-inside:avoid !important;padding:12px 16px 0 !important}
   .re-header{background:#2c3e50 !important;color:#fff !important}
@@ -541,9 +546,7 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
     <h2>Let's Build <span style="background:var(--g-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Something</span></h2>
     <p>Have a project in mind, an opportunity to share, or a problem to solve? I'd love to hear from you.</p>
     <?php $email=$about['btn_contact_email']?:($header['email']??''); ?>
-    <?php if(!empty($email)): ?>
-    <a href="mailto:<?= esc($email) ?>" class="btn-email"><i class="fas fa-envelope"></i><?= esc($email) ?></a>
-    <?php endif; ?>
+    <?php if(!empty($email)): ?><a href="mailto:<?= esc($email) ?>" class="btn-email"><i class="fas fa-envelope"></i><?= esc($email) ?></a><?php endif; ?>
   </div>
 </section>
 
@@ -622,9 +625,7 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
               <div class="re-lang-item">
                 <span class="re-lang-name"><?= esc($lang['language']) ?></span>
                 <div class="re-lang-dots">
-                  <?php for($i=1;$i<=5;$i++): ?>
-                  <span class="re-dot <?= ($lang['mastery']/20)>=$i?'on':'' ?>"></span>
-                  <?php endfor; ?>
+                  <?php for($i=1;$i<=5;$i++): ?><span class="re-dot <?= ($lang['mastery']/20)>=$i?'on':'' ?>"></span><?php endfor; ?>
                 </div>
               </div>
               <?php endforeach; ?>

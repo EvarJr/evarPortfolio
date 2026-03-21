@@ -386,15 +386,15 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
    ════════════════════════════════════════════ */
 .modal-overlay{position:fixed;inset:0;background:rgba(2,4,12,0.9);backdrop-filter:blur(8px);z-index:800;display:flex;align-items:flex-start;justify-content:center;padding:24px;overflow-y:auto;opacity:0;pointer-events:none;transition:opacity 0.3s}
 .modal-overlay.open{opacity:1;pointer-events:all}
-.modal-box{background:#fff;border-radius:20px;max-width:980px;width:100%;position:relative;animation:modalIn 0.35s cubic-bezier(0.16,1,0.3,1) both;box-shadow:0 40px 120px rgba(0,0,0,0.7)}
+.modal-box{background:#fff;border-radius:20px;max-width:980px;width:100%;position:relative;animation:modalIn 0.35s cubic-bezier(0.16,1,0.3,1) both;box-shadow:0 40px 120px rgba(0,0,0,0.7);max-height:92vh;overflow-y:auto;display:flex;flex-direction:column}
 @keyframes modalIn{from{transform:translateY(40px) scale(0.97);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
-.modal-bar{display:flex;align-items:center;justify-content:space-between;padding:15px 22px;border-bottom:1px solid #e2e8f0;background:#fafafa;border-radius:20px 20px 0 0}
+.modal-bar{display:flex;align-items:center;justify-content:space-between;padding:15px 22px;border-bottom:1px solid #e2e8f0;background:#fafafa;border-radius:20px 20px 0 0;position:sticky;top:0;z-index:10;flex-shrink:0}
 .modal-bar h3{font-family:'Cabinet Grotesk',sans-serif;font-size:14.5px;font-weight:700;color:#0f172a}
 .modal-bar-actions{display:flex;gap:9px;align-items:center}
 .btn-print{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Cabinet Grotesk',sans-serif}
 .btn-close-modal{width:34px;height:34px;border-radius:8px;border:1px solid #e2e8f0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;color:#64748b;transition:all 0.15s}
 .btn-close-modal:hover{background:#fee2e2;border-color:#fca5a5;color:#ef4444}
-.modal-body{padding:0}
+.modal-body{padding:0;flex:1;overflow:visible}
 .resume-embed{font-family:'DM Sans',sans-serif;color:#2c3e50;font-size:13px;line-height:1.55}
 .re-header{background:#2c3e50;color:#fff;padding:22px 28px;display:flex;justify-content:space-between;align-items:center;gap:20px}
 .re-name{font-family:'Sora',sans-serif;font-size:24px;font-weight:700;line-height:1.1}
@@ -694,35 +694,6 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
 @keyframes swirlA{0%,100%{transform:rotate(0deg) scale(1)}30%{transform:rotate(9deg) scale(1.05)}70%{transform:rotate(-7deg) scale(0.96)}}
 @keyframes swirlB{0%,100%{transform:rotate(0deg) scale(1)}40%{transform:rotate(-10deg) scale(1.04)}80%{transform:rotate(6deg) scale(0.97)}}
 @media(max-width:768px){.hero-swirl,.hero-swirl-2{display:none}}
-
-/* ════ HERO SWIRL ════ */
-.hero-swirl{position:absolute;top:-10%;right:-4%;width:52%;height:120%;pointer-events:none;z-index:1;opacity:0.12;overflow:hidden}
-.hero-swirl svg{width:100%;height:100%}
-.hero-swirl-2{position:absolute;top:15%;right:10%;width:32%;height:65%;pointer-events:none;z-index:1;opacity:0.06;overflow:hidden}
-.hero-swirl-2 svg{width:100%;height:100%}
-.swirl-path{fill:none;stroke-linecap:round;transform-origin:50% 50%}
-.swirl-path:nth-child(1){animation:swirlA 18s ease-in-out infinite}
-.swirl-path:nth-child(2){animation:swirlA 23s ease-in-out infinite reverse}
-.swirl-path:nth-child(3){animation:swirlB 27s ease-in-out infinite}
-.swirl-path:nth-child(4){animation:swirlB 31s ease-in-out infinite reverse}
-.swirl-path:nth-child(5){animation:swirlA 21s ease-in-out infinite}
-.swirl-path:nth-child(6){animation:swirlB 25s ease-in-out infinite reverse}
-.swirl-path:nth-child(7){animation:swirlA 29s ease-in-out infinite}
-.swirl-path:nth-child(8){animation:swirlB 17s ease-in-out infinite reverse}
-.swirl2-path{fill:none;stroke-linecap:round;transform-origin:50% 50%}
-.swirl2-path:nth-child(1){animation:swirlA 22s ease-in-out infinite reverse}
-.swirl2-path:nth-child(2){animation:swirlB 28s ease-in-out infinite}
-.swirl2-path:nth-child(3){animation:swirlA 19s ease-in-out infinite reverse}
-.swirl2-path:nth-child(4){animation:swirlB 34s ease-in-out infinite}
-.swirl2-path:nth-child(5){animation:swirlA 24s ease-in-out infinite reverse}
-@keyframes swirlA{0%,100%{transform:rotate(0deg) scale(1)}30%{transform:rotate(9deg) scale(1.05)}70%{transform:rotate(-7deg) scale(0.96)}}
-@keyframes swirlB{0%,100%{transform:rotate(0deg) scale(1)}40%{transform:rotate(-10deg) scale(1.04)}80%{transform:rotate(6deg) scale(0.97)}}
-/* ════ PROJECT FILTER ANIMATION ════ */
-.proj-card{transition:opacity 0.35s ease,transform 0.35s cubic-bezier(0.4,0,0.2,1)}
-.proj-card.hiding{opacity:0;transform:scale(0.92) translateY(8px);pointer-events:none}
-.proj-card.hidden{display:none}
-.proj-card.showing{opacity:0;transform:scale(0.92) translateY(8px)}
-@media(max-width:768px){.hero-swirl,.hero-swirl-2{display:none}}
 </style>
 </head>
 <body>
@@ -761,28 +732,6 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
   <div class="hero-orb hero-orb-1"></div>
   <div class="hero-orb hero-orb-2"></div>
   <div class="hero-orb hero-orb-3"></div>
-
-  <div class="hero-swirl" aria-hidden="true">
-    <svg viewBox="0 0 600 800" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-      <path class="swirl-path" d="M300,400 C160,180 500,80 440,300 C380,520 100,470 160,270 C220,70 540,130 510,360 C480,590 120,570 140,380 C160,190 560,220 530,450 C500,680 90,650 110,430" stroke="#8b5cf6" stroke-width="30"/>
-      <path class="swirl-path" d="M300,400 C180,210 480,100 428,306 C376,512 118,464 172,272 C226,80 528,140 500,364 C472,588 128,564 146,376 C164,188 548,228 520,452 C492,676 98,648 116,428" stroke="#6366f1" stroke-width="22"/>
-      <path class="swirl-path" d="M300,400 C196,235 464,118 418,312 C372,506 134,458 183,273 C232,88 517,148 490,368 C463,588 136,558 152,372 C168,186 537,234 512,454 C487,674 106,646 122,426" stroke="#3b82f6" stroke-width="16"/>
-      <path class="swirl-path" d="M300,400 C210,255 450,134 408,318 C366,502 148,452 194,274 C240,96 507,155 480,370 C453,585 143,552 158,368 C173,184 527,240 504,456 C481,672 113,644 128,424" stroke="#06b6d4" stroke-width="11"/>
-      <path class="swirl-path" d="M300,400 C222,272 436,149 397,323 C358,497 161,447 204,275 C247,103 498,161 472,373 C446,585 150,547 164,364 C178,181 518,245 496,457 C474,669 119,642 133,422" stroke="#a78bfa" stroke-width="7"/>
-      <path class="swirl-path" d="M300,400 C232,287 424,162 387,327 C350,492 172,442 214,276 C256,110 490,167 464,375 C438,583 156,542 169,361 C182,180 510,249 490,458 C470,667 124,640 138,421" stroke="#c4b5fd" stroke-width="4"/>
-      <path class="swirl-path" d="M300,400 C241,299 413,174 378,330 C343,486 182,437 222,277 C262,117 483,172 457,377 C431,582 161,538 173,358 C185,178 503,253 484,459 C465,665 128,638 142,420" stroke="#7c3aed" stroke-width="2.5"/>
-      <path class="swirl-path" d="M300,400 C249,310 403,184 370,333 C337,482 191,433 230,278 C269,123 476,177 451,379 C426,581 166,534 177,356 C188,178 496,257 479,460 C462,663 132,636 146,419" stroke="#4f46e5" stroke-width="1.5"/>
-    </svg>
-  </div>
-  <div class="hero-swirl-2" aria-hidden="true">
-    <svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-      <path class="swirl2-path" d="M200,250 C110,120 330,60 300,195 C270,330 80,295 112,172 C144,49 360,90 335,228 C310,366 70,340 92,216 C114,92 380,136 355,274" stroke="#06b6d4" stroke-width="24"/>
-      <path class="swirl2-path" d="M200,250 C122,136 315,74 288,200 C261,326 92,298 121,176 C150,54 350,97 326,232 C302,367 78,338 98,215 C118,92 370,142 347,277" stroke="#8b5cf6" stroke-width="16"/>
-      <path class="swirl2-path" d="M200,250 C132,150 302,86 278,204 C254,322 103,300 130,179 C157,58 342,102 318,234 C294,366 85,336 104,214 C123,92 362,147 340,278" stroke="#3b82f6" stroke-width="10"/>
-      <path class="swirl2-path" d="M200,250 C140,161 291,97 268,208 C245,319 112,302 138,182 C164,62 335,107 311,236 C287,365 90,334 109,213 C128,92 355,151 334,279" stroke="#c4b5fd" stroke-width="6"/>
-      <path class="swirl2-path" d="M200,250 C147,171 281,107 259,211 C237,315 120,303 145,184 C170,65 329,111 305,238 C281,365 95,332 113,212 C131,92 348,154 328,280" stroke="#67e8f9" stroke-width="3"/>
-    </svg>
-  </div>
 
   <div class="hero-swirl" aria-hidden="true">
     <svg viewBox="0 0 600 800" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
@@ -927,39 +876,90 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
 
   <div class="proj-grid" id="proj-grid">
 
-    <?php
-    $thumbBg   = ['thesis'=>'proj-thumb-thesis','ojt'=>'proj-thumb-ot','lgu'=>'proj-thumb-lgu','personal'=>'proj-thumb-personal'];
-    $iconColor = ['thesis'=>'thesis','ojt'=>'ot','lgu'=>'lgu','personal'=>'personal'];
-    $tagClass  = ['thesis'=>'tag-thesis','ojt'=>'tag-ot','lgu'=>'tag-lgu','personal'=>'tag-personal'];
-    $tagLabel  = ['thesis'=>'&#9733; Thesis','ojt'=>'OJT','lgu'=>'LGU','personal'=>'Personal'];
-    foreach($projects as $i => $proj):
-        $cat   = $proj['category'] ?? 'personal';
-        $projTech  = json_decode($proj['tech'] ?? '[]', true) ?: [];
-        $delay = 'd'.min($i+1,4);
-    ?>
-    <div class="proj-card <?= $cat==='thesis'?'featured':'' ?> anim <?= $delay ?>"
-         data-category="<?= esc($cat) ?>"
-         data-project="<?= $proj['id'] ?>">
-      <div class="proj-thumb <?= $thumbBg[$cat]??'proj-thumb-personal' ?>">
-        <i class="<?= esc($proj['icon']) ?> proj-thumb-icon <?= $iconColor[$cat]??'personal' ?>"></i>
-        <span class="proj-type-tag <?= $tagClass[$cat]??'tag-personal' ?>"><?= $tagLabel[$cat]??$cat ?></span>
+    <!-- THESIS — Featured -->
+    <div class="proj-card featured anim d1" data-category="thesis" data-project="thesis" onclick="openProject(this.dataset.project)">
+      <div class="proj-thumb proj-thumb-thesis">
+        <i class="fas fa-microchip proj-thumb-icon thesis"></i>
+        <span class="proj-type-tag tag-thesis">★ Thesis</span>
       </div>
       <div class="proj-body">
-        <div class="proj-title"><?= esc($proj['title']) ?></div>
-        <div class="proj-desc"><?= esc($proj['description']) ?></div>
-        <?php if(!empty($projTech)): ?>
+        <div class="proj-title">Self-Updating Predictive Maintenance Platform</div>
+        <div class="proj-desc">Intelligent water leakage detection system integrating IoT sensors, Random Forest ML with Genetic Algorithm optimization, and a human-in-the-loop self-retraining framework. Evaluated against ISO 25010.</div>
         <div class="proj-tech-row">
-          <?php foreach($projTech as $t): ?><span class="proj-tech"><?= esc($t) ?></span><?php endforeach; ?>
+          <span class="proj-tech">Laravel 11</span>
+          <span class="proj-tech">React JS</span>
+          <span class="proj-tech">Python</span>
+          <span class="proj-tech">ESP32</span>
+          <span class="proj-tech">Scikit-learn</span>
+          <span class="proj-tech">MySQL</span>
         </div>
-        <?php endif; ?>
       </div>
       <div class="proj-footer" style="justify-content:flex-end">
-        <span class="proj-link" style="color:var(--text-3);font-size:11px">
-          <i class="fas fa-arrow-up-right-from-square" style="font-size:9px"></i> Click to explore
-        </span>
+        <span class="proj-link" style="color:var(--text-3);font-size:11px"><i class="fas fa-arrow-up-right-from-square" style="font-size:9px"></i> Click to explore</span>
       </div>
     </div>
-    <?php endforeach; ?>
+
+    <!-- DOST OJT -->
+    <div class="proj-card anim d2" data-category="ojt" data-project="dost" onclick="openProject(this.dataset.project)">
+      <div class="proj-thumb proj-thumb-ot">
+        <i class="fas fa-file-pdf proj-thumb-icon ot"></i>
+        <span class="proj-type-tag tag-ot">OJT</span>
+      </div>
+      <div class="proj-body">
+        <div class="proj-title">DOST PDF Report Generator</div>
+        <div class="proj-desc">Optimized automated PDF report generation modules for the DOST Project LODI management system. Improved data accuracy and resolved critical system bugs.</div>
+        <div class="proj-tech-row">
+          <span class="proj-tech">Laravel 11</span>
+          <span class="proj-tech">PHP</span>
+          <span class="proj-tech">MySQL</span>
+          <span class="proj-tech">Git</span>
+        </div>
+      </div>
+      <div class="proj-footer" style="justify-content:flex-end">
+        <span class="proj-link" style="color:var(--text-3);font-size:11px"><i class="fas fa-arrow-up-right-from-square" style="font-size:9px"></i> Click to explore</span>
+      </div>
+    </div>
+
+    <!-- LGU Document Tracker -->
+    <div class="proj-card anim d3" data-category="lgu" data-project="lgu" onclick="openProject(this.dataset.project)">
+      <div class="proj-thumb proj-thumb-lgu">
+        <i class="fas fa-qrcode proj-thumb-icon lgu"></i>
+        <span class="proj-type-tag tag-lgu">LGU</span>
+      </div>
+      <div class="proj-body">
+        <div class="proj-title">Municipal QR Document Tracker</div>
+        <div class="proj-desc">QR-coded document tracking system for the Municipality of Tangalan. Automated record-keeping under ICT and Administrative department supervision.</div>
+        <div class="proj-tech-row">
+          <span class="proj-tech">Google Apps Script</span>
+          <span class="proj-tech">QR Code</span>
+          <span class="proj-tech">Google Sheets</span>
+        </div>
+      </div>
+      <div class="proj-footer" style="justify-content:flex-end">
+        <span class="proj-link" style="color:var(--text-3);font-size:11px"><i class="fas fa-arrow-up-right-from-square" style="font-size:9px"></i> Click to explore</span>
+      </div>
+    </div>
+
+    <!-- Attendance Tracker -->
+    <div class="proj-card anim d4" data-category="ojt lgu" data-project="attendance" onclick="openProject(this.dataset.project)">
+      <div class="proj-thumb proj-thumb-ot" style="background:linear-gradient(135deg,rgba(251,191,36,0.1),rgba(249,115,22,0.07))">
+        <i class="fas fa-calendar-check proj-thumb-icon" style="color:#fde68a;opacity:0.5"></i>
+        <span class="proj-type-tag" style="background:rgba(251,191,36,0.16);color:#fde68a;border:1px solid rgba(251,191,36,0.22)">OJT</span>
+      </div>
+      <div class="proj-body">
+        <div class="proj-title">Automated Attendance Tracker</div>
+        <div class="proj-desc">Data integration system using Google Workspace tools to streamline administrative workflows and automate attendance tracking for government operations.</div>
+        <div class="proj-tech-row">
+          <span class="proj-tech">Google Workspace</span>
+          <span class="proj-tech">Apps Script</span>
+          <span class="proj-tech">Google Forms</span>
+        </div>
+      </div>
+      <div class="proj-footer" style="justify-content:flex-end">
+        <span class="proj-link" style="color:var(--text-3);font-size:11px"><i class="fas fa-arrow-up-right-from-square" style="font-size:9px"></i> Click to explore</span>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -1235,51 +1235,102 @@ if(isoGridEl)observer.observe(isoGridEl);
 // PROJECT MODAL
 // ════════════════════════════════════════════════
 const PROJECTS = {
-  <?php
-  $typeStyles = [
-    'thesis'  =>'background:rgba(139,92,246,0.28);color:#d8b4fe;border:1px solid rgba(139,92,246,0.3)',
-    'ojt'     =>'background:rgba(6,182,212,0.18);color:#67e8f9;border:1px solid rgba(6,182,212,0.25)',
-    'lgu'     =>'background:rgba(16,185,129,0.16);color:#6ee7b7;border:1px solid rgba(16,185,129,0.22)',
-    'personal'=>'background:rgba(251,191,36,0.16);color:#fde68a;border:1px solid rgba(251,191,36,0.22)',
-  ];
-  $typeLabels=['thesis'=>'★ Thesis','ojt'=>'OJT','lgu'=>'LGU','personal'=>'Personal'];
-  foreach($projects as $proj):
-    $cat = $proj['category'] ?? 'personal';
-    $projTech = json_decode($proj['tech'] ?? '[]', true) ?: [];
-  ?>
-  <?= $proj['id'] ?>: {
-    type: <?= json_encode($typeLabels[$cat] ?? $cat) ?>,
-    typeStyle: <?= json_encode($typeStyles[$cat] ?? $typeStyles['personal']) ?>,
-    title: <?= json_encode($proj['title']) ?>,
-    desc: <?= json_encode($proj['description']) ?>,
-    tech: <?= json_encode($projTech) ?>,
-    github: <?= json_encode($proj['github_url'] ?: null) ?>,
-    demo: <?= json_encode($proj['demo_url'] ?: null) ?>,
-    extra: <?= json_encode($cat==='thesis' ? 'thesis' : null) ?>,
+  thesis: {
+    type: '★ Thesis',
+    typeStyle: 'background:rgba(139,92,246,0.28);color:#d8b4fe;border:1px solid rgba(139,92,246,0.3)',
+    title: 'Self-Updating Predictive Maintenance Platform',
+    desc: 'An intelligent web-based platform for water leakage detection that integrates IoT sensors with a self-updating machine learning model. The system uses a human-in-the-loop framework where stakeholder validation serves as ground truth to continuously retrain the Random Forest classifier, improving accuracy over time. Evaluated against ISO 25010 software quality standards.',
+    tech: ['Laravel 11','React JS','Python','Scikit-learn','ESP32','Random Forest','Genetic Algorithm','Human-in-the-loop','MySQL','ISO 25010'],
+    github: '#',
+    demo: null,
+    extra: 'thesis'
   },
-  <?php endforeach; ?>
-}
-// Thesis phases — from database
-const THESIS_PHASES = <?php
-  $thesisPhaseJs = [];
-  foreach(($thesisPhases ?? []) as $ph) {
-      $thesisPhaseJs[] = [
-          'num'     => $ph['num'],
-          'title'   => $ph['title'],
-          'content' => $ph['content'],
-      ];
+  dost: {
+    type: 'OJT',
+    typeStyle: 'background:rgba(6,182,212,0.18);color:#67e8f9;border:1px solid rgba(6,182,212,0.25)',
+    title: 'DOST PDF Report Generator',
+    desc: 'Optimized and enhanced automated PDF report generation modules for the DOST Project LODI project management system using Laravel 11. Identified and resolved critical system bugs to improve overall data accuracy and functionality. Collaborated fully remotely using Git/GitHub for version control and Google Workspace for daily coordination.',
+    tech: ['Laravel 11','PHP','MySQL','Git / GitHub','Google Workspace'],
+    github: '#',
+    demo: null,
+    extra: null
+  },
+  lgu: {
+    type: 'LGU',
+    typeStyle: 'background:rgba(16,185,129,0.16);color:#6ee7b7;border:1px solid rgba(16,185,129,0.22)',
+    title: 'Municipal QR Document Tracker',
+    desc: 'Designed and built a QR-coded Document Tracker system for the Municipality of Tangalan using Google Apps Script to fully automate municipal record-keeping under the ICT and Administrative department. Significantly reduced manual tracking overhead by digitizing document workflows for local government operations.',
+    tech: ['Google Apps Script','QR Code API','Google Sheets','Google Drive'],
+    github: '#',
+    demo: null,
+    extra: null
+  },
+  attendance: {
+    type: 'OJT',
+    typeStyle: 'background:rgba(251,191,36,0.16);color:#fde68a;border:1px solid rgba(251,191,36,0.22)',
+    title: 'Automated Attendance Tracker',
+    desc: 'Built a comprehensive data integration system using Google Workspace tools to streamline administrative workflows and automate attendance tracking for both the DOST and Municipality of Tangalan. The system integrates Google Forms, Sheets, and Apps Script to create seamless end-to-end data pipelines for government operations.',
+    tech: ['Google Workspace','Google Apps Script','Google Forms','Google Sheets','Data Automation'],
+    github: '#',
+    demo: null,
+    extra: null
   }
-  echo json_encode($thesisPhaseJs);
-?>;
+};
 
-// ISO scores — from database
-const ISO_SCORES = <?php
-  $isoJs = [];
-  foreach(($isoScores ?? []) as $s) {
-      $isoJs[] = ['label' => $s['label'], 'score' => (int)$s['score']];
+const THESIS_PHASES = [
+  {
+    num:'01', title:'Planning & Requirement Analysis',
+    content:`<ul>
+      <li>Analyzed requirements from water utility providers and defined system scope</li>
+      <li>Designed Data Flow Diagrams to visualize information movement through the platform</li>
+      <li>Defined IoT sensor requirements — flow rate, pressure sensors, solenoid valve status</li>
+      <li>Aligned with SDG 6 — clean water and water use efficiency through predictive maintenance</li>
+    </ul>`
+  },
+  {
+    num:'02', title:'Hardware & IoT Design',
+    content:`<ul>
+      <li>Designed IoT pipeline prototype with ESP32 microcontroller managing flow and pressure sensors</li>
+      <li>Implemented SIMON block cipher for sensor data encryption and security</li>
+      <li>Built simulated household pipeline connections for testing and data acquisition</li>
+      <li>Configured real-time data transmission pipeline from sensors to web platform</li>
+    </ul>`
+  },
+  {
+    num:'03', title:'ML Model & Self-Updating Framework',
+    content:`<ul>
+      <li>Implemented Random Forest Classifier optimized via Genetic Algorithms in Python + Scikit-learn</li>
+      <li>Human-in-the-loop retraining: admin validates alerts → validated data becomes ground truth → model retrains</li>
+      <li>Integrated Laravel ↔ Python via Symfony Process — web app triggers ML scripts directly</li>
+      <li>Simulation testing using synthetic telemetry data to stress test the model</li>
+    </ul>`
+  },
+  {
+    num:'04', title:'Web Platform Development',
+    content:`<ul>
+      <li>Laravel 11 REST API backend — data ingestion, decryption, preprocessing, prediction endpoints</li>
+      <li>React JS frontend — geo-tagged monitoring dashboard with interactive mapping</li>
+      <li>Administrative modules for system control, household management, and automated reporting</li>
+      <li>Real-time leak alerts, location predictions, and system health score visualization</li>
+    </ul>`
+  },
+  {
+    num:'05', title:'ISO 25010 Evaluation & Testing',
+    content:`<ul>
+      <li>Unit testing on individual code components and integration testing for Laravel ↔ Python pipeline</li>
+      <li>User Acceptance Testing with field technicians on dashboard usability</li>
+      <li>Evaluated against 5 ISO 25010 criteria — Functionality, Reliability, Security, Maintainability, Performance</li>
+    </ul>`
   }
-  echo json_encode($isoJs);
-?>;
+];
+
+const ISO_SCORES = [
+  {label:'Functionality', score:92},
+  {label:'Reliability',   score:88},
+  {label:'Security',      score:85},
+  {label:'Maintainability',score:87},
+  {label:'Performance',   score:90},
+];
 
 function openProject(id) {
   const p = PROJECTS[id];
@@ -1372,7 +1423,7 @@ document.getElementById('proj-grid').addEventListener('click', function(e) {
 document.getElementById('proj-grid').addEventListener('click',function(e){
     const card=e.target.closest('.proj-card');
     if(!card)return;
-    const id=parseInt(card.dataset.project);
+    const id=card.dataset.project;
     if(id)openProject(id);
 });
 

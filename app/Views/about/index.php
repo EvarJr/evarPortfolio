@@ -11,7 +11,6 @@
   --ink:      #050810;
   --ink-2:    #0b0f1e;
   --ink-3:    #0d1117;
-  --slate:    #1a2038;
   --blue:     #3b82f6;
   --blue-v:   #6366f1;
   --purple:   #8b5cf6;
@@ -26,7 +25,7 @@
   --border:   rgba(255,255,255,0.07);
   --border-p: rgba(99,102,241,0.3);
   --radius:   18px;
-  --nav-h:    70px;
+  --nav-h:    64px;
   --font-d:   'Clash Display','Cabinet Grotesk',sans-serif;
   --font-b:   'Cabinet Grotesk',sans-serif;
   --font-m:   'DM Mono',monospace;
@@ -36,19 +35,95 @@ html{scroll-behavior:smooth}
 body{font-family:var(--font-b);background:var(--ink);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased}
 #scroll-progress{position:fixed;top:0;left:0;z-index:9999;height:3px;width:0%;background:var(--g-accent);transition:width 0.1s linear;pointer-events:none}
 body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");opacity:0.35}
-.navbar{position:fixed;top:0;left:0;right:0;z-index:500;height:var(--nav-h);background:rgba(5,8,16,0.88);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 8vw;gap:28px}
-.nav-brand{display:flex;align-items:center;gap:11px;text-decoration:none;flex-shrink:0}
-.nav-avatar{width:38px;height:38px;border-radius:11px;background:var(--g-accent);display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--font-d);font-size:15px;font-weight:700;overflow:hidden;flex-shrink:0;box-shadow:0 0 0 1px rgba(139,92,246,0.4),0 4px 16px rgba(99,102,241,0.3)}
+
+/* ════ NAVBAR ════ */
+.navbar{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  height:var(--nav-h);
+  background:rgba(5,8,16,0.92);
+  backdrop-filter:blur(20px) saturate(180%);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;
+  padding:0 5vw;
+  justify-content:space-between;
+}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-avatar{width:36px;height:36px;border-radius:10px;background:var(--g-accent);display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--font-d);font-size:14px;font-weight:700;overflow:hidden;flex-shrink:0;box-shadow:0 0 0 1px rgba(139,92,246,0.4),0 4px 16px rgba(99,102,241,0.3)}
 .nav-avatar img{width:100%;height:100%;object-fit:cover}
-.nav-name{font-family:var(--font-d);font-size:15px;font-weight:600;color:var(--text);letter-spacing:-0.3px}
+.nav-name{font-family:var(--font-d);font-size:14px;font-weight:600;color:var(--text);letter-spacing:-0.3px}
 .nav-name span{font-weight:300;opacity:0.65}
-.nav-links{display:flex;align-items:center;gap:2px;margin-left:auto}
-.nav-link{padding:7px 14px;border-radius:9px;text-decoration:none;font-size:13px;font-weight:500;color:var(--text-2);transition:all 0.2s;white-space:nowrap;font-family:var(--font-b)}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-link{padding:7px 13px;border-radius:9px;text-decoration:none;font-size:13px;font-weight:500;color:var(--text-2);transition:all 0.2s;white-space:nowrap;font-family:var(--font-b)}
 .nav-link:hover,.nav-link.active{color:var(--text);background:rgba(255,255,255,0.06)}
-.nav-btn{padding:9px 22px;background:var(--g-accent);color:#fff;border-radius:50px;font-size:12.5px;font-weight:700;font-family:var(--font-d);text-decoration:none;margin-left:8px;transition:all 0.2s;box-shadow:0 4px 20px rgba(99,102,241,0.4);letter-spacing:0.3px}
+.nav-btn{padding:8px 20px;background:var(--g-accent);color:#fff;border-radius:50px;font-size:12.5px;font-weight:700;font-family:var(--font-d);text-decoration:none;margin-left:8px;transition:all 0.2s;box-shadow:0 4px 20px rgba(99,102,241,0.4);letter-spacing:0.3px}
 .nav-btn:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(99,102,241,0.5)}
-.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;margin-left:12px}
-.nav-hamburger span{display:block;width:22px;height:2px;background:var(--text-2);border-radius:2px;transition:all 0.3s}
+
+/* ── Mobile hamburger ── */
+.nav-hamburger{
+  display:none;
+  width:38px;height:38px;
+  border-radius:10px;
+  background:rgba(255,255,255,0.06);
+  border:1px solid var(--border);
+  cursor:pointer;
+  flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:5px;
+  flex-shrink:0;
+}
+.nav-hamburger span{display:block;width:18px;height:2px;background:var(--text-2);border-radius:2px;transition:all 0.3s}
+.nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ── Mobile slide-down menu ── */
+.mobile-menu{
+  display:none;
+  position:fixed;
+  top:var(--nav-h);left:0;right:0;
+  z-index:499;
+  background:rgba(5,8,16,0.97);
+  backdrop-filter:blur(24px);
+  border-bottom:1px solid rgba(99,102,241,0.2);
+  padding:12px 5vw 20px;
+  flex-direction:column;
+  gap:4px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.6);
+  transform:translateY(-8px);
+  opacity:0;
+  transition:transform 0.25s cubic-bezier(0.16,1,0.3,1), opacity 0.25s ease;
+}
+.mobile-menu.open{
+  display:flex;
+  transform:translateY(0);
+  opacity:1;
+}
+.mobile-menu .nav-link{
+  padding:12px 16px;
+  border-radius:12px;
+  font-size:15px;
+  font-weight:500;
+  color:var(--text-2);
+  display:flex;align-items:center;gap:10px;
+}
+.mobile-menu .nav-link:hover,.mobile-menu .nav-link.active{
+  background:rgba(99,102,241,0.1);
+  color:var(--text);
+}
+.mobile-menu .nav-link i{width:18px;text-align:center;font-size:13px;color:var(--text-3)}
+.mobile-menu .nav-link.active i{color:#a5b4fc}
+.mobile-menu-divider{height:1px;background:var(--border);margin:8px 0}
+.mobile-menu .nav-btn{
+  margin:4px 0 0;
+  padding:13px 20px;
+  border-radius:12px;
+  font-size:14px;
+  text-align:center;
+  justify-content:center;
+  display:flex;align-items:center;gap:8px;
+}
+
+/* ════ HERO ════ */
 .hero{position:relative;min-height:100vh;margin-top:var(--nav-h);background:var(--g-hero);display:flex;align-items:center;padding:60px 8vw 120px;gap:72px;overflow:visible;max-width:100%}
 .hero-orb{position:absolute;border-radius:50%;pointer-events:none;filter:blur(80px)}
 .hero-orb-1{width:520px;height:520px;top:-120px;right:-100px;background:radial-gradient(circle,rgba(99,102,241,0.22) 0%,transparent 70%);animation:orbFloat 9s ease-in-out infinite}
@@ -105,8 +180,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .section-eyebrow::before{content:'';display:inline-block;width:22px;height:1px}
 .ey-purple{color:var(--purple)}.ey-purple::before{background:var(--purple)}
 .ey-cyan{color:var(--cyan)}.ey-cyan::before{background:var(--cyan)}
-.ey-blue{color:var(--blue)}.ey-blue::before{background:var(--blue)}
-.ey-green{color:var(--green)}.ey-green::before{background:var(--green)}
 .section-title{font-family:var(--font-d);font-size:clamp(26px,2.8vw,40px);font-weight:700;color:var(--text);letter-spacing:-1px;line-height:1.1}
 .section-title span{background:var(--g-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .services-section{background:var(--ink-3);padding:0 8vw 70px}
@@ -157,7 +230,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .proj-footer{display:flex;gap:12px;padding:12px 18px;border-top:1px solid rgba(255,255,255,0.04)}
 .proj-link{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#818cf8;text-decoration:none;font-weight:500;font-family:var(--font-b);transition:color 0.2s}
 .proj-link:hover{color:#a5b4fc}
-.proj-link i{font-size:10px}
 .proj-card:hover .proj-thumb-icon{transform:scale(1.12);transition:transform 0.3s}
 .testi-section{position:relative;background:linear-gradient(155deg,#0a0a1a 0%,#0e0825 100%);padding:80px 8vw 70px;clip-path:polygon(0 50px,100% 0,100% calc(100% - 50px),0 100%);margin:-15px 0;z-index:1}
 .testi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px;margin-top:44px}
@@ -190,16 +262,24 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
 .footer-admin-link:hover{color:var(--blue-v)}
 .footer-divider{color:var(--border);font-size:11px}
 
-/* ── RESUME MODAL ── */
+/* ════ RESUME MODAL ════ */
 .modal-overlay{position:fixed;inset:0;background:rgba(2,4,12,0.9);backdrop-filter:blur(8px);z-index:800;display:flex;align-items:flex-start;justify-content:center;padding:24px;overflow-y:auto;opacity:0;pointer-events:none;transition:opacity 0.3s}
 .modal-overlay.open{opacity:1;pointer-events:all}
 .modal-box{background:#fff;border-radius:20px;max-width:980px;width:100%;position:relative;animation:modalIn 0.35s cubic-bezier(0.16,1,0.3,1) both;box-shadow:0 40px 120px rgba(0,0,0,0.7);overflow:hidden}
 @keyframes modalIn{from{transform:translateY(40px) scale(0.97);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
-.modal-bar{display:flex;align-items:center;justify-content:space-between;padding:15px 22px;border-bottom:1px solid #e2e8f0;background:#fafafa;border-radius:20px 20px 0 0}
-.modal-bar h3{font-family:'Cabinet Grotesk',sans-serif;font-size:14.5px;font-weight:700;color:#0f172a}
-.modal-bar-actions{display:flex;gap:9px;align-items:center}
-.btn-print{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Cabinet Grotesk',sans-serif}
-.btn-close-modal{width:34px;height:34px;border-radius:8px;border:1px solid #e2e8f0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;color:#64748b;transition:all 0.15s}
+.modal-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-bottom:1px solid #e2e8f0;background:#fafafa;border-radius:20px 20px 0 0;flex-wrap:wrap;gap:8px}
+.modal-bar h3{font-family:'Cabinet Grotesk',sans-serif;font-size:14px;font-weight:700;color:#0f172a}
+.modal-bar-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.btn-print{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;border:none;border-radius:8px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:'Cabinet Grotesk',sans-serif;white-space:nowrap}
+
+/* ── Print settings row ── */
+.print-settings{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.print-setting-group{display:flex;align-items:center;gap:5px;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:7px;padding:5px 10px}
+.print-setting-group label{font-size:11px;font-weight:600;color:#64748b;font-family:'Cabinet Grotesk',sans-serif;white-space:nowrap}
+.print-setting-group select{font-size:11.5px;color:#0f172a;border:none;background:transparent;font-family:'Cabinet Grotesk',sans-serif;cursor:pointer;outline:none;font-weight:500}
+.print-setting-group input[type=number]{width:46px;font-size:11.5px;color:#0f172a;border:none;background:transparent;font-family:'Cabinet Grotesk',sans-serif;text-align:center;outline:none;font-weight:500}
+
+.btn-close-modal{width:32px;height:32px;border-radius:8px;border:1px solid #e2e8f0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;color:#64748b;transition:all 0.15s;flex-shrink:0}
 .btn-close-modal:hover{background:#fee2e2;border-color:#fca5a5;color:#ef4444}
 .modal-body{padding:0 0 28px;border-radius:0 0 20px 20px;overflow:hidden}
 .resume-embed{font-family:'DM Sans',sans-serif;color:#2c3e50;font-size:13px;line-height:1.55}
@@ -209,7 +289,6 @@ footer{background:var(--ink);padding:20px 8vw;border-top:1px solid var(--border)
 .re-contacts{display:flex;flex-direction:column;gap:4px;align-items:flex-end}
 .re-contact-item{display:flex;align-items:center;gap:6px;font-size:11px;color:rgba(255,255,255,0.8)}
 .re-contact-item i{color:#3b82f6;font-size:10px}
-/* Clickable links in resume header */
 a.re-contact-item{text-decoration:underline;cursor:pointer}
 a.re-contact-item:hover{color:#fff}
 .re-body{column-count:2;column-gap:0;background:linear-gradient(to right,#ffffff 50%,#f9fafb 50%);column-rule:2px solid #f0f2f4;display:block;padding:0 0 28px;border-radius:0 0 20px 20px}
@@ -222,8 +301,6 @@ a.re-contact-item:hover{color:#fff}
 .re-job-meta{display:block;font-size:11px;color:#3b82f6;font-style:italic;margin:1px 0 4px}
 .re-ul{padding-left:14px;margin-top:3px;margin-bottom:0}
 .re-ul li{font-size:12px;color:#555;margin-bottom:3px;line-height:1.5}
-
-/* ── Education & Cert alignment ── */
 .re-edu{margin-bottom:12px;break-inside:avoid;padding-left:0;margin-left:0}
 .re-edu-deg{display:block;font-weight:700;font-size:13px}
 .re-edu-sch{display:block;font-size:11.5px;color:#3b82f6;margin:1px 0}
@@ -231,8 +308,6 @@ a.re-contact-item:hover{color:#fff}
 .re-cert{margin-bottom:10px;break-inside:avoid;padding-left:0;margin-left:0}
 .re-cert-name{display:block;font-weight:600;font-size:12px;line-height:1.4}
 .re-cert-yr{display:block;font-size:11px;color:#3b82f6;margin-top:2px}
-
-/* ── Language dots ── */
 .re-lang-list{display:inline-grid;grid-template-columns:max-content auto;align-items:center;gap:8px 20px;width:100%}
 .re-lang-item{display:contents}
 .re-lang-name{white-space:nowrap;font-size:12px;color:#555}
@@ -240,10 +315,10 @@ a.re-contact-item:hover{color:#fff}
 .re-dot{width:10px;height:10px;border-radius:50%;background:#d1d5db;border:1.5px solid #c4c9d0}
 .re-dot.on{background:#3b82f6;border-color:#2563eb}
 
-/* ── PRINT ── */
+/* ════ PRINT — A4, no margins, preserves links ════ */
 @media print{
   *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
-  #scroll-progress,.navbar,.hero,.services-section,.projects-section,.testi-section,.resume-strip,.contact-section,footer,.modal-bar{display:none !important}
+  #scroll-progress,.navbar,.mobile-menu,.hero,.services-section,.projects-section,.testi-section,.resume-strip,.contact-section,footer,.modal-bar{display:none !important}
   body{background:#fff !important;margin:0 !important;padding:0 !important;overflow:visible !important}
   .modal-overlay.open{display:block !important;position:absolute !important;inset:0 !important;background:#fff !important;padding:0 !important;overflow:visible !important;opacity:1 !important;z-index:9999 !important}
   .modal-box{max-width:100% !important;width:100% !important;border-radius:0 !important;box-shadow:none !important;animation:none !important}
@@ -252,14 +327,15 @@ a.re-contact-item:hover{color:#fff}
   .re-section{break-inside:avoid !important;padding:12px 16px 0 !important}
   .re-header{background:#2c3e50 !important;color:#fff !important}
   .re-job,.re-edu,.re-cert{break-inside:avoid !important}
-  /* Keep links clickable in PDF */
   a.re-contact-item{color:rgba(255,255,255,0.8) !important;text-decoration:underline !important}
+  @page{size:A4 portrait;margin:0}
 }
 
-/* ── MOBILE ── */
+/* ════ MOBILE ════ */
 @media(max-width:768px){
-  .hero{flex-direction:column;padding:36px 6vw 100px;gap:28px;text-align:center}
-  .hero-photo-frame{width:240px;height:290px}
+  .hero{flex-direction:column;padding:36px 6vw 100px;gap:36px;text-align:center}
+  .hero-photo-wrap{order:-1}
+  .hero-photo-frame{width:260px;height:320px}
   .hero-stat{display:none}
   .hero-mono,.hero-btns,.hero-socials,.cred-row,.counters-row{justify-content:center}
   .hero-bio{margin-left:auto;margin-right:auto}
@@ -269,6 +345,13 @@ a.re-contact-item:hover{color:#fff}
   .contact-section{clip-path:polygon(0 30px,100% 0,100% 100%,0 100%)}
   .projects-section{clip-path:polygon(0 40px,100% 0,100% calc(100% - 40px),0 100%)}
   .projects-header{flex-direction:column;align-items:flex-start}
+  .modal-bar{padding:10px 14px}
+  .print-settings{display:none}
+  .modal-bar-actions{width:100%;justify-content:space-between}
+  .btn-print{flex:1;justify-content:center}
+  .re-header{flex-direction:column;align-items:flex-start;gap:12px}
+  .re-contacts{align-items:flex-start}
+  .re-body{column-count:1 !important}
 }
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
@@ -278,10 +361,9 @@ a.re-contact-item:hover{color:#fff}
 /* ── PROJECT MODAL ── */
 .proj-modal-overlay{position:fixed;inset:0;z-index:900;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity 0.3s;background:rgba(2,4,18,0.7);backdrop-filter:blur(16px) saturate(160%)}
 .proj-modal-overlay.open{opacity:1;pointer-events:all}
-.proj-modal{position:relative;background:linear-gradient(145deg,#0f1535 0%,#0b0f1e 60%,#1a0a3d 100%);border:1px solid rgba(99,102,241,0.25);border-radius:24px;width:100%;max-width:820px;max-height:88vh;overflow-y:auto;box-shadow:0 0 0 1px rgba(99,102,241,0.12),0 40px 120px rgba(0,0,0,0.7),0 0 80px rgba(99,102,241,0.08),inset 0 1px 0 rgba(255,255,255,0.06);transform:translateY(40px) scale(0.97);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);scrollbar-width:thin;scrollbar-color:rgba(99,102,241,0.2) transparent}
+.proj-modal{position:relative;background:linear-gradient(145deg,#0f1535 0%,#0b0f1e 60%,#1a0a3d 100%);border:1px solid rgba(99,102,241,0.25);border-radius:24px;width:100%;max-width:820px;max-height:88vh;overflow-y:auto;box-shadow:0 0 0 1px rgba(99,102,241,0.12),0 40px 120px rgba(0,0,0,0.7),inset 0 1px 0 rgba(255,255,255,0.06);transform:translateY(40px) scale(0.97);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);scrollbar-width:thin;scrollbar-color:rgba(99,102,241,0.2) transparent}
 .proj-modal-overlay.open .proj-modal{transform:translateY(0) scale(1)}
 .proj-modal::before{content:'';position:absolute;inset:-1px;border-radius:25px;background:linear-gradient(135deg,rgba(99,102,241,0.3) 0%,transparent 40%,transparent 60%,rgba(6,182,212,0.2) 100%);z-index:-1;pointer-events:none}
-.proj-modal::after{content:'';position:absolute;top:-40px;left:-40px;right:-40px;bottom:-40px;border-radius:32px;background:radial-gradient(circle 80px at 15% 20%,rgba(99,102,241,0.12) 0%,transparent 100%),radial-gradient(circle 60px at 85% 80%,rgba(6,182,212,0.1) 0%,transparent 100%),radial-gradient(circle 40px at 70% 15%,rgba(139,92,246,0.1) 0%,transparent 100%);pointer-events:none;z-index:-2;filter:blur(8px)}
 .pm-header{display:flex;align-items:flex-start;justify-content:space-between;padding:24px 28px 20px;border-bottom:1px solid rgba(255,255,255,0.06);gap:16px;position:sticky;top:0;z-index:10;background:linear-gradient(135deg,rgba(15,21,53,0.98),rgba(11,15,30,0.98));backdrop-filter:blur(8px);border-radius:24px 24px 0 0}
 .pm-header-left{flex:1;min-width:0}
 .pm-type-tag{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:0.5px;padding:3px 11px;border-radius:20px;margin-bottom:10px;font-family:var(--font-d)}
@@ -353,6 +435,7 @@ a.re-contact-item:hover{color:#fff}
 
 <div id="scroll-progress"></div>
 
+<!-- ════ NAVBAR ════ -->
 <nav class="navbar">
   <a class="nav-brand" href="<?= base_url() ?>">
     <div class="nav-avatar">
@@ -367,6 +450,8 @@ a.re-contact-item:hover{color:#fff}
       <strong><?= esc($np[0]) ?></strong><?= isset($np[1])?' <span>'.esc($np[1]).'</span>':'' ?>
     </div>
   </a>
+
+  <!-- Desktop links -->
   <div class="nav-links">
     <a class="nav-link active" href="#hero">About</a>
     <a class="nav-link" href="#services">Services</a>
@@ -375,9 +460,27 @@ a.re-contact-item:hover{color:#fff}
     <a class="nav-link" href="#contact">Contact</a>
     <a class="nav-btn" href="#" onclick="openResumeModal(event)">Resume</a>
   </div>
-  <div class="nav-hamburger" onclick="toggleMobileNav(this)"><span></span><span></span><span></span></div>
+
+  <!-- Mobile hamburger -->
+  <button class="nav-hamburger" id="navHamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
+<!-- ════ MOBILE MENU ════ -->
+<div class="mobile-menu" id="mobileMenu">
+  <a class="nav-link active" href="#hero" onclick="closeMobileMenu()"><i class="fas fa-user"></i> About</a>
+  <a class="nav-link" href="#services" onclick="closeMobileMenu()"><i class="fas fa-briefcase"></i> Services</a>
+  <a class="nav-link" href="#projects" onclick="closeMobileMenu()"><i class="fas fa-code"></i> Projects</a>
+  <?php if(!empty($testimonials)): ?>
+  <a class="nav-link" href="#testimonials" onclick="closeMobileMenu()"><i class="fas fa-quote-left"></i> Testimonials</a>
+  <?php endif; ?>
+  <a class="nav-link" href="#contact" onclick="closeMobileMenu()"><i class="fas fa-envelope"></i> Contact</a>
+  <div class="mobile-menu-divider"></div>
+  <a class="nav-btn" href="#" onclick="openResumeModal(event);closeMobileMenu()"><i class="fas fa-file-alt"></i> View Resume</a>
+</div>
+
+<!-- ════ HERO ════ -->
 <section class="hero" id="hero">
   <div class="hero-orb hero-orb-1"></div>
   <div class="hero-orb hero-orb-2"></div>
@@ -589,12 +692,34 @@ a.re-contact-item:hover{color:#fff}
     <div class="modal-bar">
       <h3><i class="fas fa-file-alt" style="color:#3b82f6;margin-right:8px"></i>Resume — <?= esc($header['name']??'') ?></h3>
       <div class="modal-bar-actions">
+        <!-- Print settings (desktop only) -->
+        <div class="print-settings">
+          <div class="print-setting-group">
+            <label>Size</label>
+            <select id="printSize">
+              <option value="A4" selected>A4</option>
+              <option value="Letter">Letter</option>
+              <option value="Legal">Legal</option>
+            </select>
+          </div>
+          <div class="print-setting-group">
+            <label>Orientation</label>
+            <select id="printOrientation">
+              <option value="portrait" selected>Portrait</option>
+              <option value="landscape">Landscape</option>
+            </select>
+          </div>
+          <div class="print-setting-group">
+            <label>Scale %</label>
+            <input type="number" id="printScale" value="100" min="50" max="150" step="5">
+          </div>
+        </div>
         <button class="btn-print" onclick="printResume()"><i class="fas fa-print"></i> Print / Save PDF</button>
         <button class="btn-close-modal" onclick="closeResumeModal()"><i class="fas fa-times"></i></button>
       </div>
     </div>
-    <div class="modal-body">
-      <div class="resume-embed">
+    <div class="modal-body" id="resumeBody">
+      <div class="resume-embed" id="resumeContent">
         <div class="re-header">
           <div>
             <div class="re-name"><?= esc($header['name']??'') ?></div>
@@ -602,9 +727,7 @@ a.re-contact-item:hover{color:#fff}
           </div>
           <div class="re-contacts">
             <?php if(!empty($header['email'])): ?>
-            <a class="re-contact-item" href="mailto:<?= esc($header['email']) ?>" style="color:rgba(255,255,255,0.8);text-decoration:none">
-              <i class="fas fa-envelope"></i><?= esc($header['email']) ?>
-            </a>
+            <a class="re-contact-item" href="mailto:<?= esc($header['email']) ?>" style="color:rgba(255,255,255,0.8);text-decoration:none"><i class="fas fa-envelope"></i><?= esc($header['email']) ?></a>
             <?php endif; ?>
             <?php if(!empty($header['phone'])): ?>
             <span class="re-contact-item"><i class="fas fa-phone"></i><?= esc($header['phone']) ?></span>
@@ -613,19 +736,13 @@ a.re-contact-item:hover{color:#fff}
             <span class="re-contact-item"><i class="fas fa-map-marker-alt"></i><?= esc($header['location']) ?></span>
             <?php endif; ?>
             <?php if(!empty($header['portfolio_url'])): ?>
-            <a class="re-contact-item" href="<?= esc($header['portfolio_url']) ?>" target="_blank" style="color:rgba(255,255,255,0.8);text-decoration:underline">
-              <i class="fas fa-globe" style="color:#06b6d4;font-size:10px"></i><?= esc($header['portfolio_url']) ?>
-            </a>
+            <a class="re-contact-item" href="<?= esc($header['portfolio_url']) ?>" target="_blank" style="color:rgba(255,255,255,0.8);text-decoration:underline"><i class="fas fa-globe" style="color:#06b6d4;font-size:10px"></i><?= esc($header['portfolio_url']) ?></a>
             <?php endif; ?>
             <?php if(!empty($header['linkedin'])): ?>
-            <a class="re-contact-item" href="<?= esc($header['linkedin_url'] ?? '#') ?>" target="_blank" style="color:rgba(255,255,255,0.8);text-decoration:underline">
-              <i class="fab fa-linkedin" style="color:#0ea5e9;font-size:10px"></i><?= esc($header['linkedin']) ?>
-            </a>
+            <a class="re-contact-item" href="<?= esc($about['linkedin_url'] ?? '#') ?>" target="_blank" style="color:rgba(255,255,255,0.8);text-decoration:underline"><i class="fab fa-linkedin" style="color:#0ea5e9;font-size:10px"></i><?= esc($header['linkedin']) ?></a>
             <?php endif; ?>
             <?php if(!empty($about['github'])): ?>
-            <a class="re-contact-item" href="<?= esc($about['github']) ?>" target="_blank" style="color:rgba(255,255,255,0.8);text-decoration:underline">
-              <i class="fab fa-github" style="color:#a5b4fc;font-size:10px"></i><?= esc($about['github']) ?>
-            </a>
+            <a class="re-contact-item" href="<?= esc($about['github']) ?>" target="_blank" style="color:rgba(255,255,255,0.8);text-decoration:underline"><i class="fab fa-github" style="color:#a5b4fc;font-size:10px"></i><?= esc($about['github']) ?></a>
             <?php endif; ?>
           </div>
         </div>
@@ -689,23 +806,82 @@ a.re-contact-item:hover{color:#fff}
 </div>
 
 <script>
+// ── SCROLL PROGRESS ──
 window.addEventListener('scroll', () => {
   const el = document.getElementById('scroll-progress');
   const pct = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
   el.style.width = Math.min(pct, 100) + '%';
 }, { passive: true });
 
-function openResumeModal(e) { e&&e.preventDefault(); document.getElementById('resumeModal').classList.add('open'); document.body.style.overflow='hidden'; }
-function closeResumeModal() { document.getElementById('resumeModal').classList.remove('open'); document.body.style.overflow=''; }
+// ── MOBILE MENU ──
+function toggleMobileMenu() {
+  const menu = document.getElementById('mobileMenu');
+  const btn = document.getElementById('navHamburger');
+  const isOpen = menu.classList.contains('open');
+  if(isOpen) {
+    menu.classList.remove('open');
+    btn.classList.remove('open');
+    document.body.style.overflow = '';
+  } else {
+    menu.classList.add('open');
+    btn.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+}
+function closeMobileMenu() {
+  document.getElementById('mobileMenu').classList.remove('open');
+  document.getElementById('navHamburger').classList.remove('open');
+  document.body.style.overflow = '';
+}
+// Close mobile menu on outside click
+document.addEventListener('click', e => {
+  const menu = document.getElementById('mobileMenu');
+  const btn = document.getElementById('navHamburger');
+  if(menu.classList.contains('open') && !menu.contains(e.target) && !btn.contains(e.target)) {
+    closeMobileMenu();
+  }
+});
+
+// ── RESUME MODAL ──
+function openResumeModal(e) {
+  e&&e.preventDefault();
+  document.getElementById('resumeModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeResumeModal() {
+  document.getElementById('resumeModal').classList.remove('open');
+  document.body.style.overflow='';
+}
 document.getElementById('resumeModal').addEventListener('click', function(e) { if(e.target===this) closeResumeModal(); });
-function printResume() { document.getElementById('resumeModal').classList.add('open'); setTimeout(()=>window.print(),300); }
-function confirmLogout(e) { e.preventDefault(); if(confirm('Are you sure you want to logout?')) window.location.href='<?= base_url('logout') ?>'; }
-function toggleMobileNav(el) {
-  const links = document.querySelector('.nav-links');
-  const isOpen = links.style.display === 'flex';
-  links.style.cssText = isOpen ? '' : 'display:flex;flex-direction:column;position:fixed;top:70px;left:0;right:0;background:rgba(5,8,16,0.97);backdrop-filter:blur(20px);padding:16px 24px 28px;border-bottom:1px solid rgba(255,255,255,0.07);box-shadow:0 20px 60px rgba(0,0,0,0.5);gap:4px;z-index:499';
+
+// ── PRINT WITH SETTINGS ──
+function printResume() {
+  const size = document.getElementById('printSize')?.value || 'A4';
+  const orientation = document.getElementById('printOrientation')?.value || 'portrait';
+  const scale = document.getElementById('printScale')?.value || '100';
+
+  // Inject dynamic @page rule
+  let styleEl = document.getElementById('dynamicPrintStyle');
+  if(!styleEl) {
+    styleEl = document.createElement('style');
+    styleEl.id = 'dynamicPrintStyle';
+    document.head.appendChild(styleEl);
+  }
+  styleEl.textContent = `
+    @media print {
+      @page { size: ${size} ${orientation}; margin: 0; }
+      #resumeContent { transform: scale(${scale/100}); transform-origin: top left; width: ${10000/scale}%; }
+    }
+  `;
+
+  document.getElementById('resumeModal').classList.add('open');
+  setTimeout(() => window.print(), 300);
 }
 
+// ── LOGOUT ──
+function confirmLogout(e) { e.preventDefault(); if(confirm('Are you sure you want to logout?')) window.location.href='<?= base_url('logout') ?>'; }
+
+// ── PROJECT FILTER ──
 function filterProjects(cat, btn) {
   document.querySelectorAll('.proj-filter').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
@@ -723,6 +899,7 @@ function filterProjects(cat, btn) {
   }, 280);
 }
 
+// ── INTERSECTION OBSERVER ──
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if(!entry.isIntersecting) return;
@@ -749,6 +926,7 @@ document.querySelectorAll('.anim').forEach(el => { el.style.animationPlayState =
 const countersEl = document.getElementById('counters');
 if(countersEl) observer.observe(countersEl);
 
+// ── PROJECT MODAL ──
 const PROJECTS = {
   <?php
   $typeStyles = [
@@ -776,19 +954,15 @@ const PROJECTS = {
 };
 
 const THESIS_PHASES = <?php
-  $thesisPhaseJs = [];
-  foreach(($thesisPhases ?? []) as $ph) {
-    $thesisPhaseJs[] = ['num'=>$ph['num'],'title'=>$ph['title'],'content'=>$ph['content']];
-  }
-  echo json_encode($thesisPhaseJs);
+  $js = [];
+  foreach(($thesisPhases ?? []) as $ph) { $js[] = ['num'=>$ph['num'],'title'=>$ph['title'],'content'=>$ph['content']]; }
+  echo json_encode($js);
 ?>;
 
 const ISO_SCORES = <?php
-  $isoJs = [];
-  foreach(($isoScores ?? []) as $s) {
-    $isoJs[] = ['label'=>$s['label'],'score'=>(int)$s['score']];
-  }
-  echo json_encode($isoJs);
+  $js = [];
+  foreach(($isoScores ?? []) as $s) { $js[] = ['label'=>$s['label'],'score'=>(int)$s['score']]; }
+  echo json_encode($js);
 ?>;
 
 function openProject(id) {
@@ -799,7 +973,7 @@ function openProject(id) {
   document.getElementById('pm-title').textContent = p.title;
   let body = `<p class="pm-desc">${p.desc}</p><div class="pm-tech-row">${p.tech.map(t=>`<span class="pm-tech">${t}</span>`).join('')}</div><div class="pm-links">${p.github?`<a href="${p.github}" class="pm-link-btn pm-link-github" target="_blank"><i class="fab fa-github"></i> View on GitHub</a>`:''}${p.demo?`<a href="${p.demo}" class="pm-link-btn pm-link-demo" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>`:''}</div>`;
   if(p.extra === 'thesis') {
-    body += `<div class="pm-divider"></div><div class="pm-section-label">Development Methodology — Iterative Incremental Model</div><div class="pm-accordion">${THESIS_PHASES.map((ph,i)=>`<div class="pm-phase${i===0?' open':''}"><div class="pm-phase-header" onclick="togglePmPhase(this)"><div class="pm-phase-num">${ph.num}</div><div class="pm-phase-title">${ph.title}</div><i class="fas fa-chevron-down pm-phase-chevron"></i></div><div class="pm-phase-body"><div class="pm-phase-content">${ph.content}</div></div></div>`).join('')}</div><div class="pm-divider"></div><div class="pm-section-label">ISO 25010 Evaluation Results</div><div class="pm-iso-grid">${ISO_SCORES.map(s=>`<div class="pm-iso-card"><div class="pm-iso-label">${s.label}</div><div class="pm-iso-bar-bg"><div class="pm-iso-bar-fill" data-w="${s.score}"></div></div><div class="pm-iso-score">${s.score}%</div></div>`).join('')}</div>`;
+    body += `<div class="pm-divider"></div><div class="pm-section-label">Development Methodology</div><div class="pm-accordion">${THESIS_PHASES.map((ph,i)=>`<div class="pm-phase${i===0?' open':''}"><div class="pm-phase-header" onclick="togglePmPhase(this)"><div class="pm-phase-num">${ph.num}</div><div class="pm-phase-title">${ph.title}</div><i class="fas fa-chevron-down pm-phase-chevron"></i></div><div class="pm-phase-body"><div class="pm-phase-content">${ph.content}</div></div></div>`).join('')}</div><div class="pm-divider"></div><div class="pm-section-label">ISO 25010 Evaluation</div><div class="pm-iso-grid">${ISO_SCORES.map(s=>`<div class="pm-iso-card"><div class="pm-iso-label">${s.label}</div><div class="pm-iso-bar-bg"><div class="pm-iso-bar-fill" data-w="${s.score}"></div></div><div class="pm-iso-score">${s.score}%</div></div>`).join('')}</div>`;
   }
   document.getElementById('pm-body').innerHTML = body;
   document.getElementById('projModal').classList.add('open');
@@ -822,7 +996,7 @@ function togglePmPhase(header) {
   if(!isOpen) phase.classList.add('open');
 }
 
-document.addEventListener('keydown', e => { if(e.key === 'Escape') { closeProjModal(); closeResumeModal(); } });
+document.addEventListener('keydown', e => { if(e.key === 'Escape') { closeProjModal(); closeResumeModal(); closeMobileMenu(); } });
 
 document.getElementById('proj-grid').addEventListener('click', function(e) {
   const card = e.target.closest('.proj-card');
@@ -831,17 +1005,18 @@ document.getElementById('proj-grid').addEventListener('click', function(e) {
   if(id) openProject(id);
 });
 
+// ── NAVBAR ACTIVE ON SCROLL ──
 const navSections = ['hero','services','projects','testimonials','contact'];
 window.addEventListener('scroll', () => {
   const y = window.scrollY + 90;
   navSections.forEach(id => {
     const el = document.getElementById(id);
     if(!el) return;
-    const link = document.querySelector(`.nav-link[href="#${id}"]`);
-    if(!link) return;
+    const links = document.querySelectorAll(`.nav-link[href="#${id}"]`);
+    if(!links.length) return;
     if(el.offsetTop <= y && el.offsetTop + el.offsetHeight > y) {
       document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-      link.classList.add('active');
+      links.forEach(l => l.classList.add('active'));
     }
   });
 }, { passive: true });

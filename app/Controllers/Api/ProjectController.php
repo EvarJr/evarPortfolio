@@ -189,9 +189,6 @@ class ProjectController extends BaseApiController
         $url = $result['secure_url'];
 
         // ★ Atomic append using SQL CONCAT to prevent race condition.
-        // If two uploads happen in quick succession, a read-then-write approach
-        // causes the second upload to overwrite the first (reads empty, writes only itself).
-        // Using SQL CONCAT means the DB appends directly without a round-trip read.
         $db = \Config\Database::connect();
         $db->query(
             "UPDATE portfolio_projects SET media_urls = CASE WHEN media_urls = '' OR media_urls IS NULL THEN ? ELSE CONCAT(media_urls, '\n', ?) END WHERE id = ?",
@@ -199,8 +196,9 @@ class ProjectController extends BaseApiController
         );
 
         // Read back the updated value to return to the client
-        $proj    = $m->find($id);
-        $newUrls = $proj['media_urls'] ?? $url;
+        // Use a fresh DB query (not the model cache) to get the committed value
+        $row     = $db->query("SELECT media_urls FROM portfolio_projects WHERE id = ?", [$id])->getRow();
+        $newUrls = $row->media_urls ?? $url;
 
         return $this->jsonSuccess(['url' => $url, 'media_urls' => $newUrls], 'Media uploaded.');
     }

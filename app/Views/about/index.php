@@ -632,7 +632,7 @@ a.re-contact-item:hover{color:#fff}
         $projTech = json_decode($proj['tech'] ?? '[]', true) ?: [];
         $delay = 'd'.min($i+1,4);
         $mediaRaw = $proj['media_urls'] ?? '';
-        $mediaList = array_values(array_filter(array_map('trim', explode(',', $mediaRaw))));
+        $mediaList = array_values(array_filter(array_map('trim', preg_split('/[\n,]+/', $mediaRaw))));
         $hasMedia = !empty($mediaList);
     ?>
     <div class="proj-card-wrap <?= $cat==='thesis'?'featured':'' ?> anim <?= $delay ?>" data-category="<?= esc($cat) ?>" data-project="<?= $proj['id'] ?>">

@@ -104,10 +104,17 @@ class ProjectController extends BaseApiController
             return $this->jsonError('File too large. Maximum 100MB. Size: ' . round($file->getSize()/1024/1024, 2) . 'MB');
         }
 
-        // ── Cloudinary upload ──────────────────────────────────
-        $cloudName = env('CLOUDINARY_CLOUD_NAME');
-        $apiKey    = env('CLOUDINARY_API_KEY');
-        $apiSecret = env('CLOUDINARY_API_SECRET');
+        // ── Read Cloudinary credentials ──
+        // Try $_ENV first (most reliable on Railway), then fall back to CI4's env()
+        $cloudName = $_ENV['CLOUDINARY_CLOUD_NAME'] ?? env('CLOUDINARY_CLOUD_NAME') ?? '';
+        $apiKey    = $_ENV['CLOUDINARY_API_KEY']    ?? env('CLOUDINARY_API_KEY')    ?? '';
+        $apiSecret = $_ENV['CLOUDINARY_API_SECRET'] ?? env('CLOUDINARY_API_SECRET') ?? '';
+
+        // Debug log — check Railway logs after upload attempt to verify values
+        log_message('error', '[Cloudinary] cloud=' . $cloudName
+            . ' key_len=' . strlen($apiKey)
+            . ' secret_len=' . strlen($apiSecret)
+            . ' secret_first6=' . substr($apiSecret, 0, 6));
 
         if (!$cloudName || !$apiKey || !$apiSecret) {
             return $this->jsonError('Cloudinary not configured. Add CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET to Railway environment variables.');
@@ -118,16 +125,19 @@ class ProjectController extends BaseApiController
         $folder       = 'evarportfolio/projects';
         $timestamp    = time();
 
-        // ── FIXED: Cloudinary signature must be built from params
-        //    sorted alphabetically by key, joined as key=value pairs,
-        //    then appended with the API secret (no separator).
+        // ── Build Cloudinary signature ──
+        // Params must be sorted alphabetically by key, joined as key=value&key=value,
+        // then API secret appended directly with no separator.
         $sigParams = [
             'folder'    => $folder,
             'timestamp' => $timestamp,
         ];
-        ksort($sigParams); // alphabetical sort — required by Cloudinary
-        $sigString = http_build_query($sigParams); // folder=...&timestamp=...
+        ksort($sigParams);
+        $sigString = http_build_query($sigParams);
         $signature = hash('sha256', $sigString . $apiSecret);
+
+        // Debug log the signature string so we can verify it matches Cloudinary's expectation
+        log_message('error', '[Cloudinary] sigString=' . $sigString . ' signature=' . $signature);
 
         $ch = curl_init("https://api.cloudinary.com/v1_1/{$cloudName}/{$resourceType}/upload");
         curl_setopt_array($ch, [
@@ -154,7 +164,6 @@ class ProjectController extends BaseApiController
         $result = json_decode($response, true);
 
         if (empty($result['secure_url'])) {
-            // Return the full Cloudinary error so we can debug it
             $errMsg = $result['error']['message'] ?? ('HTTP ' . $httpCode . ': ' . $response);
             return $this->jsonError('Cloudinary error: ' . $errMsg);
         }
@@ -183,7 +192,7 @@ class ProjectController extends BaseApiController
         $proj = $m->find($id);
         if (!$proj) return $this->jsonError('Project not found.', 404);
 
-        $urls = array_values(array_filter(
+        $urls    = array_values(array_filter(
             array_map('trim', preg_split('/[\n,]+/', $proj['media_urls'] ?? ''))
         ));
         $urls    = array_filter($urls, fn($u) => $u !== $url);

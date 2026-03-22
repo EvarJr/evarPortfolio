@@ -11,13 +11,14 @@ RUN apt-get update && apt-get install -y \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-# 2. Install PHP extensions needed for CI4
+# 2. Install PHP extensions needed for CI4 + curl for Cloudinary
 RUN docker-php-ext-install \
     intl \
     mysqli \
     pdo_mysql \
     zip \
-    gd
+    gd \
+    curl
 
 # 2b. PHP upload/execution limits
 RUN echo "upload_max_filesize = 100M" > /usr/local/etc/php/conf.d/uploads.ini \
@@ -47,14 +48,13 @@ RUN chmod +x /start.sh
 # 7. Install PHP dependencies
 RUN composer install --optimize-autoloader --no-scripts --no-interaction
 
-# 8. Set permissions for CI4 writable folders + symlink uploads for direct Apache serving
+# 8. Set permissions for CI4 writable folders
 RUN mkdir -p writable/cache \
              writable/logs \
              writable/session \
              writable/uploads/projects \
     && chmod -R 777 writable/ \
-    && chown -R www-data:www-data /var/www/html \
-    && ln -sf /var/www/html/writable/uploads /var/www/html/public/uploads
+    && chown -R www-data:www-data /var/www/html
 
 EXPOSE 8080
 

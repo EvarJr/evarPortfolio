@@ -52,19 +52,7 @@ class ProjectController extends BaseApiController
     {
         $m = new ProjectModel();
         if (!$m->find($id)) return $this->jsonError('Not found.', 404);
-
-        // Delete uploaded media files
-        $proj = $m->find($id);
-        if (!empty($proj['media_urls'])) {
-            $urls = array_filter(array_map('trim', preg_split('/[\n,]+/', $proj['media_urls'])));
-            foreach ($urls as $url) {
-                if (strpos($url, '/uploads/projects/') !== false) {
-                    $path = FCPATH . ltrim(parse_url($url, PHP_URL_PATH), '/');
-                    if (file_exists($path)) unlink($path);
-                }
-            }
-        }
-
+        // Note: Cloudinary files remain on CDN (manageable via Cloudinary dashboard)
         $m->delete($id);
         return $this->jsonSuccess([], 'Project deleted.');
     }
@@ -80,7 +68,7 @@ class ProjectController extends BaseApiController
     }
 
     /**
-     * Upload media file for a project
+     * Upload media file for a project via Cloudinary
      * POST /api/project/upload-media/:id
      */
     public function uploadMedia(int $id): \CodeIgniter\HTTP\ResponseInterface
@@ -90,12 +78,11 @@ class ProjectController extends BaseApiController
 
         $file = $this->request->getFile('media');
 
-        // Debug: return file info if something is wrong
         if (!$file) {
             return $this->jsonError('No file received by server.');
         }
 
-        // Check for upload errors directly (more reliable than isValid())
+        // Check for upload errors
         if ($file->getError() !== UPLOAD_ERR_OK) {
             $errors = [
                 UPLOAD_ERR_INI_SIZE   => 'File exceeds server upload_max_filesize (' . ini_get('upload_max_filesize') . ')',
@@ -109,28 +96,67 @@ class ProjectController extends BaseApiController
             return $this->jsonError($errors[$file->getError()] ?? 'Upload error code: ' . $file->getError());
         }
 
-        // Validate by extension (more reliable than mime for videos)
-        $allowedExts = ['jpg','jpeg','png','gif','webp','mp4','webm'];
+        // Validate by extension
+        $allowedExts = ['jpg','jpeg','png','gif','webp','mp4','webm','mov','avi'];
         $ext = strtolower($file->getClientExtension());
         if (!in_array($ext, $allowedExts)) {
             return $this->jsonError('Unsupported file type: ' . $ext . '. Use JPG, PNG, GIF, WEBP, MP4 or WEBM.');
         }
 
-        // Max 50MB
-        if ($file->getSize() > 50 * 1024 * 1024) {
-            return $this->jsonError('File too large. Maximum 50MB. File size: ' . round($file->getSize()/1024/1024, 2) . 'MB');
+        // Max 100MB
+        if ($file->getSize() > 100 * 1024 * 1024) {
+            return $this->jsonError('File too large. Maximum 100MB. Size: ' . round($file->getSize()/1024/1024, 2) . 'MB');
         }
 
-        // Save file
-        $uploadPath = WRITEPATH . 'uploads/projects/';
-        if (!is_dir($uploadPath)) mkdir($uploadPath, 0777, true);
+        // ── Cloudinary upload ──────────────────────────────────
+        $cloudName = env('CLOUDINARY_CLOUD_NAME');
+        $apiKey    = env('CLOUDINARY_API_KEY');
+        $apiSecret = env('CLOUDINARY_API_SECRET');
 
-        $newName = 'proj_' . $id . '_' . uniqid() . '.' . $ext;
-        $file->move($uploadPath, $newName);
+        if (!$cloudName || !$apiKey || !$apiSecret) {
+            return $this->jsonError('Cloudinary not configured. Add CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET to Railway environment variables.');
+        }
 
-        $url = base_url('uploads/projects/' . $newName);
+        $isVideo      = in_array($ext, ['mp4','webm','mov','avi']);
+        $resourceType = $isVideo ? 'video' : 'image';
+        $folder       = 'evarportfolio/projects';
+        $timestamp    = time();
 
-        $proj = $m->find($id);
+        // Build signature
+        $sigParams = "folder={$folder}&timestamp={$timestamp}";
+        $signature = hash('sha256', $sigParams . $apiSecret);
+
+        // Upload to Cloudinary
+        $ch = curl_init("https://api.cloudinary.com/v1_1/{$cloudName}/{$resourceType}/upload");
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST           => true,
+            CURLOPT_TIMEOUT        => 180,
+            CURLOPT_POSTFIELDS     => [
+                'file'      => new \CURLFile($file->getTempName(), $file->getMimeType(), $file->getClientName()),
+                'api_key'   => $apiKey,
+                'timestamp' => $timestamp,
+                'folder'    => $folder,
+                'signature' => $signature,
+            ],
+        ]);
+        $response = curl_exec($ch);
+        $curlErr  = curl_error($ch);
+        curl_close($ch);
+
+        if ($curlErr) {
+            return $this->jsonError('Upload failed: ' . $curlErr);
+        }
+
+        $result = json_decode($response, true);
+        if (empty($result['secure_url'])) {
+            return $this->jsonError('Cloudinary error: ' . ($result['error']['message'] ?? $response));
+        }
+
+        $url = $result['secure_url'];
+
+        // Append URL to project's media_urls
+        $proj     = $m->find($id);
         $existing = trim($proj['media_urls'] ?? '');
         $newUrls  = $existing ? $existing . "\n" . $url : $url;
         $m->update($id, ['media_urls' => $newUrls]);
@@ -139,7 +165,7 @@ class ProjectController extends BaseApiController
     }
 
     /**
-     * Delete a specific media file from a project
+     * Delete a specific media item from a project
      * POST /api/project/delete-media/:id
      */
     public function deleteMedia(int $id): \CodeIgniter\HTTP\ResponseInterface
@@ -152,19 +178,14 @@ class ProjectController extends BaseApiController
         $proj = $m->find($id);
         if (!$proj) return $this->jsonError('Project not found.', 404);
 
-        // Remove from DB
+        // Remove URL from DB
         $urls = array_values(array_filter(
             array_map('trim', preg_split('/[\n,]+/', $proj['media_urls'] ?? ''))
         ));
         $urls = array_filter($urls, fn($u) => $u !== $url);
-        $m->update($id, ['media_urls' => implode("\n", $urls)]);
+        $newUrls = implode("\n", $urls);
+        $m->update($id, ['media_urls' => $newUrls]);
 
-        // Delete file if it's a local upload
-        if (strpos($url, '/uploads/projects/') !== false) {
-            $path = FCPATH . ltrim(parse_url($url, PHP_URL_PATH), '/');
-            if (file_exists($path)) unlink($path);
-        }
-
-        return $this->jsonSuccess(['media_urls' => implode("\n", $urls)], 'Media deleted.');
+        return $this->jsonSuccess(['media_urls' => $newUrls], 'Media removed.');
     }
 }

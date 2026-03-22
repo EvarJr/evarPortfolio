@@ -143,7 +143,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,420px));gap:18px;justify-content:center}
 
 /* ── FLIP CARD WRAPPER ── */
-.proj-card-wrap{perspective:1200px;border-radius:var(--radius)}
+.proj-card-wrap{perspective:1200px;border-radius:var(--radius);position:relative;}
 .proj-card-wrap.hidden{display:none}
 .proj-card{
   background:rgba(255,255,255,0.03);
@@ -203,45 +203,40 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .proj-carousel-dot{min-width:18px;height:18px;border-radius:20px;background:rgba(255,255,255,0.2);cursor:pointer;transition:all 0.2s;border:none;padding:0 4px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.7)}
 .proj-carousel-dot.active{background:#a5b4fc;transform:scale(1.3)}
 
-/* ── CAROUSEL ARROWS ── 
-   Key fix: positioned on .proj-face-back (overflow:visible),
-   NOT inside .proj-carousel (overflow:hidden).
-   They span vertically over the carousel area only (above dots+info strip). */
+/* ── CAROUSEL ARROWS ──
+   On .proj-card-wrap (perspective container, no overflow clip).
+   Completely outside the 3D flip subtree — this escapes video/iframe
+   compositor layers that ignore z-index inside transforms. */
 .proj-carousel-arrows{
   position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  /* stop above the dots+info area (~70px from bottom) */
-  bottom:70px;
-  display:flex;
+  top:0;left:0;right:0;
+  bottom:80px; /* above info strip + dots */
+  display:none;
   align-items:center;
   justify-content:space-between;
   padding:0 8px;
   pointer-events:none;
-  z-index:50;
+  z-index:100;
+  border-radius:var(--radius);
 }
+.proj-card-wrap:hover .proj-carousel-arrows{display:flex;}
 .proj-carousel-arrow{
   width:34px;height:34px;
   border-radius:50%;
-  background:rgba(5,8,16,0.8);
-  border:1.5px solid rgba(255,255,255,0.3);
-  color:#fff;
-  font-size:12px;
-  cursor:pointer;
+  background:rgba(5,8,16,0.82);
+  border:1.5px solid rgba(255,255,255,0.35);
+  color:#fff;font-size:12px;cursor:pointer;
   display:flex;align-items:center;justify-content:center;
-  pointer-events:all;
-  transition:all 0.2s;
+  pointer-events:all;transition:all 0.2s;
   backdrop-filter:blur(12px);
-  box-shadow:0 2px 12px rgba(0,0,0,0.6),0 0 0 1px rgba(255,255,255,0.05);
-  opacity:1;
-  flex-shrink:0;
+  box-shadow:0 2px 12px rgba(0,0,0,0.7);
+  opacity:1;flex-shrink:0;
 }
 .proj-carousel-arrow:hover{
-  background:rgba(99,102,241,0.8);
+  background:rgba(99,102,241,0.85);
   border-color:rgba(99,102,241,1);
   transform:scale(1.12);
-  box-shadow:0 4px 20px rgba(99,102,241,0.55);
+  box-shadow:0 4px 20px rgba(99,102,241,0.6);
 }
 
 /* ── BACK FACE — INFO STRIP ── */
@@ -582,7 +577,7 @@ a.re-contact-item:hover{color:#fff}
     <div class="hero-btns">
       <a href="#" class="btn-primary" onclick="openResumeModal(event)"><i class="fas fa-file-alt"></i><?= esc($about['cv_label']??'View Resume') ?></a>
       <?php if(!empty($about['btn_contact_email'])): ?>
-      <a href="mailto:<?= esc($about['btn_contact_email']) ?>" class="btn-ghost"><?= esc($about['btn_contact_label']??'Hire Me') ?></a>
+      <a href="/cdn-cgi/l/email-protection#e9d5d6d4c98c9a8ac1cd888b869c9db2ce8b9d87b68a86879d888a9db68c84888085ceb4c0c9d6d7" class="btn-ghost"><?= esc($about['btn_contact_label']??'Hire Me') ?></a>
       <?php else: ?>
       <a href="#contact" class="btn-ghost"><?= esc($about['btn_contact_label']??'Hire Me') ?></a>
       <?php endif; ?>
@@ -592,7 +587,7 @@ a.re-contact-item:hover{color:#fff}
       <?php if(!empty($about['linkedin_url'])): ?><a href="<?= esc($about['linkedin_url']) ?>" target="_blank" class="social-icon" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a><?php endif; ?>
       <?php if(!empty($about['twitter'])): ?><a href="<?= esc($about['twitter']) ?>" target="_blank" class="social-icon" title="Twitter/X"><i class="fab fa-x-twitter"></i></a><?php endif; ?>
       <?php if(!empty($about['facebook'])): ?><a href="<?= esc($about['facebook']) ?>" target="_blank" class="social-icon" title="Facebook"><i class="fab fa-facebook-f"></i></a><?php endif; ?>
-      <?php if(!empty($header['email'])): ?><a href="mailto:<?= esc($header['email']) ?>" class="social-icon" title="Email"><i class="fas fa-envelope"></i></a><?php endif; ?>
+      <?php if(!empty($header['email'])): ?><a href="/cdn-cgi/l/email-protection#714d4e4c5114021259551914101514032a56141c10181d562c58514e4f" class="social-icon" title="Email"><i class="fas fa-envelope"></i></a><?php endif; ?>
     </div>
     <div class="counters-row" id="counters">
       <div class="counter-chip"><div class="counter-icon blue"><i class="fas fa-briefcase"></i></div><div><div class="counter-val" data-target="2" data-suffix="">0</div><div class="counter-lbl">OJT Experiences</div></div></div>
@@ -728,23 +723,28 @@ a.re-contact-item:hover{color:#fff}
             </div>
           </div>
 
-          <!-- ★ ARROWS: sibling of carousel, NOT inside it — so overflow:hidden doesn't clip them -->
-          <?php if(count($mediaList) > 1): ?>
-          <div class="proj-carousel-arrows">
-            <button class="proj-carousel-arrow" onclick="event.stopPropagation();carouselPrev(<?= $proj['id'] ?>)">
-              <i class="fas fa-chevron-left"></i>
-            </button>
-            <button class="proj-carousel-arrow" onclick="event.stopPropagation();carouselNext(<?= $proj['id'] ?>)">
-              <i class="fas fa-chevron-right"></i>
-            </button>
-          </div>
-          <?php endif; ?>
-
-        </div>
+        </div><!-- /.proj-face-back -->
         <?php endif; ?>
 
+      </div><!-- /.proj-card -->
+
+      <?php /* ARROWS live here on .proj-card-wrap — completely outside the 3D
+               transform subtree. Video/iframe elements create their own GPU
+               compositor layer inside CSS transforms and ignore child z-index.
+               Moving arrows to the wrapper (which only has perspective, no
+               transform) makes them always paint above the video layer. */ ?>
+      <?php if($hasMedia && count($mediaList) > 1): ?>
+      <div class="proj-carousel-arrows">
+        <button class="proj-carousel-arrow" onclick="event.stopPropagation();carouselPrev(<?= $proj['id'] ?>)">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="proj-carousel-arrow" onclick="event.stopPropagation();carouselNext(<?= $proj['id'] ?>)">
+          <i class="fas fa-chevron-right"></i>
+        </button>
       </div>
-    </div>
+      <?php endif; ?>
+
+    </div><!-- /.proj-card-wrap -->
     <?php endforeach; ?>
   </div>
 </section>
@@ -779,7 +779,7 @@ a.re-contact-item:hover{color:#fff}
     <h2>Let's Build <span style="background:var(--g-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Something</span></h2>
     <p>Have a project in mind, an opportunity to share, or a problem to solve? I'd love to hear from you.</p>
     <?php $email=$about['btn_contact_email']?:($header['email']??''); ?>
-    <?php if(!empty($email)): ?><a href="mailto:<?= esc($email) ?>" class="btn-email"><i class="fas fa-envelope"></i><?= esc($email) ?></a><?php endif; ?>
+    <?php if(!empty($email)): ?><a href="/cdn-cgi/l/email-protection#fec2c1c3de9b8d9dd6da9b939f9792d7dec1c0" class="btn-email"><i class="fas fa-envelope"></i><?= esc($email) ?></a><?php endif; ?>
   </div>
 </section>
 
@@ -835,7 +835,7 @@ a.re-contact-item:hover{color:#fff}
             <div class="re-position"><?= esc($header['position']??'') ?></div>
           </div>
           <div class="re-contacts">
-            <?php if(!empty($header['email'])): ?><a class="re-contact-item" href="mailto:<?= esc($header['email']) ?>" style="color:rgba(255,255,255,0.8);text-decoration:none"><i class="fas fa-envelope"></i><?= esc($header['email']) ?></a><?php endif; ?>
+            <?php if(!empty($header['email'])): ?><a class="re-contact-item" href="/cdn-cgi/l/email-protection#a995969489ccdaca818dc1ccc8cdccdbf28eccc4c8c0c58ef480899697" style="color:rgba(255,255,255,0.8);text-decoration:none"><i class="fas fa-envelope"></i><?= esc($header['email']) ?></a><?php endif; ?>
             <?php if(!empty($header['phone'])): ?><span class="re-contact-item"><i class="fas fa-phone"></i><?= esc($header['phone']) ?></span><?php endif; ?>
             <?php if(!empty($header['location'])): ?><span class="re-contact-item"><i class="fas fa-map-marker-alt"></i><?= esc($header['location']) ?></span><?php endif; ?>
             <?php if(!empty($header['portfolio_url'])): ?><a class="re-contact-item" href="<?= esc($header['portfolio_url']) ?>" target="_blank" style="color:rgba(255,255,255,0.8);text-decoration:underline"><i class="fas fa-globe" style="color:#06b6d4;font-size:10px"></i><?= esc($header['portfolio_url']) ?></a><?php endif; ?>
@@ -861,7 +861,7 @@ a.re-contact-item:hover{color:#fff}
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 window.addEventListener('scroll',()=>{const el=document.getElementById('scroll-progress');const pct=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100;el.style.width=Math.min(pct,100)+'%';},{passive:true});
 function toggleMobileMenu(){const menu=document.getElementById('mobileMenu');const btn=document.getElementById('navHamburger');const isOpen=menu.classList.contains('open');if(isOpen){menu.classList.remove('open');btn.classList.remove('open');document.body.style.overflow='';}else{menu.classList.add('open');btn.classList.add('open');document.body.style.overflow='hidden';}}
 function closeMobileMenu(){document.getElementById('mobileMenu').classList.remove('open');document.getElementById('navHamburger').classList.remove('open');document.body.style.overflow='';}
@@ -896,7 +896,8 @@ document.getElementById('proj-grid').addEventListener('click',function(e){if(e.t
 const navSections=['hero','services','projects','testimonials','contact'];
 window.addEventListener('scroll',()=>{const y=window.scrollY+90;navSections.forEach(id=>{const el=document.getElementById(id);if(!el)return;const links=document.querySelectorAll(`.nav-link[href="#${id}"]`);if(!links.length)return;if(el.offsetTop<=y&&el.offsetTop+el.offsetHeight>y){document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));links.forEach(l=>l.classList.add('active'));}});},{passive:true});
 
-function carouselGo(id,idx){const track=document.getElementById('track-'+id);const dots=document.querySelectorAll('#dots-'+id+' .proj-carousel-dot');const total=track.children.length;idx=((idx%total)+total)%total;track.querySelectorAll('video').forEach(v=>{v.pause();});track.style.transform='translateX(-'+(idx*100)+'%)';dots.forEach((d,i)=>d.classList.toggle('active',i===idx));track.closest('.proj-carousel').dataset.index=idx;const newSlide=track.children[idx];const vid=newSlide?.querySelector('video');if(vid){vid.play().catch(()=>{});}}
+function carouselGo(id,idx){const track=document.getElementById('track-'+id);const dots=document.querySelectorAll('#dots-'+id+' .proj-carousel-dot');const total=track.children.length;idx=((idx%total)+total)%total;track.querySelectorAll('video').forEach(v=>{v.pause();});track.style.transform='translateX(-'+(idx*100)+'%)';dots.forEach((d,i)=>d.classList.toggle('active',i===idx));track.closest('.proj-carousel').dataset.index=idx;const newSlide=track.children[idx];const vid=newSlide?.querySelector('video');if(vid){vid.play().catch(()=>{});tch(()=>{});}
+}
 function carouselNext(id){const carousel=document.getElementById('carousel-'+id);carouselGo(id,parseInt(carousel.dataset.index||0)+1);}
 function carouselPrev(id){const carousel=document.getElementById('carousel-'+id);carouselGo(id,parseInt(carousel.dataset.index||0)-1);}
 </script>

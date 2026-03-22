@@ -110,9 +110,7 @@ class ProjectController extends BaseApiController
         $apiSecret = $_ENV['CLOUDINARY_API_SECRET'] ?? env('CLOUDINARY_API_SECRET') ?? '';
 
         if (!$cloudName || !$apiKey || !$apiSecret) {
-            return $this->jsonError('Missing credentials: cloud=' . $cloudName
-                . ' key_len=' . strlen($apiKey)
-                . ' secret_len=' . strlen($apiSecret));
+            return $this->jsonError('Cloudinary not configured. Add CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET to Railway environment variables.');
         }
 
         $isVideo      = in_array($ext, ['mp4','webm','mov','avi']);
@@ -120,22 +118,13 @@ class ProjectController extends BaseApiController
         $folder       = 'evarportfolio/projects';
         $timestamp    = time();
 
-        $sigParams = ['folder' => $folder, 'timestamp' => $timestamp];
-        ksort($sigParams);
-        $sigString = http_build_query($sigParams);
+        // ── Cloudinary signature ──
+        // Params sorted alphabetically, joined as raw key=value (no URL encoding),
+        // then API secret appended directly with no separator.
+        // NOTE: do NOT use http_build_query() — it encodes '/' as '%2F' which
+        // breaks the signature. Build the string manually instead.
+        $sigString = "folder={$folder}&timestamp={$timestamp}";
         $signature = hash('sha256', $sigString . $apiSecret);
-
-        // ── TEMPORARY DEBUG — remove after confirming signature is correct ──
-        return $this->jsonError(
-            'DEBUG — cloud=' . $cloudName
-            . ' | key_len=' . strlen($apiKey)
-            . ' | secret_len=' . strlen($apiSecret)
-            . ' | secret_first6=' . substr($apiSecret, 0, 6)
-            . ' | secret_last4=' . substr($apiSecret, -4)
-            . ' | sigString=' . $sigString
-            . ' | signature=' . $signature
-        );
-        // ── END TEMPORARY DEBUG ──
 
         $ch = curl_init("https://api.cloudinary.com/v1_1/{$cloudName}/{$resourceType}/upload");
         curl_setopt_array($ch, [

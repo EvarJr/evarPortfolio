@@ -37,7 +37,7 @@ body{font-family:var(--font-b);background:var(--ink);color:var(--text);overflow-
 body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");opacity:0.35}
 
 /* ════ NAVBAR ════ */
-.navbar{position:fixed;top:0;left:0;right:0;z-index:500;height:var(--nav-h);background:rgba(5,8,16,0.92);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 5vw;justify-content:space-between}
+.navbar{position:fixed;top:0;left:0;right:0;z-index:500;height:var(--nav-h);background:rgba(5,8,16,0.92);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 5vw;justify-content:space-between;}
 .nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
 .nav-avatar{width:36px;height:36px;border-radius:10px;background:var(--g-accent);display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--font-d);font-size:14px;font-weight:700;overflow:hidden;flex-shrink:0;box-shadow:0 0 0 1px rgba(139,92,246,0.4),0 4px 16px rgba(99,102,241,0.3)}
 .nav-avatar img{width:100%;height:100%;object-fit:cover}
@@ -48,19 +48,19 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .nav-link:hover,.nav-link.active{color:var(--text);background:rgba(255,255,255,0.06)}
 .nav-btn{padding:8px 20px;background:var(--g-accent);color:#fff;border-radius:50px;font-size:12.5px;font-weight:700;font-family:var(--font-d);text-decoration:none;margin-left:8px;transition:all 0.2s;box-shadow:0 4px 20px rgba(99,102,241,0.4);letter-spacing:0.3px}
 .nav-btn:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(99,102,241,0.5)}
-.nav-hamburger{display:none;width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.06);border:1px solid var(--border);cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px;flex-shrink:0}
+.nav-hamburger{display:none;width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.06);border:1px solid var(--border);cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px;flex-shrink:0;}
 .nav-hamburger span{display:block;width:18px;height:2px;background:var(--text-2);border-radius:2px;transition:all 0.3s}
 .nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
 .nav-hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
 .nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-.mobile-menu{display:none;position:fixed;top:var(--nav-h);left:0;right:0;z-index:499;background:rgba(5,8,16,0.97);backdrop-filter:blur(24px);border-bottom:1px solid rgba(99,102,241,0.2);padding:12px 5vw 20px;flex-direction:column;gap:4px;box-shadow:0 20px 60px rgba(0,0,0,0.6);transform:translateY(-8px);opacity:0;transition:transform 0.25s cubic-bezier(0.16,1,0.3,1),opacity 0.25s ease}
-.mobile-menu.open{display:flex;transform:translateY(0);opacity:1}
-.mobile-menu .nav-link{padding:12px 16px;border-radius:12px;font-size:15px;font-weight:500;color:var(--text-2);display:flex;align-items:center;gap:10px}
-.mobile-menu .nav-link:hover,.mobile-menu .nav-link.active{background:rgba(99,102,241,0.1);color:var(--text)}
+.mobile-menu{display:none;position:fixed;top:var(--nav-h);left:0;right:0;z-index:499;background:rgba(5,8,16,0.97);backdrop-filter:blur(24px);border-bottom:1px solid rgba(99,102,241,0.2);padding:12px 5vw 20px;flex-direction:column;gap:4px;box-shadow:0 20px 60px rgba(0,0,0,0.6);transform:translateY(-8px);opacity:0;transition:transform 0.25s cubic-bezier(0.16,1,0.3,1), opacity 0.25s ease;}
+.mobile-menu.open{display:flex;transform:translateY(0);opacity:1;}
+.mobile-menu .nav-link{padding:12px 16px;border-radius:12px;font-size:15px;font-weight:500;color:var(--text-2);display:flex;align-items:center;gap:10px;}
+.mobile-menu .nav-link:hover,.mobile-menu .nav-link.active{background:rgba(99,102,241,0.1);color:var(--text);}
 .mobile-menu .nav-link i{width:18px;text-align:center;font-size:13px;color:var(--text-3)}
 .mobile-menu .nav-link.active i{color:#a5b4fc}
 .mobile-menu-divider{height:1px;background:var(--border);margin:8px 0}
-.mobile-menu .nav-btn{margin:4px 0 0;padding:13px 20px;border-radius:12px;font-size:14px;text-align:center;justify-content:center;display:flex;align-items:center;gap:8px}
+.mobile-menu .nav-btn{margin:4px 0 0;padding:13px 20px;border-radius:12px;font-size:14px;text-align:center;justify-content:center;display:flex;align-items:center;gap:8px;}
 
 /* ════ HERO ════ */
 .hero{position:relative;min-height:100vh;margin-top:var(--nav-h);background:var(--g-hero);display:flex;align-items:center;padding:60px 8vw 120px;gap:72px;overflow:visible;max-width:100%}
@@ -134,8 +134,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .service-card:hover .svc-icon{background:linear-gradient(135deg,rgba(99,102,241,0.3),rgba(139,92,246,0.18));box-shadow:0 0 22px rgba(99,102,241,0.22)}
 .service-card h3{font-family:var(--font-d);font-size:15.5px;font-weight:700;color:var(--text);margin-bottom:9px;letter-spacing:-0.3px}
 .service-card p{font-size:13px;line-height:1.78;color:var(--text-2)}
-
-/* ════ PROJECTS ════ */
 .projects-section{position:relative;background:linear-gradient(160deg,#0e0825 0%,#110f2e 50%,#0b1a35 100%);padding:100px 8vw 80px;clip-path:polygon(0 60px,100% 0,100% calc(100% - 60px),0 100%);margin:-20px 0;z-index:1}
 .projects-header{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:36px;flex-wrap:wrap;width:100%}
 .proj-filters{display:flex;gap:7px;flex-wrap:wrap}
@@ -143,62 +141,68 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .proj-filter:hover{border-color:rgba(99,102,241,0.35);color:var(--text-2)}
 .proj-filter.active{background:var(--g-accent);border-color:transparent;color:#fff;box-shadow:0 4px 16px rgba(99,102,241,0.35)}
 .proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,420px));gap:18px;justify-content:center}
-
-/* ── FLIP CARD ── */
-.proj-card-wrap{
-  perspective:1200px;
-  border-radius:var(--radius);
-  min-height:310px;
-  cursor:pointer;
-}
-.proj-card-wrap.hidden{display:none !important}
-.proj-card-wrap.hiding{opacity:0;transform:scale(0.92) translateY(8px);pointer-events:none;transition:opacity 0.35s,transform 0.35s}
-.proj-card-wrap.showing{opacity:0;transform:scale(0.92) translateY(8px)}
-
+/* ── FLIP CARD WRAPPER ── */
+.proj-card-wrap{perspective:1200px;border-radius:var(--radius)}
+.proj-card-wrap.hidden{display:none}
 .proj-card{
-  width:100%;height:100%;min-height:310px;
-  position:relative;
-  transform-style:preserve-3d;
-  transition:transform 0.65s cubic-bezier(0.4,0.2,0.2,1);
-  border-radius:var(--radius);
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(99,102,241,0.14);
+  border-radius:var(--radius);overflow:hidden;
+  transition:transform 0.65s cubic-bezier(0.4,0.2,0.2,1),box-shadow 0.3s,border-color 0.3s;
+  display:flex;flex-direction:column;cursor:pointer;
+  transform-style:preserve-3d;position:relative;
+  min-height:290px;
 }
-/* Only flip if has media */
-.proj-card-wrap:hover .proj-card.has-media{transform:rotateY(180deg)}
-/* Regular hover lift for no-media cards */
-.proj-card-wrap:hover .proj-card:not(.has-media){transform:translateY(-4px)}
+.proj-card:not(.has-media):hover{border-color:rgba(99,102,241,0.32);transform:translateY(-4px);box-shadow:0 20px 56px rgba(0,0,0,0.45)}
+.proj-card-wrap:hover .proj-card.has-media{transform:rotateY(180deg);box-shadow:0 28px 70px rgba(0,0,0,0.6)}
+.proj-card.featured{border-color:rgba(139,92,246,0.35);box-shadow:0 0 0 1px rgba(139,92,246,0.12)}
+.proj-card-wrap:not(:hover) .proj-card.featured:hover{border-color:rgba(139,92,246,0.55);box-shadow:0 20px 56px rgba(139,92,246,0.2)}
 
+/* ── FRONT / BACK FACES ── */
 .proj-face{
   position:absolute;inset:0;
-  backface-visibility:hidden;
-  -webkit-backface-visibility:hidden;
-  border-radius:var(--radius);
-  overflow:hidden;
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border-radius:var(--radius);overflow:hidden;
   display:flex;flex-direction:column;
-  border:1px solid rgba(99,102,241,0.14);
-  background:rgba(255,255,255,0.03);
-  box-shadow:0 4px 24px rgba(0,0,0,0.3);
-  transition:border-color 0.3s,box-shadow 0.3s;
 }
-.proj-card-wrap:hover .proj-face-front{border-color:rgba(99,102,241,0.32);box-shadow:0 20px 56px rgba(0,0,0,0.45)}
-.proj-card.featured .proj-face{border-color:rgba(139,92,246,0.35);box-shadow:0 0 0 1px rgba(139,92,246,0.12)}
-.proj-card-wrap:hover .proj-card.featured .proj-face-front{border-color:rgba(139,92,246,0.55);box-shadow:0 20px 56px rgba(139,92,246,0.2)}
-
 .proj-face-front{z-index:2}
 .proj-face-back{
   transform:rotateY(180deg);
-  background:linear-gradient(145deg,#0d1117,#0b0f1e);
-  border-color:rgba(99,102,241,0.3);
+  background:linear-gradient(145deg,#0f1535,#0b0f1e);
+  border:1px solid rgba(99,102,241,0.3);
   z-index:1;
 }
 
-/* ── FRONT FACE ── */
-.proj-thumb{height:140px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;flex-shrink:0}
+/* ── BACK FACE — VIDEO ── */
+.proj-back-video{width:100%;height:100%;object-fit:cover;border-radius:var(--radius)}
+.proj-back-iframe{width:100%;height:100%;border:none;border-radius:var(--radius)}
+.proj-back-video-wrap{position:relative;flex:1;overflow:hidden;border-radius:var(--radius) var(--radius) 0 0}
+.proj-back-video-wrap iframe,.proj-back-video-wrap video{width:100%;height:100%;object-fit:cover;border:none}
+
+/* ── BACK FACE — PHOTO CAROUSEL ── */
+.proj-carousel{position:relative;flex:1;overflow:hidden;border-radius:var(--radius) var(--radius) 0 0}
+.proj-carousel-track{display:flex;height:100%;transition:transform 0.5s cubic-bezier(0.4,0,0.2,1)}
+.proj-carousel-slide{min-width:100%;height:100%;flex-shrink:0}
+.proj-carousel-slide img{width:100%;height:100%;object-fit:cover;display:block}
+.proj-carousel-dots{display:flex;justify-content:center;gap:5px;padding:8px 0 4px}
+.proj-carousel-dot{min-width:18px;height:18px;border-radius:20px;background:rgba(255,255,255,0.2);cursor:pointer;transition:all 0.2s;border:none;padding:0 4px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.7)}
+.proj-carousel-dot.active{background:#a5b4fc;transform:scale(1.3)}
+.proj-carousel-arrows{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 8px;pointer-events:none}
+.proj-carousel-arrow{width:28px;height:28px;border-radius:50%;background:rgba(5,8,16,0.7);border:1px solid rgba(255,255,255,0.15);color:#fff;font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;pointer-events:all;transition:all 0.2s;backdrop-filter:blur(8px)}
+.proj-carousel-arrow:hover{background:rgba(99,102,241,0.6);border-color:rgba(99,102,241,0.6)}
+
+/* ── BACK FACE — INFO STRIP ── */
+.proj-back-info{padding:12px 14px;background:rgba(5,8,16,0.85);backdrop-filter:blur(8px);flex-shrink:0}
+.proj-back-title{font-family:var(--font-d);font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.proj-back-hint{font-size:10.5px;color:var(--text-3);display:flex;align-items:center;gap:5px;font-family:var(--font-m)}
+.proj-back-hint i{font-size:9px;color:#a5b4fc}
+.proj-card.hidden{display:none}
+.proj-thumb{height:130px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
 .proj-thumb-thesis{background:linear-gradient(135deg,rgba(139,92,246,0.18),rgba(99,102,241,0.12))}
 .proj-thumb-ot{background:linear-gradient(135deg,rgba(6,182,212,0.14),rgba(59,130,246,0.09))}
 .proj-thumb-lgu{background:linear-gradient(135deg,rgba(16,185,129,0.12),rgba(6,182,212,0.07))}
 .proj-thumb-personal{background:linear-gradient(135deg,rgba(251,191,36,0.1),rgba(249,115,22,0.07))}
-.proj-thumb-icon{opacity:0.5;font-size:36px;transition:transform 0.3s}
-.proj-card-wrap:hover .proj-thumb-icon{transform:scale(1.12)}
+.proj-thumb-icon{opacity:0.5;font-size:36px}
 .proj-thumb-icon.thesis{color:#c4b5fd}
 .proj-thumb-icon.ot{color:#67e8f9}
 .proj-thumb-icon.lgu{color:#6ee7b7}
@@ -208,40 +212,15 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .tag-ot{background:rgba(6,182,212,0.18);color:#67e8f9;border:1px solid rgba(6,182,212,0.25)}
 .tag-lgu{background:rgba(16,185,129,0.16);color:#6ee7b7;border:1px solid rgba(16,185,129,0.22)}
 .tag-personal{background:rgba(251,191,36,0.14);color:#fde68a;border:1px solid rgba(251,191,36,0.2)}
-.proj-media-badge{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);background:rgba(99,102,241,0.82);backdrop-filter:blur(8px);border-radius:20px;padding:3px 10px;font-size:9.5px;font-weight:700;color:#fff;font-family:var(--font-d);letter-spacing:0.3px;display:flex;align-items:center;gap:4px;white-space:nowrap}
-.proj-body{padding:16px 18px 0;flex:1}
-.proj-title{font-family:var(--font-d);font-size:14.5px;font-weight:700;color:var(--text);margin-bottom:6px;letter-spacing:-0.3px;line-height:1.35}
-.proj-desc{font-size:12.5px;color:var(--text-2);line-height:1.7;margin-bottom:10px}
-.proj-tech-row{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
+.proj-body{padding:18px 18px 0;flex:1}
+.proj-title{font-family:var(--font-d);font-size:14.5px;font-weight:700;color:var(--text);margin-bottom:7px;letter-spacing:-0.3px;line-height:1.35}
+.proj-desc{font-size:12.5px;color:var(--text-2);line-height:1.7;margin-bottom:12px}
+.proj-tech-row{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px}
 .proj-tech{font-size:10.5px;color:#818cf8;background:rgba(99,102,241,0.1);padding:2px 8px;border-radius:4px;font-family:var(--font-m)}
-.proj-footer{display:flex;gap:12px;padding:10px 18px;border-top:1px solid rgba(255,255,255,0.04);flex-shrink:0}
+.proj-footer{display:flex;gap:12px;padding:12px 18px;border-top:1px solid rgba(255,255,255,0.04)}
 .proj-link{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#818cf8;text-decoration:none;font-weight:500;font-family:var(--font-b);transition:color 0.2s}
 .proj-link:hover{color:#a5b4fc}
-
-/* ── BACK FACE ── */
-/* Video back */
-.proj-back-video-wrap{flex:1;position:relative;overflow:hidden;border-radius:var(--radius) var(--radius) 0 0}
-.proj-back-video-wrap iframe,.proj-back-video-wrap video{width:100%;height:100%;object-fit:cover;border:none;display:block}
-
-/* Carousel back */
-.proj-carousel{position:relative;flex:1;overflow:hidden;border-radius:var(--radius) var(--radius) 0 0;min-height:0}
-.proj-carousel-track{display:flex;height:100%;transition:transform 0.5s cubic-bezier(0.4,0,0.2,1)}
-.proj-carousel-slide{min-width:100%;height:100%;flex-shrink:0;position:relative}
-.proj-carousel-slide img{width:100%;height:100%;object-fit:cover;display:block}
-.proj-carousel-arrows{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 8px;pointer-events:none}
-.proj-carousel-arrow{width:30px;height:30px;border-radius:50%;background:rgba(5,8,16,0.75);border:1px solid rgba(255,255,255,0.18);color:#fff;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;pointer-events:all;transition:all 0.2s;backdrop-filter:blur(8px)}
-.proj-carousel-arrow:hover{background:rgba(99,102,241,0.65);border-color:rgba(99,102,241,0.7)}
-.proj-carousel-dots{display:flex;justify-content:center;gap:5px;padding:6px 0 4px;background:rgba(5,8,16,0.6)}
-.proj-carousel-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.28);cursor:pointer;transition:all 0.2s;border:none;padding:0;flex-shrink:0}
-.proj-carousel-dot.active{background:#a5b4fc;transform:scale(1.35)}
-
-/* Back info strip */
-.proj-back-info{padding:11px 14px;background:rgba(5,8,16,0.88);backdrop-filter:blur(8px);flex-shrink:0;border-radius:0 0 var(--radius) var(--radius)}
-.proj-back-title{font-family:var(--font-d);font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.proj-back-hint{font-size:10.5px;color:var(--text-3);display:flex;align-items:center;gap:5px;font-family:var(--font-m)}
-.proj-back-hint i{font-size:9px;color:#a5b4fc}
-
-/* ════ TESTIMONIALS ════ */
+.proj-card:hover .proj-thumb-icon{transform:scale(1.12);transition:transform 0.3s}
 .testi-section{position:relative;background:linear-gradient(155deg,#0a0a1a 0%,#0e0825 100%);padding:80px 8vw 70px;clip-path:polygon(0 50px,100% 0,100% calc(100% - 50px),0 100%);margin:-15px 0;z-index:1}
 .testi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px;margin-top:44px}
 .testi-card{background:rgba(255,255,255,0.03);border:1px solid rgba(99,102,241,0.13);border-radius:var(--radius);padding:30px;position:relative;transition:all 0.3s}
@@ -252,7 +231,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .testi-avatar{width:40px;height:40px;border-radius:50%;background:var(--g-accent);display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-weight:700;font-size:15px;color:#fff;flex-shrink:0}
 .testi-name{font-weight:700;font-size:14px;font-family:var(--font-d);color:var(--text)}
 .testi-role{font-size:11.5px;color:var(--text-3);margin-top:1px}
-
 .resume-strip{position:relative;z-index:2;background:var(--ink-2);padding:70px 8vw;text-align:center;overflow:hidden}
 .resume-strip::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(99,102,241,0.1) 0%,transparent 70%);pointer-events:none}
 .rs-title{font-family:var(--font-d);font-size:clamp(24px,3.2vw,42px);font-weight:700;color:var(--text);margin-bottom:11px;letter-spacing:-1px;position:relative}
@@ -332,12 +310,12 @@ a.re-contact-item:hover{color:#fff}
   body{background:#fff !important;margin:0 !important;padding:0 !important;overflow:visible !important}
   .modal-overlay.open{display:block !important;position:absolute !important;inset:0 !important;background:#fff !important;padding:0 !important;overflow:visible !important;opacity:1 !important;z-index:9999 !important}
   .modal-box{max-width:100% !important;width:100% !important;border-radius:0 !important;box-shadow:none !important;animation:none !important}
-  .re-body{display:grid !important;grid-template-columns:1fr 0.65fr !important;background:none !important;padding:0 !important;border-radius:0 !important}
-  .re-col-l{display:block !important;border-right:2px solid #f0f2f4 !important;background:#fff !important}
-  .re-col-r{display:block !important;background:#f9fafb !important}
+  .re-body{display:grid !important;grid-template-columns:1fr 0.65fr !important;background:none !important;padding:0 !important;border-radius:0 !important;}
+  .re-col-l{display:block !important;border-right:2px solid #f0f2f4 !important;background:#fff !important;}
+  .re-col-r{display:block !important;background:#f9fafb !important;}
   .re-section{break-inside:avoid !important;padding:12px 16px 0 !important}
-  .re-header{background:#2c3e50 !important;color:#fff !important;display:flex !important;flex-direction:row !important;justify-content:space-between !important;align-items:center !important}
-  .re-contacts{display:flex !important;flex-direction:column !important;align-items:flex-end !important;gap:4px !important}
+  .re-header{background:#2c3e50 !important;color:#fff !important;display:flex !important;flex-direction:row !important;justify-content:space-between !important;align-items:center !important;}
+  .re-contacts{display:flex !important;flex-direction:column !important;align-items:flex-end !important;gap:4px !important;}
   .re-job,.re-edu,.re-cert{break-inside:avoid !important}
   a.re-contact-item{color:rgba(255,255,255,0.8) !important;text-decoration:underline !important}
   @page{size:A4 portrait;margin:0}
@@ -363,16 +341,14 @@ a.re-contact-item:hover{color:#fff}
   .btn-print{flex:1;justify-content:center}
   .re-header{flex-direction:column;align-items:flex-start;gap:12px}
   .re-contacts{align-items:flex-start}
-  .re-body{grid-template-columns:1fr !important}
-  /* On mobile, disable flip — tap to open modal directly */
-  .proj-card-wrap:hover .proj-card.has-media{transform:none}
+  .re-body{column-count:1 !important}
 }
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
 .anim{opacity:0;animation:fadeUp 0.65s cubic-bezier(0.16,1,0.3,1) forwards;animation-play-state:paused}
 .d1{animation-delay:0.05s}.d2{animation-delay:0.15s}.d3{animation-delay:0.25s}.d4{animation-delay:0.35s}
 
-/* ── PROJECT DETAIL MODAL ── */
+/* ── PROJECT MODAL ── */
 .proj-modal-overlay{position:fixed;inset:0;z-index:900;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity 0.3s;background:rgba(2,4,18,0.7);backdrop-filter:blur(16px) saturate(160%)}
 .proj-modal-overlay.open{opacity:1;pointer-events:all}
 .proj-modal{position:relative;background:linear-gradient(145deg,#0f1535 0%,#0b0f1e 60%,#1a0a3d 100%);border:1px solid rgba(99,102,241,0.25);border-radius:24px;width:100%;max-width:820px;max-height:88vh;overflow-y:auto;box-shadow:0 0 0 1px rgba(99,102,241,0.12),0 40px 120px rgba(0,0,0,0.7),inset 0 1px 0 rgba(255,255,255,0.06);transform:translateY(40px) scale(0.97);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);scrollbar-width:thin;scrollbar-color:rgba(99,102,241,0.2) transparent}
@@ -417,16 +393,28 @@ a.re-contact-item:hover{color:#fff}
 .pm-iso-bar-bg{height:4px;background:rgba(255,255,255,0.07);border-radius:2px;overflow:hidden}
 .pm-iso-bar-fill{height:100%;border-radius:2px;background:var(--g-accent);transition:width 1s cubic-bezier(0.4,0,0.2,1) 0.2s;width:0}
 .pm-iso-score{font-family:var(--font-d);font-size:17px;font-weight:700;color:var(--text);margin-top:6px}
-
-/* ── SWIRL ── */
+.proj-card.hiding{opacity:0;transform:scale(0.92) translateY(8px);pointer-events:none;transition:opacity 0.35s ease,transform 0.35s}
+.proj-card-wrap.hidden{display:none}
+.proj-card.showing{opacity:0;transform:scale(0.92) translateY(8px)}
 .hero-swirl{position:absolute;top:-10%;right:-4%;width:52%;height:120%;pointer-events:none;z-index:1;opacity:0.12;overflow:hidden}
 .hero-swirl svg{width:100%;height:100%}
 .hero-swirl-2{position:absolute;top:15%;right:10%;width:32%;height:65%;pointer-events:none;z-index:1;opacity:0.06;overflow:hidden}
 .hero-swirl-2 svg{width:100%;height:100%}
 .swirl-path{fill:none;stroke-linecap:round;transform-origin:50% 50%}
-.swirl-path:nth-child(1){animation:swirlA 18s ease-in-out infinite}.swirl-path:nth-child(2){animation:swirlA 23s ease-in-out infinite reverse}.swirl-path:nth-child(3){animation:swirlB 27s ease-in-out infinite}.swirl-path:nth-child(4){animation:swirlB 31s ease-in-out infinite reverse}.swirl-path:nth-child(5){animation:swirlA 21s ease-in-out infinite}.swirl-path:nth-child(6){animation:swirlB 25s ease-in-out infinite reverse}.swirl-path:nth-child(7){animation:swirlA 29s ease-in-out infinite}.swirl-path:nth-child(8){animation:swirlB 17s ease-in-out infinite reverse}
+.swirl-path:nth-child(1){animation:swirlA 18s ease-in-out infinite}
+.swirl-path:nth-child(2){animation:swirlA 23s ease-in-out infinite reverse}
+.swirl-path:nth-child(3){animation:swirlB 27s ease-in-out infinite}
+.swirl-path:nth-child(4){animation:swirlB 31s ease-in-out infinite reverse}
+.swirl-path:nth-child(5){animation:swirlA 21s ease-in-out infinite}
+.swirl-path:nth-child(6){animation:swirlB 25s ease-in-out infinite reverse}
+.swirl-path:nth-child(7){animation:swirlA 29s ease-in-out infinite}
+.swirl-path:nth-child(8){animation:swirlB 17s ease-in-out infinite reverse}
 .swirl2-path{fill:none;stroke-linecap:round;transform-origin:50% 50%}
-.swirl2-path:nth-child(1){animation:swirlA 22s ease-in-out infinite reverse}.swirl2-path:nth-child(2){animation:swirlB 28s ease-in-out infinite}.swirl2-path:nth-child(3){animation:swirlA 19s ease-in-out infinite reverse}.swirl2-path:nth-child(4){animation:swirlB 34s ease-in-out infinite}.swirl2-path:nth-child(5){animation:swirlA 24s ease-in-out infinite reverse}
+.swirl2-path:nth-child(1){animation:swirlA 22s ease-in-out infinite reverse}
+.swirl2-path:nth-child(2){animation:swirlB 28s ease-in-out infinite}
+.swirl2-path:nth-child(3){animation:swirlA 19s ease-in-out infinite reverse}
+.swirl2-path:nth-child(4){animation:swirlB 34s ease-in-out infinite}
+.swirl2-path:nth-child(5){animation:swirlA 24s ease-in-out infinite reverse}
 @keyframes swirlA{0%,100%{transform:rotate(0deg) scale(1)}30%{transform:rotate(9deg) scale(1.05)}70%{transform:rotate(-7deg) scale(0.96)}}
 @keyframes swirlB{0%,100%{transform:rotate(0deg) scale(1)}40%{transform:rotate(-10deg) scale(1.04)}80%{transform:rotate(6deg) scale(0.97)}}
 @media(max-width:768px){.hero-swirl,.hero-swirl-2{display:none}}
@@ -534,7 +522,7 @@ a.re-contact-item:hover{color:#fff}
     <div class="hero-btns">
       <a href="#" class="btn-primary" onclick="openResumeModal(event)"><i class="fas fa-file-alt"></i><?= esc($about['cv_label']??'View Resume') ?></a>
       <?php if(!empty($about['btn_contact_email'])): ?>
-      <a href="mailto:<?= esc($about['btn_contact_email']) ?>" class="btn-ghost"><?= esc($about['btn_contact_label']??'Hire Me') ?></a>
+      <a href="/cdn-cgi/l/email-protection#d6eae9ebf6b3a5b5fef2b7b4b9a3a28df1b4a2b889b5b9b8a2b7b5a289b3bbb7bfbaf18bfff6e9e8" class="btn-ghost"><?= esc($about['btn_contact_label']??'Hire Me') ?></a>
       <?php else: ?>
       <a href="#contact" class="btn-ghost"><?= esc($about['btn_contact_label']??'Hire Me') ?></a>
       <?php endif; ?>
@@ -544,7 +532,7 @@ a.re-contact-item:hover{color:#fff}
       <?php if(!empty($about['linkedin_url'])): ?><a href="<?= esc($about['linkedin_url']) ?>" target="_blank" class="social-icon" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a><?php endif; ?>
       <?php if(!empty($about['twitter'])): ?><a href="<?= esc($about['twitter']) ?>" target="_blank" class="social-icon" title="Twitter/X"><i class="fab fa-x-twitter"></i></a><?php endif; ?>
       <?php if(!empty($about['facebook'])): ?><a href="<?= esc($about['facebook']) ?>" target="_blank" class="social-icon" title="Facebook"><i class="fab fa-facebook-f"></i></a><?php endif; ?>
-      <?php if(!empty($header['email'])): ?><a href="mailto:<?= esc($header['email']) ?>" class="social-icon" title="Email"><i class="fas fa-envelope"></i></a><?php endif; ?>
+      <?php if(!empty($header['email'])): ?><a href="/cdn-cgi/l/email-protection#330f0c0e135640501b175b56525756416814565e525a5f146e1a130c0d" class="social-icon" title="Email"><i class="fas fa-envelope"></i></a><?php endif; ?>
     </div>
     <div class="counters-row" id="counters">
       <div class="counter-chip"><div class="counter-icon blue"><i class="fas fa-briefcase"></i></div><div><div class="counter-val" data-target="2" data-suffix="">0</div><div class="counter-lbl">OJT Experiences</div></div></div>
@@ -592,41 +580,30 @@ a.re-contact-item:hover{color:#fff}
     $iconColor = ['thesis'=>'thesis','ojt'=>'ot','lgu'=>'lgu','personal'=>'personal'];
     $tagClass  = ['thesis'=>'tag-thesis','ojt'=>'tag-ot','lgu'=>'tag-lgu','personal'=>'tag-personal'];
     $tagLabel  = ['thesis'=>'&#9733; Thesis','ojt'=>'OJT','lgu'=>'LGU','personal'=>'Personal'];
-
     foreach($projects as $i => $proj):
-      $cat       = $proj['category'] ?? 'personal';
-      $projTech  = json_decode($proj['tech'] ?? '[]', true) ?: [];
-      $delay     = 'd'.min($i+1,4);
-      $mediaRaw  = trim($proj['media_urls'] ?? '');
-      $mediaList = $mediaRaw
-        ? array_values(array_filter(array_map('trim', preg_split('/[\n,]+/', $mediaRaw))))
-        : [];
-      $hasMedia  = !empty($mediaList);
-      $firstUrl  = $mediaList[0] ?? '';
-      $isVideo   = $hasMedia && (
-        str_contains($firstUrl,'youtube.com') ||
-        str_contains($firstUrl,'youtu.be') ||
-        preg_match('/\.(mp4|webm|ogg)$/i', $firstUrl)
+        $cat = $proj['category'] ?? 'personal';
+        $projTech = json_decode($proj['tech'] ?? '[]', true) ?: [];
+        $delay = 'd'.min($i+1,4);
+    ?>
+    <?php
+      $mediaRaw = $proj['media_urls'] ?? '';
+      $mediaList = array_values(array_filter(array_map('trim', explode(',', $mediaRaw))));
+      $hasMedia = !empty($mediaList);
+      $isVideo = $hasMedia && (
+        strpos($mediaList[0], 'youtube.com') !== false ||
+        strpos($mediaList[0], 'youtu.be') !== false ||
+        preg_match('/\.(mp4|webm|ogg)$/i', $mediaList[0])
       );
     ?>
-    <div class="proj-card-wrap <?= $cat==='thesis'?'featured':'' ?> anim <?= $delay ?>"
-         data-category="<?= esc($cat) ?>"
-         data-project="<?= $proj['id'] ?>">
+    <div class="proj-card-wrap <?= $cat==='thesis'?'featured':'' ?> anim <?= $delay ?>" data-category="<?= esc($cat) ?>" data-project="<?= $proj['id'] ?>">
+      <div class="proj-card <?= $cat==='thesis'?'featured':'' ?> <?= $hasMedia?'has-media':'' ?>" style="min-height:290px">
 
-      <div class="proj-card <?= $cat==='thesis'?'featured':'' ?> <?= $hasMedia?'has-media':'' ?>">
-
-        <!-- ── FRONT FACE ── -->
+        <!-- FRONT FACE -->
         <div class="proj-face proj-face-front">
           <div class="proj-thumb <?= $thumbBg[$cat]??'proj-thumb-personal' ?>">
             <i class="<?= esc($proj['icon']) ?> proj-thumb-icon <?= $iconColor[$cat]??'personal' ?>"></i>
             <span class="proj-type-tag <?= $tagClass[$cat]??'tag-personal' ?>"><?= $tagLabel[$cat]??$cat ?></span>
-            <?php if($hasMedia): ?>
-            <div class="proj-media-badge">
-              <i class="fas fa-<?= $isVideo?'play':'images' ?>" style="font-size:8px"></i>
-              <?= $isVideo ? 'Video preview' : (count($mediaList).' photo'.(count($mediaList)>1?'s':'')) ?>
-              · hover
-            </div>
-            <?php endif; ?>
+            <?php if($hasMedia): ?><div style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);background:rgba(99,102,241,0.85);border-radius:20px;padding:3px 10px;font-size:9.5px;font-weight:700;color:#fff;font-family:var(--font-d);letter-spacing:0.3px;display:flex;align-items:center;gap:4px;backdrop-filter:blur(8px);white-space:nowrap"><i class="fas fa-images" style="font-size:8px"></i><?= count($mediaList) ?> media · hover</div><?php endif; ?>
           </div>
           <div class="proj-body">
             <div class="proj-title"><?= esc($proj['title']) ?></div>
@@ -636,71 +613,68 @@ a.re-contact-item:hover{color:#fff}
             <?php endif; ?>
           </div>
           <div class="proj-footer" style="justify-content:flex-end">
-            <span class="proj-link" style="color:var(--text-3);font-size:11px">
-              <i class="fas fa-arrow-up-right-from-square" style="font-size:9px"></i>
-              <?= $hasMedia ? 'Hover · Click for details' : 'Click to explore' ?>
-            </span>
+            <span class="proj-link" style="color:var(--text-3);font-size:11px"><i class="fas fa-arrow-up-right-from-square" style="font-size:9px"></i> Click to explore</span>
           </div>
         </div>
 
+        <!-- BACK FACE — unified carousel for all media types -->
         <?php if($hasMedia): ?>
-        <!-- ── BACK FACE ── -->
-        <div class="proj-face proj-face-back">
-          <?php if($isVideo):
-            // Convert YouTube watch URL to embed
-            if(preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/', $firstUrl, $ym)) {
-              $embedUrl = 'https://www.youtube.com/embed/'.$ym[1].'?autoplay=1&mute=1&loop=1&playlist='.$ym[1].'&controls=0&modestbranding=1&rel=0';
-            } else {
-              $embedUrl = $firstUrl;
-            }
-            $isYT = str_contains($firstUrl,'youtube') || str_contains($firstUrl,'youtu.be');
-          ?>
-          <div class="proj-back-video-wrap">
-            <?php if($isYT): ?>
-            <iframe src="<?= esc($embedUrl) ?>" allow="autoplay;encrypted-media" allowfullscreen></iframe>
-            <?php else: ?>
-            <video src="<?= esc($firstUrl) ?>" autoplay muted loop playsinline></video>
-            <?php endif; ?>
-          </div>
-          <?php else: ?>
-          <!-- Photo carousel -->
+        <div class="proj-face proj-face-back" onclick="event.stopPropagation(); openProject(<?= $proj['id'] ?>)">
           <div class="proj-carousel" data-index="0" id="carousel-<?= $proj['id'] ?>">
             <div class="proj-carousel-track" id="track-<?= $proj['id'] ?>">
-              <?php foreach($mediaList as $img): ?>
+              <?php foreach($mediaList as $mi => $mediaUrl):
+                $isItemVideo = preg_match('/\.(mp4|webm|mov|avi)$/i', $mediaUrl);
+                $isItemYt    = strpos($mediaUrl,'youtube.com') !== false || strpos($mediaUrl,'youtu.be') !== false;
+              ?>
               <div class="proj-carousel-slide">
-                <img src="<?= esc($img) ?>" alt="<?= esc($proj['title']) ?>" loading="lazy"
-                     onerror="this.parentElement.style.display='none'">
+                <?php if($isItemYt):
+                  preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/', $mediaUrl, $ytm);
+                  $embedUrl = 'https://www.youtube.com/embed/'.$ytm[1].'?autoplay=1&mute=1&loop=1&playlist='.$ytm[1].'&controls=0&modestbranding=1';
+                ?>
+                <iframe src="<?= esc($embedUrl) ?>" allow="autoplay; encrypted-media" allowfullscreen
+                  style="width:100%;height:100%;border:none;display:block" loading="lazy"></iframe>
+                <?php elseif($isItemVideo): ?>
+                <video src="<?= esc($mediaUrl) ?>" <?= $mi===0?'autoplay':'' ?> muted loop playsinline
+                  style="width:100%;height:100%;object-fit:cover;display:block"></video>
+                <?php else: ?>
+                <img src="<?= esc($mediaUrl) ?>" alt="<?= esc($proj['title']) ?>"
+                  style="width:100%;height:100%;object-fit:cover;display:block" loading="lazy">
+                <?php endif; ?>
               </div>
               <?php endforeach; ?>
             </div>
             <?php if(count($mediaList) > 1): ?>
             <div class="proj-carousel-arrows">
-              <button class="proj-carousel-arrow" onclick="event.stopPropagation();carouselPrev(<?= $proj['id'] ?>)">
-                <i class="fas fa-chevron-left"></i>
-              </button>
-              <button class="proj-carousel-arrow" onclick="event.stopPropagation();carouselNext(<?= $proj['id'] ?>)">
-                <i class="fas fa-chevron-right"></i>
-              </button>
+              <button class="proj-carousel-arrow" onclick="event.stopPropagation();carouselPrev(<?= $proj['id'] ?>)"><i class="fas fa-chevron-left"></i></button>
+              <button class="proj-carousel-arrow" onclick="event.stopPropagation();carouselNext(<?= $proj['id'] ?>)"><i class="fas fa-chevron-right"></i></button>
             </div>
             <div class="proj-carousel-dots" id="dots-<?= $proj['id'] ?>">
-              <?php foreach($mediaList as $di => $img): ?>
+              <?php foreach($mediaList as $di => $mediaUrl):
+                $isItemYt2  = strpos($mediaUrl,'youtube.com') !== false || strpos($mediaUrl,'youtu.be') !== false;
+                $isItemVid2 = preg_match('/\.(mp4|webm|mov|avi)$/i', $mediaUrl) || $isItemYt2;
+                $dotIcon    = $isItemVid2 ? '▶' : '●';
+              ?>
               <button class="proj-carousel-dot <?= $di===0?'active':'' ?>"
-                      onclick="event.stopPropagation();carouselGo(<?= $proj['id'] ?>,<?= $di ?>)"></button>
+                onclick="event.stopPropagation();carouselGo(<?= $proj['id'] ?>,<?= $di ?>)"
+                title="<?= $isItemVid2?'Video':'Photo' ?> <?= $di+1 ?>">
+                <span style="font-size:7px"><?= $dotIcon ?></span>
+              </button>
               <?php endforeach; ?>
             </div>
             <?php endif; ?>
           </div>
-          <?php endif; ?>
-
           <div class="proj-back-info">
             <div class="proj-back-title"><?= esc($proj['title']) ?></div>
-            <div class="proj-back-hint"><i class="fas fa-hand-pointer"></i> Click to view full details</div>
+            <div class="proj-back-hint">
+              <i class="fas fa-images" style="font-size:9px"></i>
+              <?= count($mediaList) ?> media · <i class="fas fa-hand-pointer" style="font-size:9px"></i> Click for details
+            </div>
           </div>
         </div>
         <?php endif; ?>
 
-      </div><!-- .proj-card -->
-    </div><!-- .proj-card-wrap -->
+      </div>
+    </div>
     <?php endforeach; ?>
   </div>
 </section>
@@ -735,7 +709,7 @@ a.re-contact-item:hover{color:#fff}
     <h2>Let's Build <span style="background:var(--g-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Something</span></h2>
     <p>Have a project in mind, an opportunity to share, or a problem to solve? I'd love to hear from you.</p>
     <?php $email=$about['btn_contact_email']?:($header['email']??''); ?>
-    <?php if(!empty($email)): ?><a href="mailto:<?= esc($email) ?>" class="btn-email"><i class="fas fa-envelope"></i><?= esc($email) ?></a><?php endif; ?>
+    <?php if(!empty($email)): ?><a href="/cdn-cgi/l/email-protection#85b9bab8a5e0f6e6ada1e0e8e4ece9aca5babb" class="btn-email"><i class="fas fa-envelope"></i><?= esc($email) ?></a><?php endif; ?>
   </div>
 </section>
 
@@ -754,7 +728,7 @@ a.re-contact-item:hover{color:#fff}
   </div>
 </footer>
 
-<!-- PROJECT DETAIL MODAL -->
+<!-- PROJECT MODAL -->
 <div class="proj-modal-overlay" id="projModal" onclick="closeProjModalOnOverlay(event)">
   <div class="proj-modal" id="projModalBox">
     <div class="pm-header">
@@ -775,9 +749,18 @@ a.re-contact-item:hover{color:#fff}
       <h3><i class="fas fa-file-alt" style="color:#3b82f6;margin-right:8px"></i>Resume — <?= esc($header['name']??'') ?></h3>
       <div class="modal-bar-actions">
         <div class="print-settings">
-          <div class="print-setting-group"><label>Size</label><select id="printSize"><option value="A4" selected>A4</option><option value="Letter">Letter</option><option value="Legal">Legal</option></select></div>
-          <div class="print-setting-group"><label>Orientation</label><select id="printOrientation"><option value="portrait" selected>Portrait</option><option value="landscape">Landscape</option></select></div>
-          <div class="print-setting-group"><label>Scale %</label><input type="number" id="printScale" value="100" min="50" max="150" step="5"></div>
+          <div class="print-setting-group">
+            <label>Size</label>
+            <select id="printSize"><option value="A4" selected>A4</option><option value="Letter">Letter</option><option value="Legal">Legal</option></select>
+          </div>
+          <div class="print-setting-group">
+            <label>Orientation</label>
+            <select id="printOrientation"><option value="portrait" selected>Portrait</option><option value="landscape">Landscape</option></select>
+          </div>
+          <div class="print-setting-group">
+            <label>Scale %</label>
+            <input type="number" id="printScale" value="100" min="50" max="150" step="5">
+          </div>
         </div>
         <button class="btn-print" onclick="printResume()"><i class="fas fa-print"></i> Print / Save PDF</button>
         <button class="btn-close-modal" onclick="closeResumeModal()"><i class="fas fa-times"></i></button>
@@ -792,7 +775,7 @@ a.re-contact-item:hover{color:#fff}
           </div>
           <div class="re-contacts">
             <?php if(!empty($header['email'])): ?>
-            <a class="re-contact-item" href="mailto:<?= esc($header['email']) ?>" style="color:rgba(255,255,255,0.8);text-decoration:none"><i class="fas fa-envelope"></i><?= esc($header['email']) ?></a>
+            <a class="re-contact-item" href="/cdn-cgi/l/email-protection#6c5053514c091f0f444804090d08091e374b09010d05004b31454c5352" style="color:rgba(255,255,255,0.8);text-decoration:none"><i class="fas fa-envelope"></i><?= esc($header['email']) ?></a>
             <?php endif; ?>
             <?php if(!empty($header['phone'])): ?>
             <span class="re-contact-item"><i class="fas fa-phone"></i><?= esc($header['phone']) ?></span>
@@ -870,7 +853,7 @@ a.re-contact-item:hover{color:#fff}
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── SCROLL PROGRESS ──
 window.addEventListener('scroll', () => {
   const el = document.getElementById('scroll-progress');
@@ -881,10 +864,10 @@ window.addEventListener('scroll', () => {
 // ── MOBILE MENU ──
 function toggleMobileMenu() {
   const menu = document.getElementById('mobileMenu');
-  const btn  = document.getElementById('navHamburger');
-  const open = menu.classList.toggle('open');
-  btn.classList.toggle('open', open);
-  document.body.style.overflow = open ? 'hidden' : '';
+  const btn = document.getElementById('navHamburger');
+  const isOpen = menu.classList.contains('open');
+  if(isOpen) { menu.classList.remove('open'); btn.classList.remove('open'); document.body.style.overflow = ''; }
+  else { menu.classList.add('open'); btn.classList.add('open'); document.body.style.overflow = 'hidden'; }
 }
 function closeMobileMenu() {
   document.getElementById('mobileMenu').classList.remove('open');
@@ -893,7 +876,7 @@ function closeMobileMenu() {
 }
 document.addEventListener('click', e => {
   const menu = document.getElementById('mobileMenu');
-  const btn  = document.getElementById('navHamburger');
+  const btn = document.getElementById('navHamburger');
   if(menu.classList.contains('open') && !menu.contains(e.target) && !btn.contains(e.target)) closeMobileMenu();
 });
 
@@ -904,34 +887,35 @@ document.getElementById('resumeModal').addEventListener('click', function(e) { i
 
 // ── PRINT ──
 function printResume() {
-  const size        = document.getElementById('printSize')?.value        || 'A4';
+  const size = document.getElementById('printSize')?.value || 'A4';
   const orientation = document.getElementById('printOrientation')?.value || 'portrait';
-  const scale       = document.getElementById('printScale')?.value        || '100';
+  const scale = document.getElementById('printScale')?.value || '100';
   let styleEl = document.getElementById('dynamicPrintStyle');
-  if(!styleEl){ styleEl = document.createElement('style'); styleEl.id='dynamicPrintStyle'; document.head.appendChild(styleEl); }
-  styleEl.textContent = `@media print{@page{size:${size} ${orientation};margin:0}#resumeContent{transform:scale(${scale/100});transform-origin:top left;width:${10000/scale}%}}`;
+  if(!styleEl) { styleEl = document.createElement('style'); styleEl.id = 'dynamicPrintStyle'; document.head.appendChild(styleEl); }
+  styleEl.textContent = `@media print { @page { size: ${size} ${orientation}; margin: 0; } #resumeContent { transform: scale(${scale/100}); transform-origin: top left; width: ${10000/scale}%; } }`;
   document.getElementById('resumeModal').classList.add('open');
   setTimeout(() => window.print(), 300);
 }
 
 // ── LOGOUT ──
-function confirmLogout(e){ e.preventDefault(); if(confirm('Are you sure you want to logout?')) window.location.href='<?= base_url('logout') ?>'; }
+function confirmLogout(e) { e.preventDefault(); if(confirm('Are you sure you want to logout?')) window.location.href='<?= base_url('logout') ?>'; }
 
 // ── PROJECT FILTER ──
 function filterProjects(cat, btn) {
   document.querySelectorAll('.proj-filter').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  const wraps = document.querySelectorAll('.proj-card-wrap');
+  const cards = document.querySelectorAll('.proj-card');
   const toShow = [], toHide = [];
-  wraps.forEach(wrap => {
-    const visible = cat === 'all' || (wrap.dataset.category || '') === cat;
-    if(visible) toShow.push(wrap); else toHide.push(wrap);
+  cards.forEach(card => {
+    const wrap = card.closest('.proj-card-wrap') || card;
+    const visible = cat === 'all' || (card.dataset.category || '').includes(cat);
+    if (visible) toShow.push(wrap); else toHide.push(wrap);
   });
   toHide.forEach(el => { el.classList.remove('showing'); el.classList.add('hiding'); });
   setTimeout(() => {
     toHide.forEach(el => { el.classList.add('hidden'); el.classList.remove('hiding'); });
-    toShow.forEach(el => { el.classList.remove('hidden'); void el.offsetHeight; el.classList.add('showing'); });
-    toShow.forEach((el, i) => { setTimeout(() => el.classList.remove('showing'), i * 60); });
+    toShow.forEach(el => { el.classList.remove('hidden'); el.classList.add('showing'); el.offsetHeight; });
+    toShow.forEach((el, i) => { setTimeout(() => { el.classList.remove('showing'); }, i * 60); });
   }, 280);
 }
 
@@ -939,16 +923,18 @@ function filterProjects(cat, btn) {
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if(!entry.isIntersecting) return;
-    if(entry.target.classList.contains('anim')) entry.target.style.animationPlayState = 'running';
+    if(entry.target.classList.contains('anim')) { entry.target.style.animationPlayState = 'running'; }
     if(entry.target.id === 'counters') {
       entry.target.querySelectorAll('.counter-val[data-target]').forEach(el => {
-        const target = parseInt(el.dataset.target), suffix = el.dataset.suffix || '';
+        const target = parseInt(el.dataset.target);
+        const suffix = el.dataset.suffix || '';
         let start = 0;
-        const step = ts => {
-          if(!start) start = ts;
-          const p = Math.min((ts - start) / 1400, 1);
-          el.textContent = Math.round((1 - Math.pow(1-p,3)) * target) + suffix;
-          if(p < 1) requestAnimationFrame(step);
+        const step = (timestamp) => {
+          if(!start) start = timestamp;
+          const progress = Math.min((timestamp - start) / 1400, 1);
+          const ease = 1 - Math.pow(1 - progress, 3);
+          el.textContent = Math.round(ease * target) + suffix;
+          if(progress < 1) requestAnimationFrame(step);
         };
         requestAnimationFrame(step);
       });
@@ -975,34 +961,50 @@ const PROJECTS = {
     $projTech = json_decode($proj['tech'] ?? '[]', true) ?: [];
   ?>
   <?= $proj['id'] ?>: {
-    type:      <?= json_encode($typeLabels[$cat] ?? $cat) ?>,
+    type: <?= json_encode($typeLabels[$cat] ?? $cat) ?>,
     typeStyle: <?= json_encode($typeStyles[$cat] ?? $typeStyles['personal']) ?>,
-    title:     <?= json_encode($proj['title']) ?>,
-    desc:      <?= json_encode($proj['description']) ?>,
-    tech:      <?= json_encode($projTech) ?>,
-    github:    <?= json_encode($proj['github_url'] ?: null) ?>,
-    demo:      <?= json_encode($proj['demo_url'] ?: null) ?>,
+    title: <?= json_encode($proj['title']) ?>,
+    desc: <?= json_encode($proj['description']) ?>,
+    tech: <?= json_encode($projTech) ?>,
+    github: <?= json_encode($proj['github_url'] ?: null) ?>,
+    demo: <?= json_encode($proj['demo_url'] ?: null) ?>,
   },
   <?php endforeach; ?>
 };
 
+// Phases and ISO scores for thesis (legacy fallback)
+const THESIS_PHASES = <?php
+  $js = [];
+  foreach(($thesisPhases ?? []) as $ph) { $js[] = ['num'=>$ph['num'],'title'=>$ph['title'],'content'=>$ph['content']]; }
+  echo json_encode($js);
+?>;
+const ISO_SCORES = <?php
+  $js = [];
+  foreach(($isoScores ?? []) as $s) { $js[] = ['label'=>$s['label'],'score'=>(int)$s['score']]; }
+  echo json_encode($js);
+?>;
+
+// All phases keyed by project_id (supports all categories)
 const ALL_PHASES = <?php
-  $js = [];
+  $allPhasesJs = [];
   foreach(($allThesisPhases ?? []) as $pid => $phases) {
-    $js[$pid] = array_map(fn($ph) => ['num'=>$ph['num'],'title'=>$ph['title'],'content'=>$ph['content']], $phases);
+    $allPhasesJs[$pid] = array_map(fn($ph) => [
+      'num'=>$ph['num'],'title'=>$ph['title'],'content'=>$ph['content']
+    ], $phases);
   }
-  echo json_encode($js);
+  echo json_encode($allPhasesJs);
 ?>;
-
 const ALL_ISO = <?php
-  $js = [];
+  $allIsoJs = [];
   foreach(($allIsoScores ?? []) as $pid => $scores) {
-    $js[$pid] = array_map(fn($s) => ['label'=>$s['label'],'score'=>(int)$s['score']], $scores);
+    $allIsoJs[$pid] = array_map(fn($s) => [
+      'label'=>$s['label'],'score'=>(int)$s['score']
+    ], $scores);
   }
-  echo json_encode($js);
+  echo json_encode($allIsoJs);
 ?>;
 
-// ── PROJECT DETAIL MODAL ──
+// ── PROJECT MODAL ──
 function openProject(id) {
   const p = PROJECTS[id];
   if(!p) return;
@@ -1010,34 +1012,24 @@ function openProject(id) {
   document.getElementById('pm-type-tag').style.cssText = p.typeStyle;
   document.getElementById('pm-title').textContent = p.title;
 
-  const projPhases = ALL_PHASES[id] || [];
-  const projIso    = ALL_ISO[id]    || [];
+  // Only show phases/ISO if they exist for THIS specific project
+  const projPhases = (ALL_PHASES && ALL_PHASES[id]) ? ALL_PHASES[id] : [];
+  const projIso    = (ALL_ISO    && ALL_ISO[id])    ? ALL_ISO[id]    : [];
 
-  let body = `<p class="pm-desc">${p.desc}</p>`
-    + `<div class="pm-tech-row">${p.tech.map(t=>`<span class="pm-tech">${t}</span>`).join('')}</div>`
-    + `<div class="pm-links">`
-    + (p.github ? `<a href="${p.github}" class="pm-link-btn pm-link-github" target="_blank"><i class="fab fa-github"></i> GitHub</a>` : '')
-    + (p.demo   ? `<a href="${p.demo}"   class="pm-link-btn pm-link-demo"   target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>` : '')
-    + `</div>`;
+  let body = `<p class="pm-desc">${p.desc}</p><div class="pm-tech-row">${p.tech.map(t=>`<span class="pm-tech">${t}</span>`).join('')}</div><div class="pm-links">${p.github?`<a href="${p.github}" class="pm-link-btn pm-link-github" target="_blank"><i class="fab fa-github"></i> View on GitHub</a>`:''}${p.demo?`<a href="${p.demo}" class="pm-link-btn pm-link-demo" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>`:''}</div>`;
 
-  if(projPhases.length) {
-    body += `<div class="pm-divider"></div><div class="pm-section-label">Development Methodology</div>`
-      + `<div class="pm-accordion">`
-      + projPhases.map((ph,i) => `<div class="pm-phase${i===0?' open':''}"><div class="pm-phase-header" onclick="togglePmPhase(this)"><div class="pm-phase-num">${ph.num}</div><div class="pm-phase-title">${ph.title}</div><i class="fas fa-chevron-down pm-phase-chevron"></i></div><div class="pm-phase-body"><div class="pm-phase-content">${ph.content}</div></div></div>`).join('')
-      + `</div>`;
+  if(projPhases.length > 0) {
+    body += `<div class="pm-divider"></div><div class="pm-section-label">Development Methodology</div><div class="pm-accordion">${projPhases.map((ph,i)=>`<div class="pm-phase${i===0?' open':''}"><div class="pm-phase-header" onclick="togglePmPhase(this)"><div class="pm-phase-num">${ph.num}</div><div class="pm-phase-title">${ph.title}</div><i class="fas fa-chevron-down pm-phase-chevron"></i></div><div class="pm-phase-body"><div class="pm-phase-content">${ph.content}</div></div></div>`).join('')}</div>`;
   }
-  if(projIso.length) {
-    body += `<div class="pm-divider"></div><div class="pm-section-label">ISO 25010 Evaluation</div>`
-      + `<div class="pm-iso-grid">`
-      + projIso.map(s => `<div class="pm-iso-card"><div class="pm-iso-label">${s.label}</div><div class="pm-iso-bar-bg"><div class="pm-iso-bar-fill" data-w="${s.score}"></div></div><div class="pm-iso-score">${s.score}%</div></div>`).join('')
-      + `</div>`;
+  if(projIso.length > 0) {
+    body += `<div class="pm-divider"></div><div class="pm-section-label">ISO 25010 Evaluation</div><div class="pm-iso-grid">${projIso.map(s=>`<div class="pm-iso-card"><div class="pm-iso-label">${s.label}</div><div class="pm-iso-bar-bg"><div class="pm-iso-bar-fill" data-w="${s.score}"></div></div><div class="pm-iso-score">${s.score}%</div></div>`).join('')}</div>`;
   }
 
   document.getElementById('pm-body').innerHTML = body;
   document.getElementById('projModal').classList.add('open');
   document.body.style.overflow = 'hidden';
 
-  if(projIso.length) {
+  if(projIso.length > 0) {
     setTimeout(() => {
       document.querySelectorAll('.pm-iso-bar-fill[data-w]').forEach((bar,i) => {
         setTimeout(() => { bar.style.width = bar.dataset.w + '%'; }, i * 100);
@@ -1049,69 +1041,23 @@ function openProject(id) {
 function closeProjModal() { document.getElementById('projModal').classList.remove('open'); document.body.style.overflow = ''; }
 function closeProjModalOnOverlay(e) { if(e.target === document.getElementById('projModal')) closeProjModal(); }
 function togglePmPhase(header) {
-  const phase  = header.closest('.pm-phase');
-  const wasOpen = phase.classList.contains('open');
+  const phase = header.closest('.pm-phase');
+  const isOpen = phase.classList.contains('open');
   document.querySelectorAll('.pm-phase').forEach(p => p.classList.remove('open'));
-  if(!wasOpen) phase.classList.add('open');
+  if(!isOpen) phase.classList.add('open');
 }
 
-document.addEventListener('keydown', e => {
-  if(e.key === 'Escape') { closeProjModal(); closeResumeModal(); closeMobileMenu(); }
-});
+document.addEventListener('keydown', e => { if(e.key === 'Escape') { closeProjModal(); closeResumeModal(); closeMobileMenu(); } });
 
-// Click on card wrapper → open modal (skip if clicking carousel controls or back-face)
 document.getElementById('proj-grid').addEventListener('click', function(e) {
-  if(e.target.closest('.proj-carousel-arrow') || e.target.closest('.proj-carousel-dot')) return;
-  if(e.target.closest('.proj-face-back')) return;  // back face has its own click
+  // Don't open modal when clicking carousel arrows/dots
+  if(e.target.closest('.proj-carousel-arrow') || e.target.closest('.proj-carousel-dots')) return;
+  // Don't open modal if clicking on back face (it handles its own click)
+  if(e.target.closest('.proj-face-back')) return;
   const wrap = e.target.closest('.proj-card-wrap');
   if(!wrap) return;
   const id = parseInt(wrap.dataset.project);
   if(id) openProject(id);
-});
-
-// Click on back face → open modal
-document.getElementById('proj-grid').addEventListener('click', function(e) {
-  if(e.target.closest('.proj-carousel-arrow') || e.target.closest('.proj-carousel-dot')) return;
-  const back = e.target.closest('.proj-face-back');
-  if(!back) return;
-  const wrap = back.closest('.proj-card-wrap');
-  if(!wrap) return;
-  const id = parseInt(wrap.dataset.project);
-  if(id) openProject(id);
-});
-
-// ── CAROUSEL ──
-function carouselGo(id, idx) {
-  const track  = document.getElementById('track-' + id);
-  const dotEls = document.querySelectorAll('#dots-' + id + ' .proj-carousel-dot');
-  if(!track) return;
-  const total = track.children.length;
-  idx = ((idx % total) + total) % total;
-  track.style.transform = `translateX(-${idx * 100}%)`;
-  dotEls.forEach((d,i) => d.classList.toggle('active', i === idx));
-  const carousel = document.getElementById('carousel-' + id);
-  if(carousel) carousel.dataset.index = idx;
-}
-function carouselNext(id) {
-  const c = document.getElementById('carousel-' + id);
-  carouselGo(id, parseInt(c?.dataset.index || 0) + 1);
-}
-function carouselPrev(id) {
-  const c = document.getElementById('carousel-' + id);
-  carouselGo(id, parseInt(c?.dataset.index || 0) - 1);
-}
-
-// Auto-advance photo carousels on hover
-document.querySelectorAll('.proj-card-wrap').forEach(wrap => {
-  const id = parseInt(wrap.dataset.project);
-  let timer;
-  wrap.addEventListener('mouseenter', () => {
-    const c = document.getElementById('carousel-' + id);
-    if(!c) return;
-    const total = document.getElementById('track-' + id)?.children.length || 0;
-    if(total > 1) timer = setInterval(() => carouselNext(id), 2500);
-  });
-  wrap.addEventListener('mouseleave', () => clearInterval(timer));
 });
 
 // ── NAVBAR ACTIVE ON SCROLL ──
@@ -1129,6 +1075,37 @@ window.addEventListener('scroll', () => {
     }
   });
 }, { passive: true });
+// ── CAROUSEL ──
+function carouselGo(id, idx) {
+  const track = document.getElementById('track-' + id);
+  const dots  = document.querySelectorAll('#dots-' + id + ' .proj-carousel-dot');
+  const total = track.children.length;
+  idx = ((idx % total) + total) % total;
+
+  // Pause all videos/iframes before sliding
+  track.querySelectorAll('video').forEach(v => { v.pause(); });
+
+  track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+  dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+  track.closest('.proj-carousel').dataset.index = idx;
+
+  // Play the video on the new slide if it's a video
+  const newSlide = track.children[idx];
+  const vid = newSlide?.querySelector('video');
+  if (vid) { vid.play().catch(() => {}); }
+}
+function carouselNext(id) {
+  const carousel = document.getElementById('carousel-' + id);
+  carouselGo(id, parseInt(carousel.dataset.index || 0) + 1);
+}
+function carouselPrev(id) {
+  const carousel = document.getElementById('carousel-' + id);
+  carouselGo(id, parseInt(carousel.dataset.index || 0) - 1);
+}
+
+
+
+
 </script>
 </body>
 </html>

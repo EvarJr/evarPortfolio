@@ -199,9 +199,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .proj-carousel::after{right:0;background:linear-gradient(to left,rgba(5,8,16,0.65) 0%,transparent 100%)}
 
 /* ── CAROUSEL DOTS ── */
-.proj-carousel-dots{display:flex;justify-content:center;gap:5px;padding:6px 0 4px;position:relative;z-index:5;background:rgba(5,8,16,0.5);backdrop-filter:blur(4px)}
-.proj-carousel-dot{min-width:18px;height:18px;border-radius:20px;background:rgba(255,255,255,0.2);cursor:pointer;transition:all 0.2s;border:none;padding:0 4px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.7)}
-.proj-carousel-dot.active{background:#a5b4fc;transform:scale(1.3)}
 
 /* ── BACK FACE — INFO STRIP (title only, no arrows in layout) ── */
 .proj-back-info{
@@ -704,22 +701,7 @@ a.re-contact-item:hover{color:#fff}
             </div>
           </div>
 
-          <!-- Dots row -->
-          <?php if(count($mediaList) > 1): ?>
-          <div class="proj-carousel-dots" id="dots-<?= $proj['id'] ?>">
-            <?php foreach($mediaList as $di => $mediaUrl):
-              $isItemYt2  = strpos($mediaUrl,'youtube.com') !== false || strpos($mediaUrl,'youtu.be') !== false;
-              $isItemVid2 = preg_match('/\.(mp4|webm|mov|avi)$/i', $mediaUrl) || $isItemYt2;
-              $dotIcon    = $isItemVid2 ? '▶' : '●';
-            ?>
-            <button class="proj-carousel-dot <?= $di===0?'active':'' ?>"
-              onclick="event.stopPropagation();carouselGo(<?= $proj['id'] ?>,<?= $di ?>)"
-              title="<?= $isItemVid2?'Video':'Photo' ?> <?= $di+1 ?>">
-              <span style="font-size:7px"><?= $dotIcon ?></span>
-            </button>
-            <?php endforeach; ?>
-          </div>
-          <?php endif; ?>
+
 
           <!-- Info strip: title only, no arrows in layout -->
           <div class="proj-back-info">

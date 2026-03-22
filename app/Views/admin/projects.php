@@ -71,42 +71,23 @@ body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);fon
 
 /* ── PROJECT LIST ── */
 .proj-list{display:flex;flex-direction:column;gap:8px}
-.proj-row{
-  display:flex;align-items:center;gap:12px;
-  padding:12px 14px;
-  border:1px solid var(--border);border-radius:8px;
-  background:#fff;transition:border-color 0.15s;
-  cursor:grab;
-}
+.proj-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:#fff;transition:border-color 0.15s;cursor:grab}
 .proj-row:hover{border-color:#c7d2fe}
 .proj-row.dragging{opacity:0.4;border-style:dashed}
 .proj-row.drag-over{border-color:var(--accent);background:#eff6ff}
 .proj-row:active{cursor:grabbing}
 .proj-row-drag{color:#d1d5db;font-size:12px;flex-shrink:0}
-.proj-row-icon{
-  width:36px;height:36px;border-radius:8px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:15px;flex-shrink:0;
-}
+.proj-row-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
 .proj-row-info{flex:1;min-width:0}
 .proj-row-title{font-size:13px;font-weight:600;color:var(--text)}
 .proj-row-meta{font-size:11px;color:var(--muted);margin-top:1px;display:flex;align-items:center;gap:8px}
-.cat-badge{
-  font-size:10px;font-weight:600;padding:2px 8px;
-  border-radius:20px;text-transform:uppercase;letter-spacing:0.3px;
-}
+.cat-badge{font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:0.3px}
 .cat-thesis{background:rgba(139,92,246,0.12);color:#7c3aed}
 .cat-ojt{background:rgba(6,182,212,0.1);color:#0891b2}
 .cat-lgu{background:rgba(16,185,129,0.1);color:#059669}
 .cat-personal{background:rgba(251,191,36,0.1);color:#d97706}
 .proj-row-actions{display:flex;gap:5px;flex-shrink:0}
-.feat-toggle{
-  display:flex;align-items:center;gap:5px;
-  font-size:11px;color:var(--muted);cursor:pointer;
-  padding:3px 8px;border-radius:4px;
-  background:#f9fafb;border:1px solid var(--border);
-  transition:all 0.15s;white-space:nowrap;
-}
+.feat-toggle{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);cursor:pointer;padding:3px 8px;border-radius:4px;background:#f9fafb;border:1px solid var(--border);transition:all 0.15s;white-space:nowrap}
 .feat-toggle.on{background:#f0fdf4;border-color:#86efac;color:#16a34a}
 .feat-toggle:hover{border-color:var(--accent)}
 
@@ -199,8 +180,6 @@ body.dark .dark-toggle{background:#111827;border-color:#1e2535;color:#fbbf24}
 .thesis-tab:hover:not(.active){border-color:var(--accent);color:var(--accent)}
 .thesis-panel{display:none}
 .thesis-panel.active{display:block}
-
-/* Phase rows */
 .phase-list{display:flex;flex-direction:column;gap:8px}
 .phase-row{border:1px solid var(--border);border-radius:8px;overflow:hidden;background:#fff;transition:border-color 0.15s}
 .phase-row:hover{border-color:#c7d2fe}
@@ -215,8 +194,6 @@ body.dark .dark-toggle{background:#111827;border-color:#1e2535;color:#fbbf24}
 .phase-row.open .phase-body{display:block}
 .phase-drag-handle{color:#d1d5db;font-size:11px;cursor:grab;flex-shrink:0}
 .phase-drag-handle:active{cursor:grabbing}
-
-/* ISO score rows */
 .iso-list{display:flex;flex-direction:column;gap:8px}
 .iso-row{display:flex;align-items:center;gap:12px;padding:10px 14px;border:1px solid var(--border);border-radius:8px;background:#fff}
 .iso-label-input{flex:1;border:none;background:transparent;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--text);outline:none;font-weight:500}
@@ -231,10 +208,8 @@ body.dark .dark-toggle{background:#111827;border-color:#1e2535;color:#fbbf24}
 
 <div id="toast"></div>
 
-<!-- Edit Overlay -->
 <div class="edit-overlay" id="editOverlay" onclick="closePanel()"></div>
 
-<!-- Slide Panel -->
 <div class="edit-panel" id="editPanel">
   <div class="ep-header">
     <div>
@@ -250,7 +225,6 @@ body.dark .dark-toggle{background:#111827;border-color:#1e2535;color:#fbbf24}
   </div>
 </div>
 
-<!-- Delete Modal -->
 <div class="del-modal-overlay" id="delModal">
   <div class="del-modal">
     <h3>Delete this project?</h3>
@@ -263,7 +237,6 @@ body.dark .dark-toggle{background:#111827;border-color:#1e2535;color:#fbbf24}
 </div>
 
 <div class="layout">
-  <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sb-brand">
       <div class="sb-icon"><i class="fas fa-file-alt"></i></div>
@@ -296,7 +269,6 @@ body.dark .dark-toggle{background:#111827;border-color:#1e2535;color:#fbbf24}
     </div>
   </aside>
 
-  <!-- MAIN -->
   <main class="main">
     <div class="topbar">
       <div class="topbar-title"><i class="fas fa-briefcase"></i> Featured Work</div>
@@ -309,7 +281,6 @@ body.dark .dark-toggle{background:#111827;border-color:#1e2535;color:#fbbf24}
 
     <div class="content">
 
-      <!-- PROJECTS CARD -->
       <div class="card">
         <div class="card-head">
           <div class="card-head-icon"><i class="fas fa-briefcase"></i></div>
@@ -322,7 +293,6 @@ body.dark .dark-toggle{background:#111827;border-color:#1e2535;color:#fbbf24}
           </button>
         </div>
         <div class="card-body">
-
           <div class="proj-list" id="proj-list">
             <?php foreach($projects as $p): ?>
             <?php $tech = json_decode($p['tech'] ?? '[]', true) ?? []; ?>
@@ -343,7 +313,7 @@ body.dark .dark-toggle{background:#111827;border-color:#1e2535;color:#fbbf24}
                 <div class="proj-row-meta">
                   <span class="cat-badge cat-<?= esc($p['category']) ?>"><?= esc($p['category']) ?></span>
                   <?php if(!empty($tech)): ?>
-                  <span style="color:var(--muted);font-size:11px"><?= esc(implode(' · ', array_slice($tech, 0, 3))) ?><?= count($tech)>3?' +'.( count($tech)-3).' more':'' ?></span>
+                  <span style="color:var(--muted);font-size:11px"><?= esc(implode(' · ', array_slice($tech, 0, 3))) ?><?= count($tech)>3?' +'.(count($tech)-3).' more':'' ?></span>
                   <?php endif; ?>
                 </div>
               </div>
@@ -363,18 +333,15 @@ body.dark .dark-toggle{background:#111827;border-color:#1e2535;color:#fbbf24}
             </div>
             <?php endforeach; ?>
           </div>
-
           <?php if(empty($projects)): ?>
           <div style="text-align:center;padding:40px;color:var(--muted)">
             <i class="fas fa-folder-open" style="font-size:32px;margin-bottom:12px;opacity:0.4"></i>
             <p>No projects yet. Click <strong>Add Project</strong> to get started.</p>
           </div>
           <?php endif; ?>
-
         </div>
       </div>
 
-      <!-- METHODOLOGY & ISO MANAGEMENT -->
       <div class="card thesis-card" id="methodology-card" style="display:none">
         <div class="card-head">
           <div class="card-head-icon" style="background:rgba(139,92,246,0.1);color:#7c3aed"><i class="fas fa-flask"></i></div>
@@ -393,9 +360,7 @@ body.dark .dark-toggle{background:#111827;border-color:#1e2535;color:#fbbf24}
           </div>
           <div class="thesis-panel active" id="panel-phases">
             <div class="phase-list" id="phase-list"></div>
-            <button class="btn-add-item" style="margin-top:12px" onclick="addPhase()">
-              <i class="fas fa-plus"></i> Add Phase
-            </button>
+            <button class="btn-add-item" style="margin-top:12px" onclick="addPhase()"><i class="fas fa-plus"></i> Add Phase</button>
           </div>
           <div class="thesis-panel" id="panel-iso">
             <div class="iso-list" id="iso-list"></div>
@@ -414,15 +379,10 @@ body.dark .dark-toggle{background:#111827;border-color:#1e2535;color:#fbbf24}
 <script>
 const BASE = '<?= rtrim(base_url(), '/') ?>';
 
-// ── CSRF TOKEN HELPER ──
 function getCsrfToken() {
-  return {
-    name:  '<?= csrf_token() ?>',
-    value: '<?= csrf_hash() ?>',
-  };
+  return { name: '<?= csrf_token() ?>', value: '<?= csrf_hash() ?>' };
 }
 
-// ── PROJECT DATA ──
 const PROJECTS_DATA = {
   <?php foreach($projects as $p): ?>
   <?= $p['id'] ?>: {
@@ -443,7 +403,6 @@ const PROJECTS_DATA = {
 const ALL_PHASES = <?= json_encode($projectPhases ?? []) ?>;
 const ALL_ISO    = <?= json_encode($projectIso ?? []) ?>;
 
-// ── TOAST ──
 let _toastTimer;
 function toast(msg, type='ok') {
   const el = document.getElementById('toast');
@@ -454,22 +413,16 @@ function toast(msg, type='ok') {
   _toastTimer = setTimeout(() => el.className='', 3000);
 }
 
-// ── API (JSON) ──
 async function api(path, data={}) {
   const csrf = getCsrfToken();
   const headers = { 'Content-Type': 'application/json' };
   headers[csrf.name] = csrf.value;
   const r = await fetch(BASE + path, { method:'POST', headers, body:JSON.stringify(data) });
-  // Refresh CSRF token from response header if provided
   const newToken = r.headers.get('X-CSRF-TOKEN');
-  if (newToken) {
-    const meta = document.querySelector('meta[name="csrf-token"]');
-    if (meta) meta.content = newToken;
-  }
+  if (newToken) { const meta = document.querySelector('meta[name="csrf-token"]'); if (meta) meta.content = newToken; }
   return r.json();
 }
 
-// ── SLIDE PANEL ──
 let currentEditId = null;
 
 function openAddPanel() {
@@ -481,13 +434,6 @@ function openAddPanel() {
   document.getElementById('editPanel').classList.add('open');
   document.body.style.overflow = 'hidden';
   setTimeout(() => initIconPicker('fas fa-code'), 100);
-  setTimeout(() => {
-    const mediaHidden = document.getElementById('pf-media');
-    if (mediaHidden && mediaHidden.value) renderMediaPreviews(mediaHidden.value);
-    const urls = mediaHidden?.value.split(/[\n,]+/).map(u=>u.trim()).filter(Boolean) || [];
-    const yt = urls.find(u => u.includes('youtube') || u.includes('youtu.be'));
-    if (yt) { const ytEl = document.getElementById('pf-youtube'); if(ytEl) ytEl.value = yt; }
-  }, 150);
 }
 
 function openEditPanel(id) {
@@ -525,9 +471,7 @@ function buildPanelForm(p) {
       <textarea id="pf-desc" rows="4" placeholder="What does this project do?">${v('description')}</textarea>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
-      <div class="fg" style="margin:0"><label>Category</label>
-        <select id="pf-cat">${catOpts}</select>
-      </div>
+      <div class="fg" style="margin:0"><label>Category</label><select id="pf-cat">${catOpts}</select></div>
       <div class="fg" style="margin:0"><label>Featured</label>
         <select id="pf-feat">
           <option value="1"${!p||p.is_featured?' selected':''}>Shown on portfolio</option>
@@ -548,8 +492,7 @@ function buildPanelForm(p) {
     <div class="ep-divider"></div>
     <div class="fg"><label>Tech Stack <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">— press Enter or comma to add</span></label>
       <div class="tech-pills-wrap" id="tech-pills-wrap" onclick="document.getElementById('tech-input').focus()">
-        <input type="text" id="tech-input" class="tech-input" placeholder="Add technology…"
-          onkeydown="techKeydown(event)" oninput="techInput(this)">
+        <input type="text" id="tech-input" class="tech-input" placeholder="Add technology…" onkeydown="techKeydown(event)" oninput="techInput(this)">
       </div>
       <input type="hidden" id="pf-tech" value="${p ? escHtml(JSON.stringify(p.tech||[])) : '[]'}">
     </div>
@@ -583,16 +526,15 @@ function buildPanelForm(p) {
   `;
 }
 
-// ── SAVE PROJECT ──
 async function saveProject() {
-  const title    = document.getElementById('pf-title').value.trim();
-  const desc     = document.getElementById('pf-desc').value.trim();
-  const cat      = document.getElementById('pf-cat').value;
-  const feat     = parseInt(document.getElementById('pf-feat').value);
-  const icon     = document.getElementById('pf-icon').value;
-  const github   = document.getElementById('pf-github').value.trim();
-  const demo     = document.getElementById('pf-demo').value.trim();
-  const ytEl     = document.getElementById('pf-youtube');
+  const title  = document.getElementById('pf-title').value.trim();
+  const desc   = document.getElementById('pf-desc').value.trim();
+  const cat    = document.getElementById('pf-cat').value;
+  const feat   = parseInt(document.getElementById('pf-feat').value);
+  const icon   = document.getElementById('pf-icon').value;
+  const github = document.getElementById('pf-github').value.trim();
+  const demo   = document.getElementById('pf-demo').value.trim();
+  const ytEl   = document.getElementById('pf-youtube');
   if (ytEl && ytEl.value.trim()) {
     const hiddenMedia = document.getElementById('pf-media');
     const ytUrl = ytEl.value.trim();
@@ -601,8 +543,8 @@ async function saveProject() {
     if (hiddenMedia) hiddenMedia.value = existing.join('\n');
     ytEl.value = '';
   }
-  const media    = document.getElementById('pf-media')?.value.trim() || '';
-  const techRaw  = document.getElementById('pf-tech').value;
+  const media   = document.getElementById('pf-media')?.value.trim() || '';
+  const techRaw = document.getElementById('pf-tech').value;
   let tech = [];
   try { tech = JSON.parse(techRaw); } catch(e) {}
   if (!title) { toast('Title is required.', 'err'); return; }
@@ -610,17 +552,19 @@ async function saveProject() {
   const path = currentEditId ? `/api/project/update/${currentEditId}` : '/api/project/add';
   const r = await api(path, payload);
   if (r.success) {
+    // ── Sync PROJECTS_DATA so reopening the panel reflects latest state ──
+    if (currentEditId && PROJECTS_DATA[currentEditId]) {
+      PROJECTS_DATA[currentEditId] = { ...PROJECTS_DATA[currentEditId], title, description:desc, category:cat, icon, tech, github_url:github, demo_url:demo, media_urls:media, is_featured:feat };
+    }
     toast(currentEditId ? 'Project updated!' : 'Project added!');
     closePanel();
     setTimeout(() => location.reload(), 800);
   } else toast(r.message || 'Error saving.', 'err');
 }
 
-// ── MEDIA PREVIEWS ──
 function renderMediaPreviews(mediaUrls) {
   const list = document.getElementById('media-preview-list');
   if (!list) return;
-  // FIX: use proper string split — no literal newline in regex
   const urls = mediaUrls.split(/[\n,]+/).map(u => u.trim()).filter(Boolean);
   if (!urls.length) { list.innerHTML = ''; return; }
   list.innerHTML = urls.map(url => {
@@ -641,51 +585,39 @@ function renderMediaPreviews(mediaUrls) {
   }).join('');
 }
 
-// ── MEDIA UPLOAD — with CSRF fix ──
+// ── MEDIA UPLOAD ──
 async function handleMediaUpload(input) {
   if (!currentEditId) { toast('Save the project first, then add media.', 'err'); return; }
   const files = Array.from(input.files);
   if (!files.length) return;
   const label = document.getElementById('media-upload-label');
   label.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
-
   const csrf = getCsrfToken();
-
   for (const file of files) {
     const fd = new FormData();
     fd.append('media', file);
-    // Append CSRF token to FormData so CI4 accepts the multipart request
     fd.append(csrf.name, csrf.value);
-
     try {
       const r = await fetch(BASE + '/api/project/upload-media/' + currentEditId, {
         method: 'POST',
-        // DO NOT set Content-Type header — browser sets it with boundary for multipart
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest',
-          [csrf.name]: csrf.value,
-        },
+        headers: { 'X-Requested-With': 'XMLHttpRequest', [csrf.name]: csrf.value },
         body: fd,
       });
-
       if (!r.ok) {
         const text = await r.text();
         toast('Upload failed (' + r.status + '): ' + (text.substring(0, 80) || 'Server error'), 'err');
         continue;
       }
-
       const data = await r.json();
-
-      // Refresh CSRF token if server sends new one
       const newToken = r.headers.get('X-CSRF-TOKEN');
-      if (newToken) {
-        const meta = document.querySelector('meta[name="csrf-token"]');
-        if (meta) meta.content = newToken;
-      }
-
+      if (newToken) { const meta = document.querySelector('meta[name="csrf-token"]'); if (meta) meta.content = newToken; }
       if (data.success) {
         document.getElementById('pf-media').value = data.media_urls;
         renderMediaPreviews(data.media_urls);
+        // ★ FIX: keep PROJECTS_DATA in sync so reopening the panel shows updated media
+        if (PROJECTS_DATA[currentEditId]) {
+          PROJECTS_DATA[currentEditId].media_urls = data.media_urls;
+        }
         toast('Uploaded: ' + file.name);
       } else {
         toast(data.message || 'Upload failed', 'err');
@@ -694,7 +626,6 @@ async function handleMediaUpload(input) {
       toast('Upload error: ' + e.message, 'err');
     }
   }
-
   label.innerHTML = '<i class="fas fa-upload"></i> Upload Photo or Video';
   input.value = '';
 }
@@ -705,11 +636,14 @@ async function deleteMediaItem(url) {
   if (r.success) {
     document.getElementById('pf-media').value = r.media_urls;
     renderMediaPreviews(r.media_urls);
+    // ★ FIX: keep PROJECTS_DATA in sync so reopening the panel shows updated media
+    if (PROJECTS_DATA[currentEditId]) {
+      PROJECTS_DATA[currentEditId].media_urls = r.media_urls;
+    }
     toast('Media removed.');
   } else toast(r.message || 'Error', 'err');
 }
 
-// ── TOGGLE FEATURED ──
 async function toggleFeatured(id, btn) {
   const isOn = btn.classList.contains('on');
   const r = await api(`/api/project/update/${id}`, { is_featured: isOn ? 0 : 1 });
@@ -721,7 +655,6 @@ async function toggleFeatured(id, btn) {
   } else toast(r.message || 'Error', 'err');
 }
 
-// ── DELETE ──
 function confirmDelete(id, name) {
   document.getElementById('del-msg').innerHTML = `Delete <strong>"${name}"</strong>? This cannot be undone.`;
   document.getElementById('del-confirm-btn').onclick = async () => {
@@ -736,7 +669,6 @@ function confirmDelete(id, name) {
 }
 function closeDelModal() { document.getElementById('delModal').classList.remove('open'); }
 
-// ── TECH PILLS ──
 function renderTechPills(techArr) {
   const wrap = document.getElementById('tech-pills-wrap');
   const input = document.getElementById('tech-input');
@@ -745,7 +677,6 @@ function renderTechPills(techArr) {
   wrap.appendChild(input);
   syncTechHidden();
 }
-
 function addTechPill(text) {
   if (!text.trim()) return;
   const wrap = document.getElementById('tech-pills-wrap');
@@ -757,19 +688,13 @@ function addTechPill(text) {
   wrap.insertBefore(div, input);
   syncTechHidden();
 }
-
-function removeTechPill(btn) {
-  btn.closest('.tech-pill-item').remove();
-  syncTechHidden();
-}
-
+function removeTechPill(btn) { btn.closest('.tech-pill-item').remove(); syncTechHidden(); }
 function syncTechHidden() {
   const pills = document.querySelectorAll('.tech-pill-item');
   const arr = [...pills].map(p => p.dataset.val);
   const h = document.getElementById('pf-tech');
   if (h) h.value = JSON.stringify(arr);
 }
-
 function techKeydown(e) {
   if (e.key === 'Enter' || e.key === ',') {
     e.preventDefault();
@@ -780,56 +705,17 @@ function techKeydown(e) {
     if (pills.length) { pills[pills.length-1].remove(); syncTechHidden(); }
   }
 }
-
 function techInput(inp) {
-  if (inp.value.endsWith(',')) {
-    const val = inp.value.slice(0,-1).trim();
-    if (val) { addTechPill(val); inp.value = ''; }
-  }
+  if (inp.value.endsWith(',')) { const val = inp.value.slice(0,-1).trim(); if (val) { addTechPill(val); inp.value = ''; } }
 }
 
-// ── ICON PICKER ──
 let FA_ICONS = [], iconsLoaded = false;
 const ICONS_PER_PAGE = 80;
-
 async function loadFAIcons() {
   if (iconsLoaded) return;
-  FA_ICONS = [
-    'fa-address-book','fa-address-card','fa-align-center','fa-align-left','fa-align-right',
-    'fa-ambulance','fa-anchor','fa-archive','fa-award','fa-ban','fa-bars','fa-bell','fa-bolt',
-    'fa-book','fa-book-open','fa-bookmark','fa-brain','fa-briefcase','fa-broadcast-tower',
-    'fa-bug','fa-building','fa-bullhorn','fa-calendar','fa-calendar-alt','fa-calendar-check',
-    'fa-camera','fa-certificate','fa-chart-bar','fa-chart-line','fa-chart-pie',
-    'fa-check','fa-check-circle','fa-check-square','fa-clipboard','fa-clipboard-check',
-    'fa-clipboard-list','fa-clock','fa-cloud','fa-code','fa-code-branch','fa-cog','fa-cogs',
-    'fa-comment','fa-comment-dots','fa-compass','fa-copy','fa-cube','fa-cubes','fa-database',
-    'fa-desktop','fa-download','fa-edit','fa-envelope','fa-eye','fa-file','fa-file-alt',
-    'fa-file-code','fa-file-csv','fa-file-excel','fa-file-pdf','fa-file-upload','fa-filter',
-    'fa-fingerprint','fa-fire','fa-flag','fa-flask','fa-folder','fa-folder-open',
-    'fa-gamepad','fa-globe','fa-graduation-cap','fa-hard-hat','fa-hashtag','fa-heart',
-    'fa-home','fa-id-badge','fa-id-card','fa-image','fa-inbox','fa-industry','fa-infinity',
-    'fa-info-circle','fa-key','fa-keyboard','fa-laptop','fa-laptop-code','fa-layer-group',
-    'fa-leaf','fa-link','fa-list','fa-lock','fa-magic','fa-map','fa-map-marker-alt',
-    'fa-memory','fa-microchip','fa-microphone','fa-mobile','fa-mobile-alt',
-    'fa-network-wired','fa-newspaper','fa-palette','fa-paper-plane','fa-pen',
-    'fa-pencil-alt','fa-phone','fa-plug','fa-print','fa-project-diagram','fa-puzzle-piece',
-    'fa-qrcode','fa-robot','fa-rocket','fa-route','fa-satellite','fa-satellite-dish',
-    'fa-save','fa-search','fa-server','fa-share-alt','fa-shield-alt','fa-signal',
-    'fa-sitemap','fa-sliders-h','fa-sort','fa-star','fa-sticky-note','fa-stopwatch',
-    'fa-stream','fa-sync','fa-table','fa-tablet','fa-tag','fa-tags','fa-tasks',
-    'fa-terminal','fa-thumbs-up','fa-tools','fa-trophy','fa-truck','fa-tv',
-    'fa-university','fa-upload','fa-user','fa-user-cog','fa-user-graduate',
-    'fa-user-shield','fa-users','fa-video','fa-wifi','fa-wrench','fa-water',
-    'fa-seedling','fa-tree','fa-recycle','fa-solar-panel','fa-dna','fa-atom',
-    'fa-vial','fa-microscope','fa-stethoscope','fa-car','fa-bus','fa-plane','fa-ship',
-    'fa-th','fa-th-large','fa-th-list','fa-tachometer-alt','fa-gauge',
-    'fa-exclamation-circle','fa-exclamation-triangle','fa-times-circle',
-    'fa-check-double','fa-columns','fa-shield','fa-lock-open','fa-eye-slash',
-    'fa-map-signs','fa-directions','fa-road','fa-heart-pulse','fa-weight',
-  ].sort();
+  FA_ICONS = ['fa-address-book','fa-address-card','fa-align-center','fa-align-left','fa-align-right','fa-ambulance','fa-anchor','fa-archive','fa-award','fa-ban','fa-bars','fa-bell','fa-bolt','fa-book','fa-book-open','fa-bookmark','fa-brain','fa-briefcase','fa-broadcast-tower','fa-bug','fa-building','fa-bullhorn','fa-calendar','fa-calendar-alt','fa-calendar-check','fa-camera','fa-certificate','fa-chart-bar','fa-chart-line','fa-chart-pie','fa-check','fa-check-circle','fa-check-square','fa-clipboard','fa-clipboard-check','fa-clipboard-list','fa-clock','fa-cloud','fa-code','fa-code-branch','fa-cog','fa-cogs','fa-comment','fa-comment-dots','fa-compass','fa-copy','fa-cube','fa-cubes','fa-database','fa-desktop','fa-download','fa-edit','fa-envelope','fa-eye','fa-file','fa-file-alt','fa-file-code','fa-file-csv','fa-file-excel','fa-file-pdf','fa-file-upload','fa-filter','fa-fingerprint','fa-fire','fa-flag','fa-flask','fa-folder','fa-folder-open','fa-gamepad','fa-globe','fa-graduation-cap','fa-hard-hat','fa-hashtag','fa-heart','fa-home','fa-id-badge','fa-id-card','fa-image','fa-inbox','fa-industry','fa-infinity','fa-info-circle','fa-key','fa-keyboard','fa-laptop','fa-laptop-code','fa-layer-group','fa-leaf','fa-link','fa-list','fa-lock','fa-magic','fa-map','fa-map-marker-alt','fa-memory','fa-microchip','fa-microphone','fa-mobile','fa-mobile-alt','fa-network-wired','fa-newspaper','fa-palette','fa-paper-plane','fa-pen','fa-pencil-alt','fa-phone','fa-plug','fa-print','fa-project-diagram','fa-puzzle-piece','fa-qrcode','fa-robot','fa-rocket','fa-route','fa-satellite','fa-satellite-dish','fa-save','fa-search','fa-server','fa-share-alt','fa-shield-alt','fa-signal','fa-sitemap','fa-sliders-h','fa-sort','fa-star','fa-sticky-note','fa-stopwatch','fa-stream','fa-sync','fa-table','fa-tablet','fa-tag','fa-tags','fa-tasks','fa-terminal','fa-thumbs-up','fa-tools','fa-trophy','fa-truck','fa-tv','fa-university','fa-upload','fa-user','fa-user-cog','fa-user-graduate','fa-user-shield','fa-users','fa-video','fa-wifi','fa-wrench','fa-water','fa-seedling','fa-tree','fa-recycle','fa-solar-panel','fa-dna','fa-atom','fa-vial','fa-microscope','fa-stethoscope','fa-car','fa-bus','fa-plane','fa-ship','fa-th','fa-th-large','fa-th-list','fa-tachometer-alt','fa-gauge','fa-exclamation-circle','fa-exclamation-triangle','fa-times-circle','fa-check-double','fa-columns','fa-shield','fa-lock-open','fa-eye-slash','fa-map-signs','fa-directions','fa-road','fa-heart-pulse','fa-weight'].sort();
   iconsLoaded = true;
 }
-
 async function initIconPicker(selected) {
   const grid = document.getElementById('icon-grid');
   if (!grid) return;
@@ -838,7 +724,6 @@ async function initIconPicker(selected) {
   grid._page = 1; grid._query = ''; grid._selected = selected || 'fas fa-code';
   renderIconGrid(grid);
 }
-
 function filterIcons(inp) {
   const grid = document.getElementById('icon-grid');
   if (!grid) return;
@@ -846,7 +731,6 @@ function filterIcons(inp) {
   grid._page = 1;
   renderIconGrid(grid);
 }
-
 function renderIconGrid(grid) {
   const q = grid._query || '', page = grid._page || 1, sel = grid._selected || '';
   const filtered = q ? FA_ICONS.filter(ic=>ic.includes(q)) : FA_ICONS;
@@ -870,7 +754,6 @@ function renderIconGrid(grid) {
     grid.appendChild(more);
   }
 }
-
 function selectIcon(el, fc) {
   document.getElementById('pf-icon').value = fc;
   const pi = document.getElementById('icon-preview-i');
@@ -878,56 +761,20 @@ function selectIcon(el, fc) {
   if (pi) pi.className = fc;
   if (pl) pl.textContent = fc;
   const grid = document.getElementById('icon-grid');
-  if (grid) {
-    grid._selected = fc;
-    grid.querySelectorAll('.icon-option').forEach(o=>o.classList.remove('selected'));
-    el.classList.add('selected');
-  }
+  if (grid) { grid._selected = fc; grid.querySelectorAll('.icon-option').forEach(o=>o.classList.remove('selected')); el.classList.add('selected'); }
 }
 
-// ── DRAG TO REORDER ──
 let dragSrc = null;
-
-document.addEventListener('DOMContentLoaded', () => {
-  initDrag();
-});
-
+document.addEventListener('DOMContentLoaded', () => { initDrag(); });
 function initDrag() {
   const rows = document.querySelectorAll('.proj-row');
   rows.forEach(row => {
-    row.addEventListener('dragstart', e => {
-      dragSrc = row;
-      row.classList.add('dragging');
-      e.dataTransfer.effectAllowed = 'move';
-    });
-    row.addEventListener('dragend', () => {
-      row.classList.remove('dragging');
-      document.querySelectorAll('.proj-row').forEach(r => r.classList.remove('drag-over'));
-      saveOrder();
-    });
-    row.addEventListener('dragover', e => {
-      e.preventDefault();
-      e.dataTransfer.dropEffect = 'move';
-      if (row !== dragSrc) {
-        document.querySelectorAll('.proj-row').forEach(r=>r.classList.remove('drag-over'));
-        row.classList.add('drag-over');
-      }
-    });
-    row.addEventListener('drop', e => {
-      e.preventDefault();
-      if (dragSrc && dragSrc !== row) {
-        const list = document.getElementById('proj-list');
-        const rows = [...list.querySelectorAll('.proj-row')];
-        const srcIdx = rows.indexOf(dragSrc);
-        const tgtIdx = rows.indexOf(row);
-        if (srcIdx < tgtIdx) list.insertBefore(dragSrc, row.nextSibling);
-        else list.insertBefore(dragSrc, row);
-      }
-      row.classList.remove('drag-over');
-    });
+    row.addEventListener('dragstart', e => { dragSrc = row; row.classList.add('dragging'); e.dataTransfer.effectAllowed = 'move'; });
+    row.addEventListener('dragend', () => { row.classList.remove('dragging'); document.querySelectorAll('.proj-row').forEach(r => r.classList.remove('drag-over')); saveOrder(); });
+    row.addEventListener('dragover', e => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; if (row !== dragSrc) { document.querySelectorAll('.proj-row').forEach(r=>r.classList.remove('drag-over')); row.classList.add('drag-over'); } });
+    row.addEventListener('drop', e => { e.preventDefault(); if (dragSrc && dragSrc !== row) { const list = document.getElementById('proj-list'); const rows = [...list.querySelectorAll('.proj-row')]; const srcIdx = rows.indexOf(dragSrc); const tgtIdx = rows.indexOf(row); if (srcIdx < tgtIdx) list.insertBefore(dragSrc, row.nextSibling); else list.insertBefore(dragSrc, row); } row.classList.remove('drag-over'); });
   });
 }
-
 async function saveOrder() {
   const ids = [...document.querySelectorAll('.proj-row')].map(r => parseInt(r.dataset.id));
   const r = await api('/api/project/reorder', { order: ids });
@@ -935,7 +782,6 @@ async function saveOrder() {
   else toast('Error saving order.', 'err');
 }
 
-// ── DARK MODE ──
 function toggleDark() {
   const d = document.body.classList.toggle('dark');
   localStorage.setItem('adminDarkMode', d ? '1' : '0');
@@ -949,15 +795,10 @@ function toggleDark() {
   if (icon) icon.className = d ? 'fas fa-sun' : 'fas fa-moon';
 })();
 
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { closePanel(); closeDelModal(); }
-});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closePanel(); closeDelModal(); } });
 
-// ════════════════════════════════════════════════
-// METHODOLOGY & ISO MANAGEMENT
-// ════════════════════════════════════════════════
+// ── METHODOLOGY & ISO ──
 let _currentMethodologyProjectId = null;
-
 function openMethodology(projectId, projectTitle) {
   _currentMethodologyProjectId = projectId;
   document.getElementById('methodology-project-title').textContent = projectTitle;
@@ -966,30 +807,17 @@ function openMethodology(projectId, projectTitle) {
   loadPhases(projectId);
   loadIsoScores(projectId);
 }
-
-function closeMethodology() {
-  document.getElementById('methodology-card').style.display = 'none';
-  _currentMethodologyProjectId = null;
-}
-
+function closeMethodology() { document.getElementById('methodology-card').style.display = 'none'; _currentMethodologyProjectId = null; }
 function switchTab(tab, btn) {
   document.querySelectorAll('.thesis-tab').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.thesis-panel').forEach(p => p.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('panel-' + tab).classList.add('active');
 }
-
-function loadPhases(projectId) {
-  const phases = ALL_PHASES[projectId] || [];
-  renderPhases(phases);
-}
-
+function loadPhases(projectId) { renderPhases(ALL_PHASES[projectId] || []); }
 function renderPhases(phases) {
   const list = document.getElementById('phase-list');
-  if (!phases.length) {
-    list.innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted)"><i class="fas fa-inbox" style="font-size:24px;opacity:0.3;display:block;margin-bottom:8px"></i>No phases yet. Click Add Phase to get started.</div>';
-    return;
-  }
+  if (!phases.length) { list.innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted)"><i class="fas fa-inbox" style="font-size:24px;opacity:0.3;display:block;margin-bottom:8px"></i>No phases yet. Click Add Phase to get started.</div>'; return; }
   list.innerHTML = phases.map(ph => `
     <div class="phase-row" data-id="${ph.id}" draggable="true">
       <div class="phase-header" onclick="togglePhaseRow(this)">
@@ -1003,128 +831,70 @@ function renderPhases(phases) {
       </div>
       <div class="phase-body">
         <div style="display:grid;grid-template-columns:80px 1fr;gap:10px;margin:12px 0 10px">
-          <div class="fg" style="margin:0"><label>Number</label>
-            <input type="text" name="ph-num" value="${escHtml(ph.num)}" placeholder="01" maxlength="4">
-          </div>
-          <div class="fg" style="margin:0"><label>Phase Title</label>
-            <input type="text" name="ph-title" value="${escHtml(ph.title)}" placeholder="e.g. Planning & Requirement Analysis">
-          </div>
+          <div class="fg" style="margin:0"><label>Number</label><input type="text" name="ph-num" value="${escHtml(ph.num)}" placeholder="01" maxlength="4"></div>
+          <div class="fg" style="margin:0"><label>Phase Title</label><input type="text" name="ph-title" value="${escHtml(ph.title)}" placeholder="e.g. Planning & Requirement Analysis"></div>
         </div>
         <div class="fg" style="margin-bottom:10px">
           <label>Content <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">(HTML — use &lt;ul&gt;&lt;li&gt; format)</span></label>
           <textarea name="ph-content" rows="5" style="font-family:monospace;font-size:12px">${escHtml(ph.content)}</textarea>
         </div>
-        <button class="btn-primary" style="font-size:12px;padding:7px 16px" onclick="savePhase(${ph.id},this)">
-          <i class="fas fa-check"></i> Save Phase
-        </button>
+        <button class="btn-primary" style="font-size:12px;padding:7px 16px" onclick="savePhase(${ph.id},this)"><i class="fas fa-check"></i> Save Phase</button>
       </div>
     </div>`).join('');
   initPhaseDrag();
 }
-
-function togglePhaseRow(header) {
-  header.closest('.phase-row').classList.toggle('open');
-}
-
+function togglePhaseRow(header) { header.closest('.phase-row').classList.toggle('open'); }
 async function savePhase(id, btn) {
-  const row     = btn.closest('.phase-row');
-  const num     = row.querySelector('[name=ph-num]').value.trim();
-  const title   = row.querySelector('[name=ph-title]').value.trim();
+  const row = btn.closest('.phase-row');
+  const num = row.querySelector('[name=ph-num]').value.trim();
+  const title = row.querySelector('[name=ph-title]').value.trim();
   const content = row.querySelector('[name=ph-content]').value.trim();
   if (!title) { toast('Phase title is required.', 'err'); return; }
   const r = await api(`/api/thesis/phase/update/${id}`, { num, title, content });
   if (r.success) {
     row.querySelector('.phase-num-badge').textContent = num;
     row.querySelector('.phase-title-txt').textContent = title;
-    if (ALL_PHASES[_currentMethodologyProjectId]) {
-      const ph = ALL_PHASES[_currentMethodologyProjectId].find(p => p.id == id);
-      if (ph) { ph.num = num; ph.title = title; ph.content = content; }
-    }
+    if (ALL_PHASES[_currentMethodologyProjectId]) { const ph = ALL_PHASES[_currentMethodologyProjectId].find(p => p.id == id); if (ph) { ph.num = num; ph.title = title; ph.content = content; } }
     toast('Phase saved!');
   } else toast(r.message || 'Error', 'err');
 }
-
 async function addPhase() {
   if (!_currentMethodologyProjectId) return;
   const count = document.querySelectorAll('.phase-row').length;
-  const r = await api('/api/thesis/phase/add', {
-    project_id: _currentMethodologyProjectId,
-    num: String(count + 1).padStart(2, '0'),
-    title: 'New Phase',
-    content: '<ul><li>Add content here</li></ul>'
-  });
+  const r = await api('/api/thesis/phase/add', { project_id: _currentMethodologyProjectId, num: String(count+1).padStart(2,'0'), title:'New Phase', content:'<ul><li>Add content here</li></ul>' });
   if (r.success) {
     toast('Phase added!');
     if (!ALL_PHASES[_currentMethodologyProjectId]) ALL_PHASES[_currentMethodologyProjectId] = [];
-    ALL_PHASES[_currentMethodologyProjectId].push({
-      id: r.id,
-      num: String(count + 1).padStart(2, '0'),
-      title: 'New Phase',
-      content: '<ul><li>Add content here</li></ul>',
-      sort_order: ALL_PHASES[_currentMethodologyProjectId].length + 1
-    });
+    ALL_PHASES[_currentMethodologyProjectId].push({ id:r.id, num:String(count+1).padStart(2,'0'), title:'New Phase', content:'<ul><li>Add content here</li></ul>', sort_order:ALL_PHASES[_currentMethodologyProjectId].length+1 });
     loadPhases(_currentMethodologyProjectId);
-    setTimeout(() => {
-      const rows = document.querySelectorAll('.phase-row');
-      if (rows.length) rows[rows.length-1].querySelector('.phase-header').click();
-    }, 100);
+    setTimeout(() => { const rows = document.querySelectorAll('.phase-row'); if (rows.length) rows[rows.length-1].querySelector('.phase-header').click(); }, 100);
   } else toast(r.message || 'Error', 'err');
 }
-
 async function deletePhase(id, btn) {
   const title = btn.closest('.phase-row').querySelector('.phase-title-txt').textContent;
   document.getElementById('del-msg').innerHTML = `Delete phase <strong>"${title}"</strong>?`;
   document.getElementById('del-confirm-btn').onclick = async () => {
     const r = await api(`/api/thesis/phase/delete/${id}`);
-    if (r.success) {
-      closeDelModal();
-      btn.closest('.phase-row').remove();
-      if (ALL_PHASES[_currentMethodologyProjectId]) {
-        ALL_PHASES[_currentMethodologyProjectId] = ALL_PHASES[_currentMethodologyProjectId].filter(p => p.id != id);
-      }
-      toast('Phase deleted.');
-    } else toast(r.message || 'Error', 'err');
+    if (r.success) { closeDelModal(); btn.closest('.phase-row').remove(); if (ALL_PHASES[_currentMethodologyProjectId]) ALL_PHASES[_currentMethodologyProjectId] = ALL_PHASES[_currentMethodologyProjectId].filter(p => p.id != id); toast('Phase deleted.'); }
+    else toast(r.message || 'Error', 'err');
   };
   document.getElementById('delModal').classList.add('open');
 }
-
 function initPhaseDrag() {
   let src = null;
   const list = document.getElementById('phase-list');
   if (!list) return;
   list.querySelectorAll('.phase-row').forEach(row => {
     row.addEventListener('dragstart', e => { src = row; row.classList.add('dragging'); });
-    row.addEventListener('dragend', () => {
-      list.querySelectorAll('.phase-row').forEach(r => r.classList.remove('dragging','drag-over'));
-      const ids = [...list.querySelectorAll('.phase-row')].map(r => parseInt(r.dataset.id));
-      api('/api/thesis/phase/reorder', { order: ids });
-    });
-    row.addEventListener('dragover', e => {
-      e.preventDefault();
-      if (row !== src) { list.querySelectorAll('.phase-row').forEach(r=>r.classList.remove('drag-over')); row.classList.add('drag-over'); }
-    });
-    row.addEventListener('drop', e => {
-      e.preventDefault();
-      if (src && row !== src) {
-        const rows = [...list.querySelectorAll('.phase-row')];
-        rows.indexOf(src) < rows.indexOf(row) ? list.insertBefore(src, row.nextSibling) : list.insertBefore(src, row);
-        row.classList.remove('drag-over');
-      }
-    });
+    row.addEventListener('dragend', () => { list.querySelectorAll('.phase-row').forEach(r => r.classList.remove('dragging','drag-over')); const ids = [...list.querySelectorAll('.phase-row')].map(r => parseInt(r.dataset.id)); api('/api/thesis/phase/reorder', { order: ids }); });
+    row.addEventListener('dragover', e => { e.preventDefault(); if (row !== src) { list.querySelectorAll('.phase-row').forEach(r=>r.classList.remove('drag-over')); row.classList.add('drag-over'); } });
+    row.addEventListener('drop', e => { e.preventDefault(); if (src && row !== src) { const rows = [...list.querySelectorAll('.phase-row')]; rows.indexOf(src) < rows.indexOf(row) ? list.insertBefore(src, row.nextSibling) : list.insertBefore(src, row); row.classList.remove('drag-over'); } });
   });
 }
-
-function loadIsoScores(projectId) {
-  const scores = ALL_ISO[projectId] || [];
-  renderIsoScores(scores);
-}
-
+function loadIsoScores(projectId) { renderIsoScores(ALL_ISO[projectId] || []); }
 function renderIsoScores(scores) {
   const list = document.getElementById('iso-list');
-  if (!scores.length) {
-    list.innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted)"><i class="fas fa-inbox" style="font-size:24px;opacity:0.3;display:block;margin-bottom:8px"></i>No scores yet. Click Add Criterion.</div>';
-    return;
-  }
+  if (!scores.length) { list.innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted)"><i class="fas fa-inbox" style="font-size:24px;opacity:0.3;display:block;margin-bottom:8px"></i>No scores yet. Click Add Criterion.</div>'; return; }
   list.innerHTML = scores.map(s => `
     <div class="iso-row" data-id="${s.id}">
       <i class="fas fa-grip-vertical" style="color:#d1d5db;font-size:11px;cursor:grab;flex-shrink:0"></i>
@@ -1137,38 +907,24 @@ function renderIsoScores(scores) {
       <button class="icon-btn del" onclick="removeIsoRow(this)" title="Remove"><i class="fas fa-trash"></i></button>
     </div>`).join('');
 }
-
-function updateIsoBar(input) {
-  const val = Math.max(0, Math.min(100, parseInt(input.value) || 0));
-  input.closest('.iso-row').querySelector('.iso-bar-fill').style.width = val + '%';
-}
-
+function updateIsoBar(input) { const val = Math.max(0,Math.min(100,parseInt(input.value)||0)); input.closest('.iso-row').querySelector('.iso-bar-fill').style.width = val+'%'; }
 function addIsoRow() {
   const list = document.getElementById('iso-list');
   if (list.querySelector('div[style*="padding"]')) list.innerHTML = '';
   const div = document.createElement('div');
   div.className = 'iso-row'; div.dataset.id = '0';
-  div.innerHTML = `
-    <i class="fas fa-grip-vertical" style="color:#d1d5db;font-size:11px;cursor:grab;flex-shrink:0"></i>
+  div.innerHTML = `<i class="fas fa-grip-vertical" style="color:#d1d5db;font-size:11px;cursor:grab;flex-shrink:0"></i>
     <input type="text" class="iso-label-input" value="New Criterion" placeholder="Criterion name">
     <div class="iso-bar"><div class="iso-bar-fill" style="width:80%"></div></div>
-    <div class="iso-score-wrap">
-      <input type="number" class="iso-score-input" value="80" min="0" max="100" oninput="updateIsoBar(this)">
-      <span style="font-size:12px;color:var(--muted)">%</span>
-    </div>
+    <div class="iso-score-wrap"><input type="number" class="iso-score-input" value="80" min="0" max="100" oninput="updateIsoBar(this)"><span style="font-size:12px;color:var(--muted)">%</span></div>
     <button class="icon-btn del" onclick="removeIsoRow(this)" title="Remove"><i class="fas fa-trash"></i></button>`;
   list.appendChild(div);
 }
-
 function removeIsoRow(btn) { btn.closest('.iso-row').remove(); }
-
 async function saveIsoScores() {
   if (!_currentMethodologyProjectId) return;
   const rows = document.querySelectorAll('#iso-list .iso-row');
-  const scores = [...rows].map(row => ({
-    label: row.querySelector('.iso-label-input').value.trim(),
-    score: parseInt(row.querySelector('.iso-score-input').value) || 0,
-  })).filter(s => s.label);
+  const scores = [...rows].map(row => ({ label: row.querySelector('.iso-label-input').value.trim(), score: parseInt(row.querySelector('.iso-score-input').value)||0 })).filter(s => s.label);
   const r = await api('/api/thesis/iso/update', { project_id: _currentMethodologyProjectId, scores });
   if (r.success) toast('Scores saved!');
   else toast(r.message || 'Error', 'err');

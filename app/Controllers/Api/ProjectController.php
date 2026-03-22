@@ -52,7 +52,6 @@ class ProjectController extends BaseApiController
     {
         $m = new ProjectModel();
         if (!$m->find($id)) return $this->jsonError('Not found.', 404);
-        // Note: Cloudinary files remain on CDN (manageable via Cloudinary dashboard)
         $m->delete($id);
         return $this->jsonSuccess([], 'Project deleted.');
     }
@@ -82,7 +81,6 @@ class ProjectController extends BaseApiController
             return $this->jsonError('No file received by server.');
         }
 
-        // Check for upload errors
         if ($file->getError() !== UPLOAD_ERR_OK) {
             $errors = [
                 UPLOAD_ERR_INI_SIZE   => 'File exceeds server upload_max_filesize (' . ini_get('upload_max_filesize') . ')',
@@ -96,14 +94,12 @@ class ProjectController extends BaseApiController
             return $this->jsonError($errors[$file->getError()] ?? 'Upload error code: ' . $file->getError());
         }
 
-        // Validate by extension
         $allowedExts = ['jpg','jpeg','png','gif','webp','mp4','webm','mov','avi'];
         $ext = strtolower($file->getClientExtension());
         if (!in_array($ext, $allowedExts)) {
             return $this->jsonError('Unsupported file type: ' . $ext . '. Use JPG, PNG, GIF, WEBP, MP4 or WEBM.');
         }
 
-        // Max 100MB
         if ($file->getSize() > 100 * 1024 * 1024) {
             return $this->jsonError('File too large. Maximum 100MB. Size: ' . round($file->getSize()/1024/1024, 2) . 'MB');
         }
@@ -122,11 +118,17 @@ class ProjectController extends BaseApiController
         $folder       = 'evarportfolio/projects';
         $timestamp    = time();
 
-        // Build signature
-        $sigParams = "folder={$folder}&timestamp={$timestamp}";
-        $signature = hash('sha256', $sigParams . $apiSecret);
+        // ── FIXED: Cloudinary signature must be built from params
+        //    sorted alphabetically by key, joined as key=value pairs,
+        //    then appended with the API secret (no separator).
+        $sigParams = [
+            'folder'    => $folder,
+            'timestamp' => $timestamp,
+        ];
+        ksort($sigParams); // alphabetical sort — required by Cloudinary
+        $sigString = http_build_query($sigParams); // folder=...&timestamp=...
+        $signature = hash('sha256', $sigString . $apiSecret);
 
-        // Upload to Cloudinary
         $ch = curl_init("https://api.cloudinary.com/v1_1/{$cloudName}/{$resourceType}/upload");
         curl_setopt_array($ch, [
             CURLOPT_RETURNTRANSFER => true,
@@ -142,20 +144,23 @@ class ProjectController extends BaseApiController
         ]);
         $response = curl_exec($ch);
         $curlErr  = curl_error($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
         if ($curlErr) {
-            return $this->jsonError('Upload failed: ' . $curlErr);
+            return $this->jsonError('cURL error: ' . $curlErr);
         }
 
         $result = json_decode($response, true);
+
         if (empty($result['secure_url'])) {
-            return $this->jsonError('Cloudinary error: ' . ($result['error']['message'] ?? $response));
+            // Return the full Cloudinary error so we can debug it
+            $errMsg = $result['error']['message'] ?? ('HTTP ' . $httpCode . ': ' . $response);
+            return $this->jsonError('Cloudinary error: ' . $errMsg);
         }
 
         $url = $result['secure_url'];
 
-        // Append URL to project's media_urls
         $proj     = $m->find($id);
         $existing = trim($proj['media_urls'] ?? '');
         $newUrls  = $existing ? $existing . "\n" . $url : $url;
@@ -178,11 +183,10 @@ class ProjectController extends BaseApiController
         $proj = $m->find($id);
         if (!$proj) return $this->jsonError('Project not found.', 404);
 
-        // Remove URL from DB
         $urls = array_values(array_filter(
             array_map('trim', preg_split('/[\n,]+/', $proj['media_urls'] ?? ''))
         ));
-        $urls = array_filter($urls, fn($u) => $u !== $url);
+        $urls    = array_filter($urls, fn($u) => $u !== $url);
         $newUrls = implode("\n", $urls);
         $m->update($id, ['media_urls' => $newUrls]);
 

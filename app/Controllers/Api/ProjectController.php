@@ -51,7 +51,19 @@ class ProjectController extends BaseApiController
     public function delete(int $id): \CodeIgniter\HTTP\ResponseInterface
     {
         $m = new ProjectModel();
-        if (!$m->find($id)) return $this->jsonError('Not found.', 404);
+        $proj = $m->find($id);
+        if (!$proj) return $this->jsonError('Not found.', 404);
+
+        // Delete all media from Cloudinary before removing the project
+        if (!empty($proj['media_urls'])) {
+            $urls = array_values(array_filter(
+                array_map('trim', preg_split('/[\n,]+/', $proj['media_urls']))
+            ));
+            foreach ($urls as $url) {
+                $this->deleteFromCloudinary($url);
+            }
+        }
+
         $m->delete($id);
         return $this->jsonSuccess([], 'Project deleted.');
     }
@@ -118,11 +130,7 @@ class ProjectController extends BaseApiController
         $folder       = 'evarportfolio/projects';
         $timestamp    = time();
 
-        // ── Cloudinary signature ──
-        // Params sorted alphabetically, joined as raw key=value (no URL encoding),
-        // then API secret appended directly with no separator.
-        // NOTE: do NOT use http_build_query() — it encodes '/' as '%2F' which
-        // breaks the signature. Build the string manually instead.
+        // Cloudinary signature — params sorted alphabetically, raw string (no URL encoding)
         $sigString = "folder={$folder}&timestamp={$timestamp}";
         $signature = hash('sha256', $sigString . $apiSecret);
 
@@ -167,6 +175,7 @@ class ProjectController extends BaseApiController
 
     /**
      * Delete a specific media item from a project
+     * Also deletes the file from Cloudinary
      * POST /api/project/delete-media/:id
      */
     public function deleteMedia(int $id): \CodeIgniter\HTTP\ResponseInterface
@@ -179,6 +188,10 @@ class ProjectController extends BaseApiController
         $proj = $m->find($id);
         if (!$proj) return $this->jsonError('Project not found.', 404);
 
+        // Delete from Cloudinary
+        $this->deleteFromCloudinary($url);
+
+        // Remove URL from DB
         $urls    = array_values(array_filter(
             array_map('trim', preg_split('/[\n,]+/', $proj['media_urls'] ?? ''))
         ));
@@ -187,5 +200,50 @@ class ProjectController extends BaseApiController
         $m->update($id, ['media_urls' => $newUrls]);
 
         return $this->jsonSuccess(['media_urls' => $newUrls], 'Media removed.');
+    }
+
+    /**
+     * Delete a file from Cloudinary by its URL.
+     * Extracts the public_id from the URL and calls the destroy API.
+     */
+    private function deleteFromCloudinary(string $url): void
+    {
+        $cloudName = $_ENV['CLOUDINARY_CLOUD_NAME'] ?? env('CLOUDINARY_CLOUD_NAME') ?? '';
+        $apiKey    = $_ENV['CLOUDINARY_API_KEY']    ?? env('CLOUDINARY_API_KEY')    ?? '';
+        $apiSecret = $_ENV['CLOUDINARY_API_SECRET'] ?? env('CLOUDINARY_API_SECRET') ?? '';
+
+        if (!$cloudName || !$apiKey || !$apiSecret || !$url) return;
+
+        // Skip YouTube URLs — they're not hosted on Cloudinary
+        if (str_contains($url, 'youtube') || str_contains($url, 'youtu.be')) return;
+
+        // Extract public_id from Cloudinary URL
+        // URL format: https://res.cloudinary.com/{cloud}/image|video/upload/v{version}/{public_id}.{ext}
+        // public_id includes the folder e.g. "evarportfolio/projects/abc123"
+        if (!preg_match('/\/upload\/(?:v\d+\/)?(.+?)(?:\.[a-z0-9]+)?$/i', $url, $matches)) return;
+        $publicId = $matches[1]; // e.g. "evarportfolio/projects/abc123"
+
+        // Determine resource type from URL
+        $resourceType = str_contains($url, '/video/') ? 'video' : 'image';
+
+        $timestamp = time();
+        $sigString = "public_id={$publicId}&timestamp={$timestamp}";
+        $signature = hash('sha256', $sigString . $apiSecret);
+
+        $ch = curl_init("https://api.cloudinary.com/v1_1/{$cloudName}/{$resourceType}/destroy");
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST           => true,
+            CURLOPT_TIMEOUT        => 30,
+            CURLOPT_POSTFIELDS     => [
+                'public_id' => $publicId,
+                'api_key'   => $apiKey,
+                'timestamp' => $timestamp,
+                'signature' => $signature,
+            ],
+        ]);
+        curl_exec($ch);
+        curl_close($ch);
+        // We don't check the response — DB removal happens regardless
     }
 }

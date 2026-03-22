@@ -105,19 +105,14 @@ class ProjectController extends BaseApiController
         }
 
         // ── Read Cloudinary credentials ──
-        // Try $_ENV first (most reliable on Railway), then fall back to CI4's env()
         $cloudName = $_ENV['CLOUDINARY_CLOUD_NAME'] ?? env('CLOUDINARY_CLOUD_NAME') ?? '';
         $apiKey    = $_ENV['CLOUDINARY_API_KEY']    ?? env('CLOUDINARY_API_KEY')    ?? '';
         $apiSecret = $_ENV['CLOUDINARY_API_SECRET'] ?? env('CLOUDINARY_API_SECRET') ?? '';
 
-        // Debug log — check Railway logs after upload attempt to verify values
-        log_message('error', '[Cloudinary] cloud=' . $cloudName
-            . ' key_len=' . strlen($apiKey)
-            . ' secret_len=' . strlen($apiSecret)
-            . ' secret_first6=' . substr($apiSecret, 0, 6));
-
         if (!$cloudName || !$apiKey || !$apiSecret) {
-            return $this->jsonError('Cloudinary not configured. Add CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET to Railway environment variables.');
+            return $this->jsonError('Missing credentials: cloud=' . $cloudName
+                . ' key_len=' . strlen($apiKey)
+                . ' secret_len=' . strlen($apiSecret));
         }
 
         $isVideo      = in_array($ext, ['mp4','webm','mov','avi']);
@@ -125,19 +120,22 @@ class ProjectController extends BaseApiController
         $folder       = 'evarportfolio/projects';
         $timestamp    = time();
 
-        // ── Build Cloudinary signature ──
-        // Params must be sorted alphabetically by key, joined as key=value&key=value,
-        // then API secret appended directly with no separator.
-        $sigParams = [
-            'folder'    => $folder,
-            'timestamp' => $timestamp,
-        ];
+        $sigParams = ['folder' => $folder, 'timestamp' => $timestamp];
         ksort($sigParams);
         $sigString = http_build_query($sigParams);
         $signature = hash('sha256', $sigString . $apiSecret);
 
-        // Debug log the signature string so we can verify it matches Cloudinary's expectation
-        log_message('error', '[Cloudinary] sigString=' . $sigString . ' signature=' . $signature);
+        // ── TEMPORARY DEBUG — remove after confirming signature is correct ──
+        return $this->jsonError(
+            'DEBUG — cloud=' . $cloudName
+            . ' | key_len=' . strlen($apiKey)
+            . ' | secret_len=' . strlen($apiSecret)
+            . ' | secret_first6=' . substr($apiSecret, 0, 6)
+            . ' | secret_last4=' . substr($apiSecret, -4)
+            . ' | sigString=' . $sigString
+            . ' | signature=' . $signature
+        );
+        // ── END TEMPORARY DEBUG ──
 
         $ch = curl_init("https://api.cloudinary.com/v1_1/{$cloudName}/{$resourceType}/upload");
         curl_setopt_array($ch, [

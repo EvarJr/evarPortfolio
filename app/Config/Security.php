@@ -59,7 +59,6 @@ class Security extends BaseConfig
      * --------------------------------------------------------------------------
      *
      * Expiration time for Cross Site Request Forgery protection cookie.
-     *
      * Defaults to two hours (in seconds).
      */
     public int $expires = 7200;
@@ -69,18 +68,20 @@ class Security extends BaseConfig
      * CSRF Regenerate
      * --------------------------------------------------------------------------
      *
-     * Regenerate CSRF Token on every submission.
+     * Set to false so the token stays valid across multiple fetch() calls
+     * without requiring a page reload between uploads.
      */
-    public bool $regenerate = true;
+    public bool $regenerate = false;
 
     /**
      * --------------------------------------------------------------------------
      * CSRF Redirect
      * --------------------------------------------------------------------------
      *
-     * Redirect to previous page with error on failure.
-     *
-     * @see https://codeigniter4.github.io/userguide/libraries/security.html#redirection-on-failure
+     * IMPORTANT: Must be false.
+     * When true in production, CI4 silently redirects failed CSRF POST requests
+     * to GET — causing "Can't find route for GET: api/..." 404 errors on all
+     * API upload and data calls.
      */
-    public bool $redirect = (ENVIRONMENT === 'production');
+    public bool $redirect = false;
 }

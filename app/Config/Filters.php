@@ -6,7 +6,7 @@ use App\Filters\AuthFilter;
 use CodeIgniter\Config\BaseConfig;
 
 /**
- * app/Config/Filters.php  — REPLACE your entire file with this
+ * app/Config/Filters.php
  *
  * Registers our 'auth' filter alias so it can be used in Routes.php
  * as ['filter' => 'auth']
@@ -19,19 +19,19 @@ class Filters extends BaseConfig
         'honeypot'      => \CodeIgniter\Filters\Honeypot::class,
         'invalidchars'  => \CodeIgniter\Filters\InvalidChars::class,
         'secureheaders' => \CodeIgniter\Filters\SecureHeaders::class,
-        'auth'          => AuthFilter::class,   // ← our admin auth filter
+        'auth'          => AuthFilter::class,
     ];
 
     public array $globals = [
-        'before' => [],
-        'after'  => ['toolbar'],
+        'before' => [
+            // Exclude all api/* routes from CSRF — they handle their own tokens.
+            // Without this, CI4 rejects the token and redirects POST → GET,
+            // causing "Can't find a route for GET: api/..." 404 errors.
+            'csrf' => ['except' => ['api/*']],
+        ],
+        'after' => ['toolbar'],
     ];
 
-    public array $methods  = [];
-    public array $filters  = [];
-
-    public array $except = [
-        'api/*',
-        'api/project/upload-media/*',
-    ];
+    public array $methods = [];
+    public array $filters = [];
 }

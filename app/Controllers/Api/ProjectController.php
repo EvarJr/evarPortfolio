@@ -188,11 +188,19 @@ class ProjectController extends BaseApiController
 
         $url = $result['secure_url'];
 
-        // Append to existing media_urls — always reads fresh from DB
-        $proj     = $m->find($id);
-        $existing = trim($proj['media_urls'] ?? '');
-        $newUrls  = $existing ? $existing . "\n" . $url : $url;
-        $m->update($id, ['media_urls' => $newUrls]);
+        // ★ Atomic append using SQL CONCAT to prevent race condition.
+        // If two uploads happen in quick succession, a read-then-write approach
+        // causes the second upload to overwrite the first (reads empty, writes only itself).
+        // Using SQL CONCAT means the DB appends directly without a round-trip read.
+        $db = \Config\Database::connect();
+        $db->query(
+            "UPDATE portfolio_projects SET media_urls = CASE WHEN media_urls = '' OR media_urls IS NULL THEN ? ELSE CONCAT(media_urls, '\n', ?) END WHERE id = ?",
+            [$url, $url, $id]
+        );
+
+        // Read back the updated value to return to the client
+        $proj    = $m->find($id);
+        $newUrls = $proj['media_urls'] ?? $url;
 
         return $this->jsonSuccess(['url' => $url, 'media_urls' => $newUrls], 'Media uploaded.');
     }

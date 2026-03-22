@@ -187,9 +187,16 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .proj-carousel-dots{display:flex;justify-content:center;gap:5px;padding:8px 0 4px}
 .proj-carousel-dot{min-width:18px;height:18px;border-radius:20px;background:rgba(255,255,255,0.2);cursor:pointer;transition:all 0.2s;border:none;padding:0 4px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.7)}
 .proj-carousel-dot.active{background:#a5b4fc;transform:scale(1.3)}
-.proj-carousel-arrows{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 8px;pointer-events:none}
-.proj-carousel-arrow{width:28px;height:28px;border-radius:50%;background:rgba(5,8,16,0.7);border:1px solid rgba(255,255,255,0.15);color:#fff;font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;pointer-events:all;transition:all 0.2s;backdrop-filter:blur(8px)}
-.proj-carousel-arrow:hover{background:rgba(99,102,241,0.6);border-color:rgba(99,102,241,0.6)}
+
+/* ── CAROUSEL ARROWS — always visible on back face ── */
+.proj-carousel-arrows{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 6px;pointer-events:none;z-index:20}
+.proj-carousel-arrow{width:32px;height:32px;border-radius:50%;background:rgba(5,8,16,0.75);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;pointer-events:all;transition:all 0.2s;backdrop-filter:blur(10px);opacity:1;box-shadow:0 2px 8px rgba(0,0,0,0.5)}
+.proj-carousel-arrow:hover{background:rgba(99,102,241,0.7);border-color:rgba(99,102,241,0.8);transform:scale(1.1)}
+
+/* ── CAROUSEL CLOUDY EDGE VIGNETTE ── */
+.proj-carousel::before,.proj-carousel::after{content:'';position:absolute;top:0;bottom:0;width:48px;z-index:10;pointer-events:none}
+.proj-carousel::before{left:0;background:linear-gradient(to right,rgba(5,8,16,0.55) 0%,transparent 100%)}
+.proj-carousel::after{right:0;background:linear-gradient(to left,rgba(5,8,16,0.55) 0%,transparent 100%)}
 
 /* ── BACK FACE — INFO STRIP ── */
 .proj-back-info{padding:12px 14px;background:rgba(5,8,16,0.85);backdrop-filter:blur(8px);flex-shrink:0}
@@ -522,7 +529,7 @@ a.re-contact-item:hover{color:#fff}
     <div class="hero-btns">
       <a href="#" class="btn-primary" onclick="openResumeModal(event)"><i class="fas fa-file-alt"></i><?= esc($about['cv_label']??'View Resume') ?></a>
       <?php if(!empty($about['btn_contact_email'])): ?>
-      <a href="/cdn-cgi/l/email-protection#d6eae9ebf6b3a5b5fef2b7b4b9a3a28df1b4a2b889b5b9b8a2b7b5a289b3bbb7bfbaf18bfff6e9e8" class="btn-ghost"><?= esc($about['btn_contact_label']??'Hire Me') ?></a>
+      <a href="mailto:<?= esc($about['btn_contact_email']) ?>" class="btn-ghost"><?= esc($about['btn_contact_label']??'Hire Me') ?></a>
       <?php else: ?>
       <a href="#contact" class="btn-ghost"><?= esc($about['btn_contact_label']??'Hire Me') ?></a>
       <?php endif; ?>
@@ -532,7 +539,7 @@ a.re-contact-item:hover{color:#fff}
       <?php if(!empty($about['linkedin_url'])): ?><a href="<?= esc($about['linkedin_url']) ?>" target="_blank" class="social-icon" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a><?php endif; ?>
       <?php if(!empty($about['twitter'])): ?><a href="<?= esc($about['twitter']) ?>" target="_blank" class="social-icon" title="Twitter/X"><i class="fab fa-x-twitter"></i></a><?php endif; ?>
       <?php if(!empty($about['facebook'])): ?><a href="<?= esc($about['facebook']) ?>" target="_blank" class="social-icon" title="Facebook"><i class="fab fa-facebook-f"></i></a><?php endif; ?>
-      <?php if(!empty($header['email'])): ?><a href="/cdn-cgi/l/email-protection#330f0c0e135640501b175b56525756416814565e525a5f146e1a130c0d" class="social-icon" title="Email"><i class="fas fa-envelope"></i></a><?php endif; ?>
+      <?php if(!empty($header['email'])): ?><a href="mailto:<?= esc($header['email']) ?>" class="social-icon" title="Email"><i class="fas fa-envelope"></i></a><?php endif; ?>
     </div>
     <div class="counters-row" id="counters">
       <div class="counter-chip"><div class="counter-icon blue"><i class="fas fa-briefcase"></i></div><div><div class="counter-val" data-target="2" data-suffix="">0</div><div class="counter-lbl">OJT Experiences</div></div></div>
@@ -709,7 +716,7 @@ a.re-contact-item:hover{color:#fff}
     <h2>Let's Build <span style="background:var(--g-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Something</span></h2>
     <p>Have a project in mind, an opportunity to share, or a problem to solve? I'd love to hear from you.</p>
     <?php $email=$about['btn_contact_email']?:($header['email']??''); ?>
-    <?php if(!empty($email)): ?><a href="/cdn-cgi/l/email-protection#85b9bab8a5e0f6e6ada1e0e8e4ece9aca5babb" class="btn-email"><i class="fas fa-envelope"></i><?= esc($email) ?></a><?php endif; ?>
+    <?php if(!empty($email)): ?><a href="mailto:<?= esc($email) ?>" class="btn-email"><i class="fas fa-envelope"></i><?= esc($email) ?></a><?php endif; ?>
   </div>
 </section>
 
@@ -775,7 +782,7 @@ a.re-contact-item:hover{color:#fff}
           </div>
           <div class="re-contacts">
             <?php if(!empty($header['email'])): ?>
-            <a class="re-contact-item" href="/cdn-cgi/l/email-protection#6c5053514c091f0f444804090d08091e374b09010d05004b31454c5352" style="color:rgba(255,255,255,0.8);text-decoration:none"><i class="fas fa-envelope"></i><?= esc($header['email']) ?></a>
+            <a class="re-contact-item" href="mailto:<?= esc($header['email']) ?>" style="color:rgba(255,255,255,0.8);text-decoration:none"><i class="fas fa-envelope"></i><?= esc($header['email']) ?></a>
             <?php endif; ?>
             <?php if(!empty($header['phone'])): ?>
             <span class="re-contact-item"><i class="fas fa-phone"></i><?= esc($header['phone']) ?></span>
@@ -853,7 +860,7 @@ a.re-contact-item:hover{color:#fff}
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // ── SCROLL PROGRESS ──
 window.addEventListener('scroll', () => {
   const el = document.getElementById('scroll-progress');
@@ -1012,7 +1019,6 @@ function openProject(id) {
   document.getElementById('pm-type-tag').style.cssText = p.typeStyle;
   document.getElementById('pm-title').textContent = p.title;
 
-  // Only show phases/ISO if they exist for THIS specific project
   const projPhases = (ALL_PHASES && ALL_PHASES[id]) ? ALL_PHASES[id] : [];
   const projIso    = (ALL_ISO    && ALL_ISO[id])    ? ALL_ISO[id]    : [];
 
@@ -1050,9 +1056,7 @@ function togglePmPhase(header) {
 document.addEventListener('keydown', e => { if(e.key === 'Escape') { closeProjModal(); closeResumeModal(); closeMobileMenu(); } });
 
 document.getElementById('proj-grid').addEventListener('click', function(e) {
-  // Don't open modal when clicking carousel arrows/dots
   if(e.target.closest('.proj-carousel-arrow') || e.target.closest('.proj-carousel-dots')) return;
-  // Don't open modal if clicking on back face (it handles its own click)
   if(e.target.closest('.proj-face-back')) return;
   const wrap = e.target.closest('.proj-card-wrap');
   if(!wrap) return;
@@ -1075,6 +1079,7 @@ window.addEventListener('scroll', () => {
     }
   });
 }, { passive: true });
+
 // ── CAROUSEL ──
 function carouselGo(id, idx) {
   const track = document.getElementById('track-' + id);
@@ -1082,14 +1087,12 @@ function carouselGo(id, idx) {
   const total = track.children.length;
   idx = ((idx % total) + total) % total;
 
-  // Pause all videos/iframes before sliding
   track.querySelectorAll('video').forEach(v => { v.pause(); });
 
   track.style.transform = 'translateX(-' + (idx * 100) + '%)';
   dots.forEach((d, i) => d.classList.toggle('active', i === idx));
   track.closest('.proj-carousel').dataset.index = idx;
 
-  // Play the video on the new slide if it's a video
   const newSlide = track.children[idx];
   const vid = newSlide?.querySelector('video');
   if (vid) { vid.play().catch(() => {}); }
@@ -1102,10 +1105,6 @@ function carouselPrev(id) {
   const carousel = document.getElementById('carousel-' + id);
   carouselGo(id, parseInt(carousel.dataset.index || 0) - 1);
 }
-
-
-
-
 </script>
 </body>
 </html>

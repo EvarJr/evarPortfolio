@@ -203,53 +203,45 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .proj-carousel-dot{min-width:18px;height:18px;border-radius:20px;background:rgba(255,255,255,0.2);cursor:pointer;transition:all 0.2s;border:none;padding:0 4px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.7)}
 .proj-carousel-dot.active{background:#a5b4fc;transform:scale(1.3)}
 
-/* ── CAROUSEL ARROWS ──
-   On .proj-card-wrap (perspective container, no overflow clip).
-   Completely outside the 3D flip subtree — this escapes video/iframe
-   compositor layers that ignore z-index inside transforms. */
-.proj-carousel-arrows{
-  position:absolute;
-  top:0;left:0;right:0;
-  bottom:80px; /* above info strip + dots */
-  display:none;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 8px;
-  pointer-events:none;
-  z-index:100;
-  border-radius:var(--radius);
-}
-.proj-card-wrap:hover .proj-carousel-arrows{display:flex;}
-.proj-carousel-arrow{
-  width:34px;height:34px;
-  border-radius:50%;
-  background:rgba(5,8,16,0.82);
-  border:1.5px solid rgba(255,255,255,0.35);
-  color:#fff;font-size:12px;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  pointer-events:all;transition:all 0.2s;
-  backdrop-filter:blur(12px);
-  box-shadow:0 2px 12px rgba(0,0,0,0.7);
-  opacity:1;flex-shrink:0;
-}
-.proj-carousel-arrow:hover{
-  background:rgba(99,102,241,0.85);
-  border-color:rgba(99,102,241,1);
-  transform:scale(1.12);
-  box-shadow:0 4px 20px rgba(99,102,241,0.6);
-}
-
-/* ── BACK FACE — INFO STRIP ── */
+/* ── BACK FACE — INFO STRIP (title left, arrows right) ── */
 .proj-back-info{
-  padding:10px 14px;
-  background:rgba(5,8,16,0.88);
+  padding:10px 12px 10px 14px;
+  background:rgba(5,8,16,0.92);
   backdrop-filter:blur(8px);
   flex-shrink:0;
   position:relative;z-index:5;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  border-top:1px solid rgba(99,102,241,0.15);
 }
-.proj-back-title{font-family:var(--font-d);font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.proj-back-hint{font-size:10.5px;color:var(--text-3);display:flex;align-items:center;gap:5px;font-family:var(--font-m)}
+.proj-back-info-text{flex:1;min-width:0;}
+.proj-back-title{font-family:var(--font-d);font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.proj-back-hint{font-size:10px;color:var(--text-3);display:flex;align-items:center;gap:4px;font-family:var(--font-m)}
 .proj-back-hint i{font-size:9px;color:#a5b4fc}
+
+/* ── CAROUSEL ARROWS — inline in info strip, right side ── */
+.proj-carousel-arrows{display:flex;align-items:center;gap:5px;flex-shrink:0;}
+.proj-carousel-arrow{
+  width:28px;height:28px;
+  border-radius:8px;
+  background:rgba(99,102,241,0.15);
+  border:1px solid rgba(99,102,241,0.4);
+  color:#a5b4fc;
+  font-size:11px;
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.2s;
+  flex-shrink:0;
+}
+.proj-carousel-arrow:hover{
+  background:rgba(99,102,241,0.6);
+  border-color:rgba(99,102,241,1);
+  color:#fff;
+  transform:scale(1.1);
+  box-shadow:0 2px 12px rgba(99,102,241,0.5);
+}
 
 .proj-card.hidden{display:none}
 .proj-thumb{height:130px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
@@ -713,37 +705,31 @@ a.re-contact-item:hover{color:#fff}
           </div>
           <?php endif; ?>
 
-          <!-- Info strip -->
+          <!-- Info strip: title left, arrows right -->
           <div class="proj-back-info">
-            <div class="proj-back-title"><?= esc($proj['title']) ?></div>
-            <div class="proj-back-hint">
-              <i class="fas fa-images" style="font-size:9px"></i>
-              <?= count($mediaList) ?> media &nbsp;·&nbsp;
-              <i class="fas fa-hand-pointer" style="font-size:9px"></i> Click for details
+            <div class="proj-back-info-text">
+              <div class="proj-back-title"><?= esc($proj['title']) ?></div>
+              <div class="proj-back-hint">
+                <i class="fas fa-hand-pointer"></i> Click for details
+              </div>
             </div>
+            <?php if(count($mediaList) > 1): ?>
+            <div class="proj-carousel-arrows">
+              <button class="proj-carousel-arrow" onclick="event.stopPropagation();carouselPrev(<?= $proj['id'] ?>)" title="Previous">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              <span style="font-size:9px;color:var(--text-3);font-family:var(--font-m);padding:0 1px" id="slide-counter-<?= $proj['id'] ?>">1/<?= count($mediaList) ?></span>
+              <button class="proj-carousel-arrow" onclick="event.stopPropagation();carouselNext(<?= $proj['id'] ?>)" title="Next">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
+            <?php endif; ?>
           </div>
 
         </div><!-- /.proj-face-back -->
         <?php endif; ?>
 
       </div><!-- /.proj-card -->
-
-      <?php /* ARROWS live here on .proj-card-wrap — completely outside the 3D
-               transform subtree. Video/iframe elements create their own GPU
-               compositor layer inside CSS transforms and ignore child z-index.
-               Moving arrows to the wrapper (which only has perspective, no
-               transform) makes them always paint above the video layer. */ ?>
-      <?php if($hasMedia && count($mediaList) > 1): ?>
-      <div class="proj-carousel-arrows">
-        <button class="proj-carousel-arrow" onclick="event.stopPropagation();carouselPrev(<?= $proj['id'] ?>)">
-          <i class="fas fa-chevron-left"></i>
-        </button>
-        <button class="proj-carousel-arrow" onclick="event.stopPropagation();carouselNext(<?= $proj['id'] ?>)">
-          <i class="fas fa-chevron-right"></i>
-        </button>
-      </div>
-      <?php endif; ?>
-
     </div><!-- /.proj-card-wrap -->
     <?php endforeach; ?>
   </div>
@@ -896,7 +882,7 @@ document.getElementById('proj-grid').addEventListener('click',function(e){if(e.t
 const navSections=['hero','services','projects','testimonials','contact'];
 window.addEventListener('scroll',()=>{const y=window.scrollY+90;navSections.forEach(id=>{const el=document.getElementById(id);if(!el)return;const links=document.querySelectorAll(`.nav-link[href="#${id}"]`);if(!links.length)return;if(el.offsetTop<=y&&el.offsetTop+el.offsetHeight>y){document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));links.forEach(l=>l.classList.add('active'));}});},{passive:true});
 
-function carouselGo(id,idx){const track=document.getElementById('track-'+id);const dots=document.querySelectorAll('#dots-'+id+' .proj-carousel-dot');const total=track.children.length;idx=((idx%total)+total)%total;track.querySelectorAll('video').forEach(v=>{v.pause();});track.style.transform='translateX(-'+(idx*100)+'%)';dots.forEach((d,i)=>d.classList.toggle('active',i===idx));track.closest('.proj-carousel').dataset.index=idx;const newSlide=track.children[idx];const vid=newSlide?.querySelector('video');if(vid){vid.play().catch(()=>{});tch(()=>{});}
+function carouselGo(id,idx){const track=document.getElementById('track-'+id);const dots=document.querySelectorAll('#dots-'+id+' .proj-carousel-dot');const total=track.children.length;idx=((idx%total)+total)%total;track.querySelectorAll('video').forEach(v=>{v.pause();});track.style.transform='translateX(-'+(idx*100)+'%)';dots.forEach((d,i)=>d.classList.toggle('active',i===idx));track.closest('.proj-carousel').dataset.index=idx;const counter=document.getElementById('slide-counter-'+id);if(counter)counter.textContent=(idx+1)+'/'+total;const newSlide=track.children[idx];const vid=newSlide?.querySelector('video');if(vid){vid.play().catch(()=>{});tch(()=>{});}
 }
 function carouselNext(id){const carousel=document.getElementById('carousel-'+id);carouselGo(id,parseInt(carousel.dataset.index||0)+1);}
 function carouselPrev(id){const carousel=document.getElementById('carousel-'+id);carouselGo(id,parseInt(carousel.dataset.index||0)-1);}

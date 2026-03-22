@@ -141,15 +141,13 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .proj-filter:hover{border-color:rgba(99,102,241,0.35);color:var(--text-2)}
 .proj-filter.active{background:var(--g-accent);border-color:transparent;color:#fff;box-shadow:0 4px 16px rgba(99,102,241,0.35)}
 .proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,420px));gap:18px;justify-content:center}
-
 /* ── FLIP CARD WRAPPER ── */
-.proj-card-wrap{perspective:1200px;border-radius:var(--radius);position:relative;}
+.proj-card-wrap{perspective:1200px;border-radius:var(--radius)}
 .proj-card-wrap.hidden{display:none}
 .proj-card{
   background:rgba(255,255,255,0.03);
   border:1px solid rgba(99,102,241,0.14);
-  border-radius:var(--radius);
-  /* NO overflow:hidden here — it would clip the back-face arrows */
+  border-radius:var(--radius);overflow:hidden;
   transition:transform 0.65s cubic-bezier(0.4,0.2,0.2,1),box-shadow 0.3s,border-color 0.3s;
   display:flex;flex-direction:column;cursor:pointer;
   transform-style:preserve-3d;position:relative;
@@ -164,85 +162,47 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .proj-face{
   position:absolute;inset:0;
   backface-visibility:hidden;-webkit-backface-visibility:hidden;
-  border-radius:var(--radius);
+  border-radius:var(--radius);overflow:hidden;
   display:flex;flex-direction:column;
 }
-.proj-face-front{z-index:2;overflow:hidden}
-/* Back face: overflow VISIBLE so arrows aren't clipped */
+.proj-face-front{z-index:2}
 .proj-face-back{
   transform:rotateY(180deg);
   background:linear-gradient(145deg,#0f1535,#0b0f1e);
   border:1px solid rgba(99,102,241,0.3);
   z-index:1;
-  overflow:visible;
 }
 
+/* ── BACK FACE — VIDEO ── */
+.proj-back-video{width:100%;height:100%;object-fit:cover;border-radius:var(--radius)}
+.proj-back-iframe{width:100%;height:100%;border:none;border-radius:var(--radius)}
+.proj-back-video-wrap{position:relative;flex:1;overflow:hidden;border-radius:var(--radius) var(--radius) 0 0}
+.proj-back-video-wrap iframe,.proj-back-video-wrap video{width:100%;height:100%;object-fit:cover;border:none}
+
 /* ── BACK FACE — PHOTO CAROUSEL ── */
-/* Carousel itself clips media, but arrows live outside it */
-.proj-carousel{
-  position:relative;flex:1;
-  overflow:hidden; /* clips media only */
-  border-radius:var(--radius) var(--radius) 0 0;
-  /* Clip the media but NOT child elements that escape — arrows are siblings, not children */
-}
+.proj-carousel{position:relative;flex:1;overflow:hidden;border-radius:var(--radius) var(--radius) 0 0}
 .proj-carousel-track{display:flex;height:100%;transition:transform 0.5s cubic-bezier(0.4,0,0.2,1)}
 .proj-carousel-slide{min-width:100%;height:100%;flex-shrink:0}
 .proj-carousel-slide img{width:100%;height:100%;object-fit:cover;display:block}
-.proj-carousel-slide video{width:100%;height:100%;object-fit:cover;display:block}
-.proj-carousel-slide iframe{width:100%;height:100%;border:none;display:block}
-
-/* ── CLOUDY VIGNETTE on left & right edges of carousel ── */
-.proj-carousel::before,.proj-carousel::after{
-  content:'';position:absolute;top:0;bottom:0;width:52px;pointer-events:none;z-index:5;
-}
-.proj-carousel::before{left:0;background:linear-gradient(to right,rgba(5,8,16,0.65) 0%,transparent 100%)}
-.proj-carousel::after{right:0;background:linear-gradient(to left,rgba(5,8,16,0.65) 0%,transparent 100%)}
-
-/* ── CAROUSEL DOTS ── */
-.proj-carousel-dots{display:flex;justify-content:center;gap:5px;padding:6px 0 4px;position:relative;z-index:5;background:rgba(5,8,16,0.5);backdrop-filter:blur(4px)}
+.proj-carousel-dots{display:flex;justify-content:center;gap:5px;padding:8px 0 4px}
 .proj-carousel-dot{min-width:18px;height:18px;border-radius:20px;background:rgba(255,255,255,0.2);cursor:pointer;transition:all 0.2s;border:none;padding:0 4px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.7)}
 .proj-carousel-dot.active{background:#a5b4fc;transform:scale(1.3)}
 
-/* ── BACK FACE — INFO STRIP (title left, arrows right) ── */
-.proj-back-info{
-  padding:10px 12px 10px 14px;
-  background:rgba(5,8,16,0.92);
-  backdrop-filter:blur(8px);
-  flex-shrink:0;
-  position:relative;z-index:5;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:8px;
-  border-top:1px solid rgba(99,102,241,0.15);
-}
-.proj-back-info-text{flex:1;min-width:0;}
-.proj-back-title{font-family:var(--font-d);font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.proj-back-hint{font-size:10px;color:var(--text-3);display:flex;align-items:center;gap:4px;font-family:var(--font-m)}
+/* ── CAROUSEL ARROWS — always visible on back face ── */
+.proj-carousel-arrows{position:absolute;top:0;left:0;right:0;bottom:40px;display:flex;align-items:center;justify-content:space-between;padding:0 8px;pointer-events:none;z-index:30}
+.proj-carousel-arrow{width:32px;height:32px;border-radius:50%;background:rgba(5,8,16,0.75);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;pointer-events:all;transition:all 0.2s;backdrop-filter:blur(10px);opacity:1;box-shadow:0 2px 8px rgba(0,0,0,0.5)}
+.proj-carousel-arrow:hover{background:rgba(99,102,241,0.7);border-color:rgba(99,102,241,0.8);transform:scale(1.1)}
+
+/* ── CAROUSEL CLOUDY EDGE VIGNETTE ── */
+.proj-carousel::before,.proj-carousel::after{content:'';position:absolute;top:0;bottom:0;width:48px;z-index:10;pointer-events:none}
+.proj-carousel::before{left:0;background:linear-gradient(to right,rgba(5,8,16,0.55) 0%,transparent 100%)}
+.proj-carousel::after{right:0;background:linear-gradient(to left,rgba(5,8,16,0.55) 0%,transparent 100%)}
+
+/* ── BACK FACE — INFO STRIP ── */
+.proj-back-info{padding:12px 14px;background:rgba(5,8,16,0.85);backdrop-filter:blur(8px);flex-shrink:0}
+.proj-back-title{font-family:var(--font-d);font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.proj-back-hint{font-size:10.5px;color:var(--text-3);display:flex;align-items:center;gap:5px;font-family:var(--font-m)}
 .proj-back-hint i{font-size:9px;color:#a5b4fc}
-
-/* ── CAROUSEL ARROWS — inline in info strip, right side ── */
-.proj-carousel-arrows{display:flex;align-items:center;gap:5px;flex-shrink:0;}
-.proj-carousel-arrow{
-  width:28px;height:28px;
-  border-radius:8px;
-  background:rgba(99,102,241,0.15);
-  border:1px solid rgba(99,102,241,0.4);
-  color:#a5b4fc;
-  font-size:11px;
-  cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  transition:all 0.2s;
-  flex-shrink:0;
-}
-.proj-carousel-arrow:hover{
-  background:rgba(99,102,241,0.6);
-  border-color:rgba(99,102,241,1);
-  color:#fff;
-  transform:scale(1.1);
-  box-shadow:0 2px 12px rgba(99,102,241,0.5);
-}
-
 .proj-card.hidden{display:none}
 .proj-thumb{height:130px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
 .proj-thumb-thesis{background:linear-gradient(135deg,rgba(139,92,246,0.18),rgba(99,102,241,0.12))}
@@ -569,7 +529,7 @@ a.re-contact-item:hover{color:#fff}
     <div class="hero-btns">
       <a href="#" class="btn-primary" onclick="openResumeModal(event)"><i class="fas fa-file-alt"></i><?= esc($about['cv_label']??'View Resume') ?></a>
       <?php if(!empty($about['btn_contact_email'])): ?>
-      <a href="/cdn-cgi/l/email-protection#e9d5d6d4c98c9a8ac1cd888b869c9db2ce8b9d87b68a86879d888a9db68c84888085ceb4c0c9d6d7" class="btn-ghost"><?= esc($about['btn_contact_label']??'Hire Me') ?></a>
+      <a href="mailto:<?= esc($about['btn_contact_email']) ?>" class="btn-ghost"><?= esc($about['btn_contact_label']??'Hire Me') ?></a>
       <?php else: ?>
       <a href="#contact" class="btn-ghost"><?= esc($about['btn_contact_label']??'Hire Me') ?></a>
       <?php endif; ?>
@@ -579,7 +539,7 @@ a.re-contact-item:hover{color:#fff}
       <?php if(!empty($about['linkedin_url'])): ?><a href="<?= esc($about['linkedin_url']) ?>" target="_blank" class="social-icon" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a><?php endif; ?>
       <?php if(!empty($about['twitter'])): ?><a href="<?= esc($about['twitter']) ?>" target="_blank" class="social-icon" title="Twitter/X"><i class="fab fa-x-twitter"></i></a><?php endif; ?>
       <?php if(!empty($about['facebook'])): ?><a href="<?= esc($about['facebook']) ?>" target="_blank" class="social-icon" title="Facebook"><i class="fab fa-facebook-f"></i></a><?php endif; ?>
-      <?php if(!empty($header['email'])): ?><a href="/cdn-cgi/l/email-protection#714d4e4c5114021259551914101514032a56141c10181d562c58514e4f" class="social-icon" title="Email"><i class="fas fa-envelope"></i></a><?php endif; ?>
+      <?php if(!empty($header['email'])): ?><a href="mailto:<?= esc($header['email']) ?>" class="social-icon" title="Email"><i class="fas fa-envelope"></i></a><?php endif; ?>
     </div>
     <div class="counters-row" id="counters">
       <div class="counter-chip"><div class="counter-icon blue"><i class="fas fa-briefcase"></i></div><div><div class="counter-val" data-target="2" data-suffix="">0</div><div class="counter-lbl">OJT Experiences</div></div></div>
@@ -631,23 +591,26 @@ a.re-contact-item:hover{color:#fff}
         $cat = $proj['category'] ?? 'personal';
         $projTech = json_decode($proj['tech'] ?? '[]', true) ?: [];
         $delay = 'd'.min($i+1,4);
-        $mediaRaw = $proj['media_urls'] ?? '';
-        $mediaList = array_values(array_filter(array_map('trim', explode(',', $mediaRaw))));
-        $hasMedia = !empty($mediaList);
+    ?>
+    <?php
+      $mediaRaw = $proj['media_urls'] ?? '';
+      $mediaList = array_values(array_filter(array_map('trim', explode(',', $mediaRaw))));
+      $hasMedia = !empty($mediaList);
+      $isVideo = $hasMedia && (
+        strpos($mediaList[0], 'youtube.com') !== false ||
+        strpos($mediaList[0], 'youtu.be') !== false ||
+        preg_match('/\.(mp4|webm|ogg)$/i', $mediaList[0])
+      );
     ?>
     <div class="proj-card-wrap <?= $cat==='thesis'?'featured':'' ?> anim <?= $delay ?>" data-category="<?= esc($cat) ?>" data-project="<?= $proj['id'] ?>">
       <div class="proj-card <?= $cat==='thesis'?'featured':'' ?> <?= $hasMedia?'has-media':'' ?>" style="min-height:290px">
 
-        <!-- ═══ FRONT FACE ═══ -->
+        <!-- FRONT FACE -->
         <div class="proj-face proj-face-front">
           <div class="proj-thumb <?= $thumbBg[$cat]??'proj-thumb-personal' ?>">
             <i class="<?= esc($proj['icon']) ?> proj-thumb-icon <?= $iconColor[$cat]??'personal' ?>"></i>
             <span class="proj-type-tag <?= $tagClass[$cat]??'tag-personal' ?>"><?= $tagLabel[$cat]??$cat ?></span>
-            <?php if($hasMedia): ?>
-            <div style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);background:rgba(99,102,241,0.85);border-radius:20px;padding:3px 10px;font-size:9.5px;font-weight:700;color:#fff;font-family:var(--font-d);letter-spacing:0.3px;display:flex;align-items:center;gap:4px;backdrop-filter:blur(8px);white-space:nowrap">
-              <i class="fas fa-images" style="font-size:8px"></i><?= count($mediaList) ?> media · hover
-            </div>
-            <?php endif; ?>
+            <?php if($hasMedia): ?><div style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);background:rgba(99,102,241,0.85);border-radius:20px;padding:3px 10px;font-size:9.5px;font-weight:700;color:#fff;font-family:var(--font-d);letter-spacing:0.3px;display:flex;align-items:center;gap:4px;backdrop-filter:blur(8px);white-space:nowrap"><i class="fas fa-images" style="font-size:8px"></i><?= count($mediaList) ?> media · hover</div><?php endif; ?>
           </div>
           <div class="proj-body">
             <div class="proj-title"><?= esc($proj['title']) ?></div>
@@ -661,11 +624,9 @@ a.re-contact-item:hover{color:#fff}
           </div>
         </div>
 
-        <!-- ═══ BACK FACE ═══ -->
+        <!-- BACK FACE — unified carousel for all media types -->
         <?php if($hasMedia): ?>
         <div class="proj-face proj-face-back" onclick="event.stopPropagation(); openProject(<?= $proj['id'] ?>)">
-
-          <!-- Carousel: overflow:hidden clips media -->
           <div class="proj-carousel" data-index="0" id="carousel-<?= $proj['id'] ?>">
             <div class="proj-carousel-track" id="track-<?= $proj['id'] ?>">
               <?php foreach($mediaList as $mi => $mediaUrl):
@@ -677,60 +638,50 @@ a.re-contact-item:hover{color:#fff}
                   preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/', $mediaUrl, $ytm);
                   $embedUrl = 'https://www.youtube.com/embed/'.$ytm[1].'?autoplay=1&mute=1&loop=1&playlist='.$ytm[1].'&controls=0&modestbranding=1';
                 ?>
-                <iframe src="<?= esc($embedUrl) ?>" allow="autoplay; encrypted-media" allowfullscreen loading="lazy"></iframe>
+                <iframe src="<?= esc($embedUrl) ?>" allow="autoplay; encrypted-media" allowfullscreen
+                  style="width:100%;height:100%;border:none;display:block" loading="lazy"></iframe>
                 <?php elseif($isItemVideo): ?>
-                <video src="<?= esc($mediaUrl) ?>" <?= $mi===0?'autoplay':'' ?> muted loop playsinline></video>
+                <video src="<?= esc($mediaUrl) ?>" <?= $mi===0?'autoplay':'' ?> muted loop playsinline
+                  style="width:100%;height:100%;object-fit:cover;display:block"></video>
                 <?php else: ?>
-                <img src="<?= esc($mediaUrl) ?>" alt="<?= esc($proj['title']) ?>" loading="lazy">
+                <img src="<?= esc($mediaUrl) ?>" alt="<?= esc($proj['title']) ?>"
+                  style="width:100%;height:100%;object-fit:cover;display:block" loading="lazy">
                 <?php endif; ?>
               </div>
               <?php endforeach; ?>
             </div>
-          </div>
-
-          <!-- Dots row -->
-          <?php if(count($mediaList) > 1): ?>
-          <div class="proj-carousel-dots" id="dots-<?= $proj['id'] ?>">
-            <?php foreach($mediaList as $di => $mediaUrl):
-              $isItemYt2  = strpos($mediaUrl,'youtube.com') !== false || strpos($mediaUrl,'youtu.be') !== false;
-              $isItemVid2 = preg_match('/\.(mp4|webm|mov|avi)$/i', $mediaUrl) || $isItemYt2;
-              $dotIcon    = $isItemVid2 ? '▶' : '●';
-            ?>
-            <button class="proj-carousel-dot <?= $di===0?'active':'' ?>"
-              onclick="event.stopPropagation();carouselGo(<?= $proj['id'] ?>,<?= $di ?>)"
-              title="<?= $isItemVid2?'Video':'Photo' ?> <?= $di+1 ?>">
-              <span style="font-size:7px"><?= $dotIcon ?></span>
-            </button>
-            <?php endforeach; ?>
-          </div>
-          <?php endif; ?>
-
-          <!-- Info strip: title left, arrows right -->
-          <div class="proj-back-info">
-            <div class="proj-back-info-text">
-              <div class="proj-back-title"><?= esc($proj['title']) ?></div>
-              <div class="proj-back-hint">
-                <i class="fas fa-hand-pointer"></i> Click for details
-              </div>
-            </div>
             <?php if(count($mediaList) > 1): ?>
             <div class="proj-carousel-arrows">
-              <button class="proj-carousel-arrow" onclick="event.stopPropagation();carouselPrev(<?= $proj['id'] ?>)" title="Previous">
-                <i class="fas fa-chevron-left"></i>
+              <button class="proj-carousel-arrow" onclick="event.stopPropagation();carouselPrev(<?= $proj['id'] ?>)"><i class="fas fa-chevron-left"></i></button>
+              <button class="proj-carousel-arrow" onclick="event.stopPropagation();carouselNext(<?= $proj['id'] ?>)"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="proj-carousel-dots" id="dots-<?= $proj['id'] ?>">
+              <?php foreach($mediaList as $di => $mediaUrl):
+                $isItemYt2  = strpos($mediaUrl,'youtube.com') !== false || strpos($mediaUrl,'youtu.be') !== false;
+                $isItemVid2 = preg_match('/\.(mp4|webm|mov|avi)$/i', $mediaUrl) || $isItemYt2;
+                $dotIcon    = $isItemVid2 ? '▶' : '●';
+              ?>
+              <button class="proj-carousel-dot <?= $di===0?'active':'' ?>"
+                onclick="event.stopPropagation();carouselGo(<?= $proj['id'] ?>,<?= $di ?>)"
+                title="<?= $isItemVid2?'Video':'Photo' ?> <?= $di+1 ?>">
+                <span style="font-size:7px"><?= $dotIcon ?></span>
               </button>
-              <span style="font-size:9px;color:var(--text-3);font-family:var(--font-m);padding:0 1px" id="slide-counter-<?= $proj['id'] ?>">1/<?= count($mediaList) ?></span>
-              <button class="proj-carousel-arrow" onclick="event.stopPropagation();carouselNext(<?= $proj['id'] ?>)" title="Next">
-                <i class="fas fa-chevron-right"></i>
-              </button>
+              <?php endforeach; ?>
             </div>
             <?php endif; ?>
           </div>
-
-        </div><!-- /.proj-face-back -->
+          <div class="proj-back-info">
+            <div class="proj-back-title"><?= esc($proj['title']) ?></div>
+            <div class="proj-back-hint">
+              <i class="fas fa-images" style="font-size:9px"></i>
+              <?= count($mediaList) ?> media · <i class="fas fa-hand-pointer" style="font-size:9px"></i> Click for details
+            </div>
+          </div>
+        </div>
         <?php endif; ?>
 
-      </div><!-- /.proj-card -->
-    </div><!-- /.proj-card-wrap -->
+      </div>
+    </div>
     <?php endforeach; ?>
   </div>
 </section>
@@ -765,7 +716,7 @@ a.re-contact-item:hover{color:#fff}
     <h2>Let's Build <span style="background:var(--g-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Something</span></h2>
     <p>Have a project in mind, an opportunity to share, or a problem to solve? I'd love to hear from you.</p>
     <?php $email=$about['btn_contact_email']?:($header['email']??''); ?>
-    <?php if(!empty($email)): ?><a href="/cdn-cgi/l/email-protection#fec2c1c3de9b8d9dd6da9b939f9792d7dec1c0" class="btn-email"><i class="fas fa-envelope"></i><?= esc($email) ?></a><?php endif; ?>
+    <?php if(!empty($email)): ?><a href="mailto:<?= esc($email) ?>" class="btn-email"><i class="fas fa-envelope"></i><?= esc($email) ?></a><?php endif; ?>
   </div>
 </section>
 
@@ -805,9 +756,18 @@ a.re-contact-item:hover{color:#fff}
       <h3><i class="fas fa-file-alt" style="color:#3b82f6;margin-right:8px"></i>Resume — <?= esc($header['name']??'') ?></h3>
       <div class="modal-bar-actions">
         <div class="print-settings">
-          <div class="print-setting-group"><label>Size</label><select id="printSize"><option value="A4" selected>A4</option><option value="Letter">Letter</option><option value="Legal">Legal</option></select></div>
-          <div class="print-setting-group"><label>Orientation</label><select id="printOrientation"><option value="portrait" selected>Portrait</option><option value="landscape">Landscape</option></select></div>
-          <div class="print-setting-group"><label>Scale %</label><input type="number" id="printScale" value="100" min="50" max="150" step="5"></div>
+          <div class="print-setting-group">
+            <label>Size</label>
+            <select id="printSize"><option value="A4" selected>A4</option><option value="Letter">Letter</option><option value="Legal">Legal</option></select>
+          </div>
+          <div class="print-setting-group">
+            <label>Orientation</label>
+            <select id="printOrientation"><option value="portrait" selected>Portrait</option><option value="landscape">Landscape</option></select>
+          </div>
+          <div class="print-setting-group">
+            <label>Scale %</label>
+            <input type="number" id="printScale" value="100" min="50" max="150" step="5">
+          </div>
         </div>
         <button class="btn-print" onclick="printResume()"><i class="fas fa-print"></i> Print / Save PDF</button>
         <button class="btn-close-modal" onclick="closeResumeModal()"><i class="fas fa-times"></i></button>
@@ -821,25 +781,78 @@ a.re-contact-item:hover{color:#fff}
             <div class="re-position"><?= esc($header['position']??'') ?></div>
           </div>
           <div class="re-contacts">
-            <?php if(!empty($header['email'])): ?><a class="re-contact-item" href="/cdn-cgi/l/email-protection#a995969489ccdaca818dc1ccc8cdccdbf28eccc4c8c0c58ef480899697" style="color:rgba(255,255,255,0.8);text-decoration:none"><i class="fas fa-envelope"></i><?= esc($header['email']) ?></a><?php endif; ?>
-            <?php if(!empty($header['phone'])): ?><span class="re-contact-item"><i class="fas fa-phone"></i><?= esc($header['phone']) ?></span><?php endif; ?>
-            <?php if(!empty($header['location'])): ?><span class="re-contact-item"><i class="fas fa-map-marker-alt"></i><?= esc($header['location']) ?></span><?php endif; ?>
-            <?php if(!empty($header['portfolio_url'])): ?><a class="re-contact-item" href="<?= esc($header['portfolio_url']) ?>" target="_blank" style="color:rgba(255,255,255,0.8);text-decoration:underline"><i class="fas fa-globe" style="color:#06b6d4;font-size:10px"></i><?= esc($header['portfolio_url']) ?></a><?php endif; ?>
-            <?php if(!empty($header['linkedin'])): ?><a class="re-contact-item" href="<?= esc($about['linkedin_url'] ?? '#') ?>" target="_blank" style="color:rgba(255,255,255,0.8);text-decoration:underline"><i class="fab fa-linkedin" style="color:#0ea5e9;font-size:10px"></i><?= esc($header['linkedin']) ?></a><?php endif; ?>
-            <?php if(!empty($about['github'])): ?><a class="re-contact-item" href="<?= esc($about['github']) ?>" target="_blank" style="color:rgba(255,255,255,0.8);text-decoration:underline"><i class="fab fa-github" style="color:#a5b4fc;font-size:10px"></i><?= esc($about['github']) ?></a><?php endif; ?>
+            <?php if(!empty($header['email'])): ?>
+            <a class="re-contact-item" href="mailto:<?= esc($header['email']) ?>" style="color:rgba(255,255,255,0.8);text-decoration:none"><i class="fas fa-envelope"></i><?= esc($header['email']) ?></a>
+            <?php endif; ?>
+            <?php if(!empty($header['phone'])): ?>
+            <span class="re-contact-item"><i class="fas fa-phone"></i><?= esc($header['phone']) ?></span>
+            <?php endif; ?>
+            <?php if(!empty($header['location'])): ?>
+            <span class="re-contact-item"><i class="fas fa-map-marker-alt"></i><?= esc($header['location']) ?></span>
+            <?php endif; ?>
+            <?php if(!empty($header['portfolio_url'])): ?>
+            <a class="re-contact-item" href="<?= esc($header['portfolio_url']) ?>" target="_blank" style="color:rgba(255,255,255,0.8);text-decoration:underline"><i class="fas fa-globe" style="color:#06b6d4;font-size:10px"></i><?= esc($header['portfolio_url']) ?></a>
+            <?php endif; ?>
+            <?php if(!empty($header['linkedin'])): ?>
+            <a class="re-contact-item" href="<?= esc($about['linkedin_url'] ?? '#') ?>" target="_blank" style="color:rgba(255,255,255,0.8);text-decoration:underline"><i class="fab fa-linkedin" style="color:#0ea5e9;font-size:10px"></i><?= esc($header['linkedin']) ?></a>
+            <?php endif; ?>
+            <?php if(!empty($about['github'])): ?>
+            <a class="re-contact-item" href="<?= esc($about['github']) ?>" target="_blank" style="color:rgba(255,255,255,0.8);text-decoration:underline"><i class="fab fa-github" style="color:#a5b4fc;font-size:10px"></i><?= esc($about['github']) ?></a>
+            <?php endif; ?>
           </div>
         </div>
         <div class="re-body">
           <div class="re-col-l">
             <?php if(!empty($summary['content'])): ?><div class="re-section"><div class="re-section-title">Summary</div><p class="re-summary"><?= esc($summary['content']) ?></p></div><?php endif; ?>
-            <?php if(!empty($history)): ?><div class="re-section"><div class="re-section-title">Work History</div><?php foreach($history as $job): ?><div class="re-job"><span class="re-job-role"><?= esc($job['role']) ?></span><span class="re-job-meta"><?= esc($job['company']) ?> &middot; <?= esc($job['start_month']) ?> <?= esc($job['start_year']) ?> &ndash; <?= $job['is_current']?'Present':esc($job['end_month']).' '.esc($job['end_year']) ?></span><?php if(!empty($job['bullets'])): ?><ul class="re-ul"><?php foreach($job['bullets'] as $b): ?><li><?= esc($b['content']) ?></li><?php endforeach; ?></ul><?php endif; ?></div><?php endforeach; ?></div><?php endif; ?>
+            <?php if(!empty($history)): ?>
+            <div class="re-section"><div class="re-section-title">Work History</div>
+              <?php foreach($history as $job): ?>
+              <div class="re-job">
+                <span class="re-job-role"><?= esc($job['role']) ?></span>
+                <span class="re-job-meta"><?= esc($job['company']) ?> &middot; <?= esc($job['start_month']) ?> <?= esc($job['start_year']) ?> &ndash; <?= $job['is_current']?'Present':esc($job['end_month']).' '.esc($job['end_year']) ?></span>
+                <?php if(!empty($job['bullets'])): ?><ul class="re-ul"><?php foreach($job['bullets'] as $b): ?><li><?= esc($b['content']) ?></li><?php endforeach; ?></ul><?php endif; ?>
+              </div>
+              <?php endforeach; ?>
+            </div>
+            <?php endif; ?>
             <?php if(!empty($skills)): ?><div class="re-section"><div class="re-section-title">Personal Skills</div><ul class="re-ul"><?php foreach($skills as $s): ?><li><?= esc($s['content']) ?></li><?php endforeach; ?></ul></div><?php endif; ?>
           </div>
           <div class="re-col-r">
             <?php if(!empty($tech)): ?><div class="re-section"><div class="re-section-title">Stack of Technologies</div><ul class="re-ul"><?php foreach($tech as $t): ?><li><?= esc($t['content']) ?></li><?php endforeach; ?></ul></div><?php endif; ?>
-            <?php if(!empty($languages)): ?><div class="re-section"><div class="re-section-title">Languages</div><div class="re-lang-list"><?php foreach($languages as $lang): ?><div class="re-lang-item"><span class="re-lang-name"><?= esc($lang['language']) ?></span><div class="re-lang-dots"><?php for($i=1;$i<=5;$i++): ?><span class="re-dot <?= ($lang['mastery']/20)>=$i?'on':'' ?>"></span><?php endfor; ?></div></div><?php endforeach; ?></div></div><?php endif; ?>
-            <?php if(!empty($education)): ?><div class="re-section"><div class="re-section-title">Education</div><?php foreach($education as $edu): ?><div class="re-edu"><div class="re-edu-deg"><?= esc($edu['degree']) ?></div><div class="re-edu-sch"><?= esc($edu['school']) ?></div><div class="re-edu-dt"><?= esc($edu['start_month']) ?> <?= esc($edu['start_year']) ?> &ndash; <?= esc($edu['end_month']) ?> <?= esc($edu['end_year']) ?></div><?php if(!empty($edu['bullets'])): ?><ul class="re-ul"><?php foreach($edu['bullets'] as $b): ?><li><?= esc($b['content']) ?></li><?php endforeach; ?></ul><?php endif; ?></div><?php endforeach; ?></div><?php endif; ?>
-            <?php if(!empty($certifications)): ?><div class="re-section"><div class="re-section-title">Certifications</div><?php foreach($certifications as $cert): ?><div class="re-cert"><div class="re-cert-name"><?= esc($cert['name']) ?></div><div class="re-cert-yr"><?= esc($cert['year']) ?></div></div><?php endforeach; ?></div><?php endif; ?>
+            <?php if(!empty($languages)): ?>
+            <div class="re-section"><div class="re-section-title">Languages</div>
+              <div class="re-lang-list">
+                <?php foreach($languages as $lang): ?>
+                <div class="re-lang-item">
+                  <span class="re-lang-name"><?= esc($lang['language']) ?></span>
+                  <div class="re-lang-dots"><?php for($i=1;$i<=5;$i++): ?><span class="re-dot <?= ($lang['mastery']/20)>=$i?'on':'' ?>"></span><?php endfor; ?></div>
+                </div>
+                <?php endforeach; ?>
+              </div>
+            </div>
+            <?php endif; ?>
+            <?php if(!empty($education)): ?>
+            <div class="re-section"><div class="re-section-title">Education</div>
+              <?php foreach($education as $edu): ?>
+              <div class="re-edu">
+                <div class="re-edu-deg"><?= esc($edu['degree']) ?></div>
+                <div class="re-edu-sch"><?= esc($edu['school']) ?></div>
+                <div class="re-edu-dt"><?= esc($edu['start_month']) ?> <?= esc($edu['start_year']) ?> &ndash; <?= esc($edu['end_month']) ?> <?= esc($edu['end_year']) ?></div>
+                <?php if(!empty($edu['bullets'])): ?><ul class="re-ul"><?php foreach($edu['bullets'] as $b): ?><li><?= esc($b['content']) ?></li><?php endforeach; ?></ul><?php endif; ?>
+              </div>
+              <?php endforeach; ?>
+            </div>
+            <?php endif; ?>
+            <?php if(!empty($certifications)): ?>
+            <div class="re-section"><div class="re-section-title">Certifications</div>
+              <?php foreach($certifications as $cert): ?>
+              <div class="re-cert">
+                <div class="re-cert-name"><?= esc($cert['name']) ?></div>
+                <div class="re-cert-yr"><?= esc($cert['year']) ?></div>
+              </div>
+              <?php endforeach; ?>
+            </div>
+            <?php endif; ?>
           </div>
         </div>
       </div>
@@ -847,45 +860,251 @@ a.re-contact-item:hover{color:#fff}
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-window.addEventListener('scroll',()=>{const el=document.getElementById('scroll-progress');const pct=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100;el.style.width=Math.min(pct,100)+'%';},{passive:true});
-function toggleMobileMenu(){const menu=document.getElementById('mobileMenu');const btn=document.getElementById('navHamburger');const isOpen=menu.classList.contains('open');if(isOpen){menu.classList.remove('open');btn.classList.remove('open');document.body.style.overflow='';}else{menu.classList.add('open');btn.classList.add('open');document.body.style.overflow='hidden';}}
-function closeMobileMenu(){document.getElementById('mobileMenu').classList.remove('open');document.getElementById('navHamburger').classList.remove('open');document.body.style.overflow='';}
-document.addEventListener('click',e=>{const menu=document.getElementById('mobileMenu');const btn=document.getElementById('navHamburger');if(menu.classList.contains('open')&&!menu.contains(e.target)&&!btn.contains(e.target))closeMobileMenu();});
-function openResumeModal(e){e&&e.preventDefault();document.getElementById('resumeModal').classList.add('open');document.body.style.overflow='hidden';}
-function closeResumeModal(){document.getElementById('resumeModal').classList.remove('open');document.body.style.overflow='';}
-document.getElementById('resumeModal').addEventListener('click',function(e){if(e.target===this)closeResumeModal();});
-function printResume(){const size=document.getElementById('printSize')?.value||'A4';const orientation=document.getElementById('printOrientation')?.value||'portrait';const scale=document.getElementById('printScale')?.value||'100';let styleEl=document.getElementById('dynamicPrintStyle');if(!styleEl){styleEl=document.createElement('style');styleEl.id='dynamicPrintStyle';document.head.appendChild(styleEl);}styleEl.textContent=`@media print{@page{size:${size} ${orientation};margin:0;}#resumeContent{transform:scale(${scale/100});transform-origin:top left;width:${10000/scale}%;}}`;document.getElementById('resumeModal').classList.add('open');setTimeout(()=>window.print(),300);}
-function confirmLogout(e){e.preventDefault();if(confirm('Are you sure you want to logout?'))window.location.href='<?= base_url('logout') ?>';}
-function filterProjects(cat,btn){document.querySelectorAll('.proj-filter').forEach(b=>b.classList.remove('active'));btn.classList.add('active');const cards=document.querySelectorAll('.proj-card');const toShow=[],toHide=[];cards.forEach(card=>{const wrap=card.closest('.proj-card-wrap')||card;const visible=cat==='all'||(card.dataset.category||'').includes(cat);if(visible)toShow.push(wrap);else toHide.push(wrap);});toHide.forEach(el=>{el.classList.remove('showing');el.classList.add('hiding');});setTimeout(()=>{toHide.forEach(el=>{el.classList.add('hidden');el.classList.remove('hiding');});toShow.forEach(el=>{el.classList.remove('hidden');el.classList.add('showing');el.offsetHeight;});toShow.forEach((el,i)=>{setTimeout(()=>{el.classList.remove('showing');},i*60);});},280);}
-const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(!entry.isIntersecting)return;if(entry.target.classList.contains('anim')){entry.target.style.animationPlayState='running';}if(entry.target.id==='counters'){entry.target.querySelectorAll('.counter-val[data-target]').forEach(el=>{const target=parseInt(el.dataset.target);const suffix=el.dataset.suffix||'';let start=0;const step=(timestamp)=>{if(!start)start=timestamp;const progress=Math.min((timestamp-start)/1400,1);const ease=1-Math.pow(1-progress,3);el.textContent=Math.round(ease*target)+suffix;if(progress<1)requestAnimationFrame(step);};requestAnimationFrame(step);});}observer.unobserve(entry.target);});},{threshold:0.15});
-document.querySelectorAll('.anim').forEach(el=>{el.style.animationPlayState='paused';observer.observe(el);});
-const countersEl=document.getElementById('counters');if(countersEl)observer.observe(countersEl);
+<script>
+// ── SCROLL PROGRESS ──
+window.addEventListener('scroll', () => {
+  const el = document.getElementById('scroll-progress');
+  const pct = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+  el.style.width = Math.min(pct, 100) + '%';
+}, { passive: true });
 
-const PROJECTS={
-<?php
-$typeStyles=['thesis'=>'background:rgba(139,92,246,0.28);color:#d8b4fe;border:1px solid rgba(139,92,246,0.3)','ojt'=>'background:rgba(6,182,212,0.18);color:#67e8f9;border:1px solid rgba(6,182,212,0.25)','lgu'=>'background:rgba(16,185,129,0.16);color:#6ee7b7;border:1px solid rgba(16,185,129,0.22)','personal'=>'background:rgba(251,191,36,0.16);color:#fde68a;border:1px solid rgba(251,191,36,0.22)'];
-$typeLabels=['thesis'=>'★ Thesis','ojt'=>'OJT','lgu'=>'LGU','personal'=>'Personal'];
-foreach($projects as $proj):$cat=$proj['category']??'personal';$projTech=json_decode($proj['tech']??'[]',true)?:[];
-echo $proj['id'].':{'.'type:'.json_encode($typeLabels[$cat]??$cat).',typeStyle:'.json_encode($typeStyles[$cat]??$typeStyles['personal']).',title:'.json_encode($proj['title']).',desc:'.json_encode($proj['description']).',tech:'.json_encode($projTech).',github:'.json_encode($proj['github_url']?:null).',demo:'.json_encode($proj['demo_url']?:null).'},';
-endforeach;
-?>};
-const ALL_PHASES=<?php $allPhasesJs=[];foreach(($allThesisPhases??[])as $pid=>$phases){$allPhasesJs[$pid]=array_map(fn($ph)=>['num'=>$ph['num'],'title'=>$ph['title'],'content'=>$ph['content']],$phases);}echo json_encode($allPhasesJs);?>;
-const ALL_ISO=<?php $allIsoJs=[];foreach(($allIsoScores??[])as $pid=>$scores){$allIsoJs[$pid]=array_map(fn($s)=>['label'=>$s['label'],'score'=>(int)$s['score']],$scores);}echo json_encode($allIsoJs);?>;
-
-function openProject(id){const p=PROJECTS[id];if(!p)return;document.getElementById('pm-type-tag').textContent=p.type;document.getElementById('pm-type-tag').style.cssText=p.typeStyle;document.getElementById('pm-title').textContent=p.title;const projPhases=(ALL_PHASES&&ALL_PHASES[id])?ALL_PHASES[id]:[];const projIso=(ALL_ISO&&ALL_ISO[id])?ALL_ISO[id]:[];let body=`<p class="pm-desc">${p.desc}</p><div class="pm-tech-row">${p.tech.map(t=>`<span class="pm-tech">${t}</span>`).join('')}</div><div class="pm-links">${p.github?`<a href="${p.github}" class="pm-link-btn pm-link-github" target="_blank"><i class="fab fa-github"></i> View on GitHub</a>`:''}${p.demo?`<a href="${p.demo}" class="pm-link-btn pm-link-demo" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>`:''}</div>`;if(projPhases.length>0){body+=`<div class="pm-divider"></div><div class="pm-section-label">Development Methodology</div><div class="pm-accordion">${projPhases.map((ph,i)=>`<div class="pm-phase${i===0?' open':''}"><div class="pm-phase-header" onclick="togglePmPhase(this)"><div class="pm-phase-num">${ph.num}</div><div class="pm-phase-title">${ph.title}</div><i class="fas fa-chevron-down pm-phase-chevron"></i></div><div class="pm-phase-body"><div class="pm-phase-content">${ph.content}</div></div></div>`).join('')}</div>`;}if(projIso.length>0){body+=`<div class="pm-divider"></div><div class="pm-section-label">ISO 25010 Evaluation</div><div class="pm-iso-grid">${projIso.map(s=>`<div class="pm-iso-card"><div class="pm-iso-label">${s.label}</div><div class="pm-iso-bar-bg"><div class="pm-iso-bar-fill" data-w="${s.score}"></div></div><div class="pm-iso-score">${s.score}%</div></div>`).join('')}</div>`;}document.getElementById('pm-body').innerHTML=body;document.getElementById('projModal').classList.add('open');document.body.style.overflow='hidden';if(projIso.length>0){setTimeout(()=>{document.querySelectorAll('.pm-iso-bar-fill[data-w]').forEach((bar,i)=>{setTimeout(()=>{bar.style.width=bar.dataset.w+'%';},i*100);});},200);}}
-function closeProjModal(){document.getElementById('projModal').classList.remove('open');document.body.style.overflow='';}
-function closeProjModalOnOverlay(e){if(e.target===document.getElementById('projModal'))closeProjModal();}
-function togglePmPhase(header){const phase=header.closest('.pm-phase');const isOpen=phase.classList.contains('open');document.querySelectorAll('.pm-phase').forEach(p=>p.classList.remove('open'));if(!isOpen)phase.classList.add('open');}
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeProjModal();closeResumeModal();closeMobileMenu();}});
-document.getElementById('proj-grid').addEventListener('click',function(e){if(e.target.closest('.proj-carousel-arrow')||e.target.closest('.proj-carousel-dots'))return;if(e.target.closest('.proj-face-back'))return;const wrap=e.target.closest('.proj-card-wrap');if(!wrap)return;const id=parseInt(wrap.dataset.project);if(id)openProject(id);});
-const navSections=['hero','services','projects','testimonials','contact'];
-window.addEventListener('scroll',()=>{const y=window.scrollY+90;navSections.forEach(id=>{const el=document.getElementById(id);if(!el)return;const links=document.querySelectorAll(`.nav-link[href="#${id}"]`);if(!links.length)return;if(el.offsetTop<=y&&el.offsetTop+el.offsetHeight>y){document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));links.forEach(l=>l.classList.add('active'));}});},{passive:true});
-
-function carouselGo(id,idx){const track=document.getElementById('track-'+id);const dots=document.querySelectorAll('#dots-'+id+' .proj-carousel-dot');const total=track.children.length;idx=((idx%total)+total)%total;track.querySelectorAll('video').forEach(v=>{v.pause();});track.style.transform='translateX(-'+(idx*100)+'%)';dots.forEach((d,i)=>d.classList.toggle('active',i===idx));track.closest('.proj-carousel').dataset.index=idx;const counter=document.getElementById('slide-counter-'+id);if(counter)counter.textContent=(idx+1)+'/'+total;const newSlide=track.children[idx];const vid=newSlide?.querySelector('video');if(vid){vid.play().catch(()=>{});tch(()=>{});}
+// ── MOBILE MENU ──
+function toggleMobileMenu() {
+  const menu = document.getElementById('mobileMenu');
+  const btn = document.getElementById('navHamburger');
+  const isOpen = menu.classList.contains('open');
+  if(isOpen) { menu.classList.remove('open'); btn.classList.remove('open'); document.body.style.overflow = ''; }
+  else { menu.classList.add('open'); btn.classList.add('open'); document.body.style.overflow = 'hidden'; }
 }
-function carouselNext(id){const carousel=document.getElementById('carousel-'+id);carouselGo(id,parseInt(carousel.dataset.index||0)+1);}
-function carouselPrev(id){const carousel=document.getElementById('carousel-'+id);carouselGo(id,parseInt(carousel.dataset.index||0)-1);}
+function closeMobileMenu() {
+  document.getElementById('mobileMenu').classList.remove('open');
+  document.getElementById('navHamburger').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('click', e => {
+  const menu = document.getElementById('mobileMenu');
+  const btn = document.getElementById('navHamburger');
+  if(menu.classList.contains('open') && !menu.contains(e.target) && !btn.contains(e.target)) closeMobileMenu();
+});
+
+// ── RESUME MODAL ──
+function openResumeModal(e) { e&&e.preventDefault(); document.getElementById('resumeModal').classList.add('open'); document.body.style.overflow='hidden'; }
+function closeResumeModal() { document.getElementById('resumeModal').classList.remove('open'); document.body.style.overflow=''; }
+document.getElementById('resumeModal').addEventListener('click', function(e) { if(e.target===this) closeResumeModal(); });
+
+// ── PRINT ──
+function printResume() {
+  const size = document.getElementById('printSize')?.value || 'A4';
+  const orientation = document.getElementById('printOrientation')?.value || 'portrait';
+  const scale = document.getElementById('printScale')?.value || '100';
+  let styleEl = document.getElementById('dynamicPrintStyle');
+  if(!styleEl) { styleEl = document.createElement('style'); styleEl.id = 'dynamicPrintStyle'; document.head.appendChild(styleEl); }
+  styleEl.textContent = `@media print { @page { size: ${size} ${orientation}; margin: 0; } #resumeContent { transform: scale(${scale/100}); transform-origin: top left; width: ${10000/scale}%; } }`;
+  document.getElementById('resumeModal').classList.add('open');
+  setTimeout(() => window.print(), 300);
+}
+
+// ── LOGOUT ──
+function confirmLogout(e) { e.preventDefault(); if(confirm('Are you sure you want to logout?')) window.location.href='<?= base_url('logout') ?>'; }
+
+// ── PROJECT FILTER ──
+function filterProjects(cat, btn) {
+  document.querySelectorAll('.proj-filter').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const cards = document.querySelectorAll('.proj-card');
+  const toShow = [], toHide = [];
+  cards.forEach(card => {
+    const wrap = card.closest('.proj-card-wrap') || card;
+    const visible = cat === 'all' || (card.dataset.category || '').includes(cat);
+    if (visible) toShow.push(wrap); else toHide.push(wrap);
+  });
+  toHide.forEach(el => { el.classList.remove('showing'); el.classList.add('hiding'); });
+  setTimeout(() => {
+    toHide.forEach(el => { el.classList.add('hidden'); el.classList.remove('hiding'); });
+    toShow.forEach(el => { el.classList.remove('hidden'); el.classList.add('showing'); el.offsetHeight; });
+    toShow.forEach((el, i) => { setTimeout(() => { el.classList.remove('showing'); }, i * 60); });
+  }, 280);
+}
+
+// ── INTERSECTION OBSERVER ──
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(!entry.isIntersecting) return;
+    if(entry.target.classList.contains('anim')) { entry.target.style.animationPlayState = 'running'; }
+    if(entry.target.id === 'counters') {
+      entry.target.querySelectorAll('.counter-val[data-target]').forEach(el => {
+        const target = parseInt(el.dataset.target);
+        const suffix = el.dataset.suffix || '';
+        let start = 0;
+        const step = (timestamp) => {
+          if(!start) start = timestamp;
+          const progress = Math.min((timestamp - start) / 1400, 1);
+          const ease = 1 - Math.pow(1 - progress, 3);
+          el.textContent = Math.round(ease * target) + suffix;
+          if(progress < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      });
+    }
+    observer.unobserve(entry.target);
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('.anim').forEach(el => { el.style.animationPlayState = 'paused'; observer.observe(el); });
+const countersEl = document.getElementById('counters');
+if(countersEl) observer.observe(countersEl);
+
+// ── PROJECT DATA ──
+const PROJECTS = {
+  <?php
+  $typeStyles = [
+    'thesis'  => 'background:rgba(139,92,246,0.28);color:#d8b4fe;border:1px solid rgba(139,92,246,0.3)',
+    'ojt'     => 'background:rgba(6,182,212,0.18);color:#67e8f9;border:1px solid rgba(6,182,212,0.25)',
+    'lgu'     => 'background:rgba(16,185,129,0.16);color:#6ee7b7;border:1px solid rgba(16,185,129,0.22)',
+    'personal'=> 'background:rgba(251,191,36,0.16);color:#fde68a;border:1px solid rgba(251,191,36,0.22)',
+  ];
+  $typeLabels = ['thesis'=>'★ Thesis','ojt'=>'OJT','lgu'=>'LGU','personal'=>'Personal'];
+  foreach($projects as $proj):
+    $cat = $proj['category'] ?? 'personal';
+    $projTech = json_decode($proj['tech'] ?? '[]', true) ?: [];
+  ?>
+  <?= $proj['id'] ?>: {
+    type: <?= json_encode($typeLabels[$cat] ?? $cat) ?>,
+    typeStyle: <?= json_encode($typeStyles[$cat] ?? $typeStyles['personal']) ?>,
+    title: <?= json_encode($proj['title']) ?>,
+    desc: <?= json_encode($proj['description']) ?>,
+    tech: <?= json_encode($projTech) ?>,
+    github: <?= json_encode($proj['github_url'] ?: null) ?>,
+    demo: <?= json_encode($proj['demo_url'] ?: null) ?>,
+  },
+  <?php endforeach; ?>
+};
+
+// Phases and ISO scores for thesis (legacy fallback)
+const THESIS_PHASES = <?php
+  $js = [];
+  foreach(($thesisPhases ?? []) as $ph) { $js[] = ['num'=>$ph['num'],'title'=>$ph['title'],'content'=>$ph['content']]; }
+  echo json_encode($js);
+?>;
+const ISO_SCORES = <?php
+  $js = [];
+  foreach(($isoScores ?? []) as $s) { $js[] = ['label'=>$s['label'],'score'=>(int)$s['score']]; }
+  echo json_encode($js);
+?>;
+
+// All phases keyed by project_id (supports all categories)
+const ALL_PHASES = <?php
+  $allPhasesJs = [];
+  foreach(($allThesisPhases ?? []) as $pid => $phases) {
+    $allPhasesJs[$pid] = array_map(fn($ph) => [
+      'num'=>$ph['num'],'title'=>$ph['title'],'content'=>$ph['content']
+    ], $phases);
+  }
+  echo json_encode($allPhasesJs);
+?>;
+const ALL_ISO = <?php
+  $allIsoJs = [];
+  foreach(($allIsoScores ?? []) as $pid => $scores) {
+    $allIsoJs[$pid] = array_map(fn($s) => [
+      'label'=>$s['label'],'score'=>(int)$s['score']
+    ], $scores);
+  }
+  echo json_encode($allIsoJs);
+?>;
+
+// ── PROJECT MODAL ──
+function openProject(id) {
+  const p = PROJECTS[id];
+  if(!p) return;
+  document.getElementById('pm-type-tag').textContent = p.type;
+  document.getElementById('pm-type-tag').style.cssText = p.typeStyle;
+  document.getElementById('pm-title').textContent = p.title;
+
+  const projPhases = (ALL_PHASES && ALL_PHASES[id]) ? ALL_PHASES[id] : [];
+  const projIso    = (ALL_ISO    && ALL_ISO[id])    ? ALL_ISO[id]    : [];
+
+  let body = `<p class="pm-desc">${p.desc}</p><div class="pm-tech-row">${p.tech.map(t=>`<span class="pm-tech">${t}</span>`).join('')}</div><div class="pm-links">${p.github?`<a href="${p.github}" class="pm-link-btn pm-link-github" target="_blank"><i class="fab fa-github"></i> View on GitHub</a>`:''}${p.demo?`<a href="${p.demo}" class="pm-link-btn pm-link-demo" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>`:''}</div>`;
+
+  if(projPhases.length > 0) {
+    body += `<div class="pm-divider"></div><div class="pm-section-label">Development Methodology</div><div class="pm-accordion">${projPhases.map((ph,i)=>`<div class="pm-phase${i===0?' open':''}"><div class="pm-phase-header" onclick="togglePmPhase(this)"><div class="pm-phase-num">${ph.num}</div><div class="pm-phase-title">${ph.title}</div><i class="fas fa-chevron-down pm-phase-chevron"></i></div><div class="pm-phase-body"><div class="pm-phase-content">${ph.content}</div></div></div>`).join('')}</div>`;
+  }
+  if(projIso.length > 0) {
+    body += `<div class="pm-divider"></div><div class="pm-section-label">ISO 25010 Evaluation</div><div class="pm-iso-grid">${projIso.map(s=>`<div class="pm-iso-card"><div class="pm-iso-label">${s.label}</div><div class="pm-iso-bar-bg"><div class="pm-iso-bar-fill" data-w="${s.score}"></div></div><div class="pm-iso-score">${s.score}%</div></div>`).join('')}</div>`;
+  }
+
+  document.getElementById('pm-body').innerHTML = body;
+  document.getElementById('projModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  if(projIso.length > 0) {
+    setTimeout(() => {
+      document.querySelectorAll('.pm-iso-bar-fill[data-w]').forEach((bar,i) => {
+        setTimeout(() => { bar.style.width = bar.dataset.w + '%'; }, i * 100);
+      });
+    }, 200);
+  }
+}
+
+function closeProjModal() { document.getElementById('projModal').classList.remove('open'); document.body.style.overflow = ''; }
+function closeProjModalOnOverlay(e) { if(e.target === document.getElementById('projModal')) closeProjModal(); }
+function togglePmPhase(header) {
+  const phase = header.closest('.pm-phase');
+  const isOpen = phase.classList.contains('open');
+  document.querySelectorAll('.pm-phase').forEach(p => p.classList.remove('open'));
+  if(!isOpen) phase.classList.add('open');
+}
+
+document.addEventListener('keydown', e => { if(e.key === 'Escape') { closeProjModal(); closeResumeModal(); closeMobileMenu(); } });
+
+document.getElementById('proj-grid').addEventListener('click', function(e) {
+  if(e.target.closest('.proj-carousel-arrow') || e.target.closest('.proj-carousel-dots')) return;
+  if(e.target.closest('.proj-face-back')) return;
+  const wrap = e.target.closest('.proj-card-wrap');
+  if(!wrap) return;
+  const id = parseInt(wrap.dataset.project);
+  if(id) openProject(id);
+});
+
+// ── NAVBAR ACTIVE ON SCROLL ──
+const navSections = ['hero','services','projects','testimonials','contact'];
+window.addEventListener('scroll', () => {
+  const y = window.scrollY + 90;
+  navSections.forEach(id => {
+    const el = document.getElementById(id);
+    if(!el) return;
+    const links = document.querySelectorAll(`.nav-link[href="#${id}"]`);
+    if(!links.length) return;
+    if(el.offsetTop <= y && el.offsetTop + el.offsetHeight > y) {
+      document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+      links.forEach(l => l.classList.add('active'));
+    }
+  });
+}, { passive: true });
+
+// ── CAROUSEL ──
+function carouselGo(id, idx) {
+  const track = document.getElementById('track-' + id);
+  const dots  = document.querySelectorAll('#dots-' + id + ' .proj-carousel-dot');
+  const total = track.children.length;
+  idx = ((idx % total) + total) % total;
+
+  track.querySelectorAll('video').forEach(v => { v.pause(); });
+
+  track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+  dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+  track.closest('.proj-carousel').dataset.index = idx;
+
+  const newSlide = track.children[idx];
+  const vid = newSlide?.querySelector('video');
+  if (vid) { vid.play().catch(() => {}); }
+}
+function carouselNext(id) {
+  const carousel = document.getElementById('carousel-' + id);
+  carouselGo(id, parseInt(carousel.dataset.index || 0) + 1);
+}
+function carouselPrev(id) {
+  const carousel = document.getElementById('carousel-' + id);
+  carouselGo(id, parseInt(carousel.dataset.index || 0) - 1);
+}
 </script>
 </body>
 </html>

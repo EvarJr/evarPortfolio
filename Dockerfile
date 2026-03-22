@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libxml2-dev \
     libonig-dev \
+    libcurl4-openssl-dev \
     unzip \
     git \
     && rm -rf /var/lib/apt/lists/*

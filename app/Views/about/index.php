@@ -203,9 +203,9 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .proj-carousel-dot{min-width:18px;height:18px;border-radius:20px;background:rgba(255,255,255,0.2);cursor:pointer;transition:all 0.2s;border:none;padding:0 4px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.7)}
 .proj-carousel-dot.active{background:#a5b4fc;transform:scale(1.3)}
 
-/* ── BACK FACE — INFO STRIP (title left, arrows right) ── */
+/* ── BACK FACE — INFO STRIP (title only, no arrows in layout) ── */
 .proj-back-info{
-  padding:10px 12px 10px 14px;
+  padding:10px 14px;
   background:rgba(5,8,16,0.92);
   backdrop-filter:blur(8px);
   flex-shrink:0;
@@ -221,26 +221,42 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .proj-back-hint{font-size:10px;color:var(--text-3);display:flex;align-items:center;gap:4px;font-family:var(--font-m)}
 .proj-back-hint i{font-size:9px;color:#a5b4fc}
 
-/* ── CAROUSEL ARROWS — inline in info strip, right side ── */
-.proj-carousel-arrows{display:flex;align-items:center;gap:5px;flex-shrink:0;}
+/* ── CAROUSEL ARROWS — float over media, pinned to left/right edges, vertically centered ── */
+.proj-carousel-arrows{
+  position:absolute;
+  left:0;right:0;
+  bottom:52px; /* above info strip */
+  top:0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 8px;
+  pointer-events:none;
+  z-index:20;
+  opacity:0;
+  transition:opacity 0.2s;
+}
+.proj-face-back:hover .proj-carousel-arrows{opacity:1;}
 .proj-carousel-arrow{
-  width:28px;height:28px;
-  border-radius:8px;
-  background:rgba(99,102,241,0.15);
-  border:1px solid rgba(99,102,241,0.4);
-  color:#a5b4fc;
-  font-size:11px;
+  width:30px;height:30px;
+  border-radius:50%;
   cursor:pointer;
   display:flex;align-items:center;justify-content:center;
   transition:all 0.2s;
   flex-shrink:0;
+  pointer-events:all;
+  backdrop-filter:blur(10px);
+  background:rgba(5,8,16,0.7);
+  border:1.5px solid rgba(255,255,255,0.25);
+  color:#fff;
+  font-size:11px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.5);
 }
 .proj-carousel-arrow:hover{
-  background:rgba(99,102,241,0.6);
+  background:rgba(99,102,241,0.75);
   border-color:rgba(99,102,241,1);
-  color:#fff;
-  transform:scale(1.1);
-  box-shadow:0 2px 12px rgba(99,102,241,0.5);
+  transform:scale(1.12);
+  box-shadow:0 4px 16px rgba(99,102,241,0.5);
 }
 
 .proj-card.hidden{display:none}
@@ -705,26 +721,30 @@ a.re-contact-item:hover{color:#fff}
           </div>
           <?php endif; ?>
 
-          <!-- Info strip: title left, arrows right -->
+          <!-- Info strip: title only, no arrows in layout -->
           <div class="proj-back-info">
             <div class="proj-back-info-text">
               <div class="proj-back-title"><?= esc($proj['title']) ?></div>
               <div class="proj-back-hint">
                 <i class="fas fa-hand-pointer"></i> Click for details
+                <?php if(count($mediaList) > 1): ?>
+                &nbsp;·&nbsp;<span id="slide-counter-<?= $proj['id'] ?>">1/<?= count($mediaList) ?></span>
+                <?php endif; ?>
               </div>
             </div>
-            <?php if(count($mediaList) > 1): ?>
-            <div class="proj-carousel-arrows">
-              <button class="proj-carousel-arrow" onclick="event.stopPropagation();carouselPrev(<?= $proj['id'] ?>)" title="Previous">
-                <i class="fas fa-chevron-left"></i>
-              </button>
-              <span style="font-size:9px;color:var(--text-3);font-family:var(--font-m);padding:0 1px" id="slide-counter-<?= $proj['id'] ?>">1/<?= count($mediaList) ?></span>
-              <button class="proj-carousel-arrow" onclick="event.stopPropagation();carouselNext(<?= $proj['id'] ?>)" title="Next">
-                <i class="fas fa-chevron-right"></i>
-              </button>
-            </div>
-            <?php endif; ?>
           </div>
+
+          <!-- Arrows float over the media area, hidden until hover -->
+          <?php if(count($mediaList) > 1): ?>
+          <div class="proj-carousel-arrows">
+            <button class="proj-carousel-arrow" onclick="event.stopPropagation();carouselPrev(<?= $proj['id'] ?>)" title="Previous">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="proj-carousel-arrow" onclick="event.stopPropagation();carouselNext(<?= $proj['id'] ?>)" title="Next">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+          <?php endif; ?>
 
         </div><!-- /.proj-face-back -->
         <?php endif; ?>

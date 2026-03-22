@@ -20,7 +20,7 @@ class ProjectController extends BaseApiController
             'tech'        => $tech,
             'github_url'  => $d['github_url']  ?? '',
             'demo_url'    => $d['demo_url']    ?? '',
-            'media_urls'  => $d['media_urls']  ?? '',
+            'media_urls'  => '',
             'is_featured' => isset($d['is_featured']) ? (int)$d['is_featured'] : 1,
             'sort_order'  => $m->nextSortOrder(),
         ]);
@@ -33,6 +33,11 @@ class ProjectController extends BaseApiController
         $m = new ProjectModel();
         if (!$m->find($id)) return $this->jsonError('Not found.', 404);
         $tech = isset($d['tech']) ? ProjectModel::encodeTech((array)$d['tech']) : null;
+
+        // ★ FIX: Never include media_urls here.
+        // Media is managed exclusively via uploadMedia() and deleteMedia().
+        // Including it here would overwrite the DB with a stale JS value,
+        // losing any uploads done in the current edit session.
         $data = [
             'title'       => $d['title']       ?? '',
             'description' => $d['description'] ?? '',
@@ -40,7 +45,6 @@ class ProjectController extends BaseApiController
             'icon'        => $d['icon']        ?? 'fas fa-code',
             'github_url'  => $d['github_url']  ?? '',
             'demo_url'    => $d['demo_url']    ?? '',
-            'media_urls'  => $d['media_urls']  ?? '',
             'is_featured' => isset($d['is_featured']) ? (int)$d['is_featured'] : 1,
         ];
         if ($tech !== null) $data['tech'] = $tech;
@@ -79,6 +83,33 @@ class ProjectController extends BaseApiController
     }
 
     /**
+     * Add a YouTube URL to a project's media_urls
+     * POST /api/project/add-youtube/:id
+     */
+    public function addYoutube(int $id): \CodeIgniter\HTTP\ResponseInterface
+    {
+        $d = $this->getJson();
+        $url = trim($d['url'] ?? '');
+        if (!$url) return $this->jsonError('No URL provided.');
+        if (!str_contains($url, 'youtube') && !str_contains($url, 'youtu.be')) {
+            return $this->jsonError('Not a valid YouTube URL.');
+        }
+
+        $m = new ProjectModel();
+        $proj = $m->find($id);
+        if (!$proj) return $this->jsonError('Project not found.', 404);
+
+        $existing = array_values(array_filter(
+            array_map('trim', preg_split('/[\n,]+/', $proj['media_urls'] ?? ''))
+        ));
+        if (!in_array($url, $existing)) $existing[] = $url;
+        $newUrls = implode("\n", $existing);
+        $m->update($id, ['media_urls' => $newUrls]);
+
+        return $this->jsonSuccess(['media_urls' => $newUrls], 'YouTube link added.');
+    }
+
+    /**
      * Upload media file for a project via Cloudinary
      * POST /api/project/upload-media/:id
      */
@@ -88,10 +119,7 @@ class ProjectController extends BaseApiController
         if (!$m->find($id)) return $this->jsonError('Project not found.', 404);
 
         $file = $this->request->getFile('media');
-
-        if (!$file) {
-            return $this->jsonError('No file received by server.');
-        }
+        if (!$file) return $this->jsonError('No file received by server.');
 
         if ($file->getError() !== UPLOAD_ERR_OK) {
             $errors = [
@@ -111,12 +139,10 @@ class ProjectController extends BaseApiController
         if (!in_array($ext, $allowedExts)) {
             return $this->jsonError('Unsupported file type: ' . $ext . '. Use JPG, PNG, GIF, WEBP, MP4 or WEBM.');
         }
-
         if ($file->getSize() > 100 * 1024 * 1024) {
             return $this->jsonError('File too large. Maximum 100MB. Size: ' . round($file->getSize()/1024/1024, 2) . 'MB');
         }
 
-        // ── Read Cloudinary credentials ──
         $cloudName = $_ENV['CLOUDINARY_CLOUD_NAME'] ?? env('CLOUDINARY_CLOUD_NAME') ?? '';
         $apiKey    = $_ENV['CLOUDINARY_API_KEY']    ?? env('CLOUDINARY_API_KEY')    ?? '';
         $apiSecret = $_ENV['CLOUDINARY_API_SECRET'] ?? env('CLOUDINARY_API_SECRET') ?? '';
@@ -130,7 +156,7 @@ class ProjectController extends BaseApiController
         $folder       = 'evarportfolio/projects';
         $timestamp    = time();
 
-        // Cloudinary signature — params sorted alphabetically, raw string (no URL encoding)
+        // Signature: params sorted alphabetically, raw string (no URL encoding), secret appended
         $sigString = "folder={$folder}&timestamp={$timestamp}";
         $signature = hash('sha256', $sigString . $apiSecret);
 
@@ -152,12 +178,9 @@ class ProjectController extends BaseApiController
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
-        if ($curlErr) {
-            return $this->jsonError('cURL error: ' . $curlErr);
-        }
+        if ($curlErr) return $this->jsonError('cURL error: ' . $curlErr);
 
         $result = json_decode($response, true);
-
         if (empty($result['secure_url'])) {
             $errMsg = $result['error']['message'] ?? ('HTTP ' . $httpCode . ': ' . $response);
             return $this->jsonError('Cloudinary error: ' . $errMsg);
@@ -165,6 +188,7 @@ class ProjectController extends BaseApiController
 
         $url = $result['secure_url'];
 
+        // Append to existing media_urls — always reads fresh from DB
         $proj     = $m->find($id);
         $existing = trim($proj['media_urls'] ?? '');
         $newUrls  = $existing ? $existing . "\n" . $url : $url;
@@ -191,7 +215,6 @@ class ProjectController extends BaseApiController
         // Delete from Cloudinary
         $this->deleteFromCloudinary($url);
 
-        // Remove URL from DB
         $urls    = array_values(array_filter(
             array_map('trim', preg_split('/[\n,]+/', $proj['media_urls'] ?? ''))
         ));
@@ -203,8 +226,7 @@ class ProjectController extends BaseApiController
     }
 
     /**
-     * Delete a file from Cloudinary by its URL.
-     * Extracts the public_id from the URL and calls the destroy API.
+     * Delete a file from Cloudinary by its secure_url.
      */
     private function deleteFromCloudinary(string $url): void
     {
@@ -214,21 +236,17 @@ class ProjectController extends BaseApiController
 
         if (!$cloudName || !$apiKey || !$apiSecret || !$url) return;
 
-        // Skip YouTube URLs — they're not hosted on Cloudinary
+        // Skip YouTube — not hosted on Cloudinary
         if (str_contains($url, 'youtube') || str_contains($url, 'youtu.be')) return;
 
-        // Extract public_id from Cloudinary URL
-        // URL format: https://res.cloudinary.com/{cloud}/image|video/upload/v{version}/{public_id}.{ext}
-        // public_id includes the folder e.g. "evarportfolio/projects/abc123"
+        // Extract public_id from URL
+        // Format: https://res.cloudinary.com/{cloud}/image|video/upload/v{ver}/{public_id}.{ext}
         if (!preg_match('/\/upload\/(?:v\d+\/)?(.+?)(?:\.[a-z0-9]+)?$/i', $url, $matches)) return;
-        $publicId = $matches[1]; // e.g. "evarportfolio/projects/abc123"
-
-        // Determine resource type from URL
+        $publicId     = $matches[1];
         $resourceType = str_contains($url, '/video/') ? 'video' : 'image';
-
-        $timestamp = time();
-        $sigString = "public_id={$publicId}&timestamp={$timestamp}";
-        $signature = hash('sha256', $sigString . $apiSecret);
+        $timestamp    = time();
+        $sigString    = "public_id={$publicId}&timestamp={$timestamp}";
+        $signature    = hash('sha256', $sigString . $apiSecret);
 
         $ch = curl_init("https://api.cloudinary.com/v1_1/{$cloudName}/{$resourceType}/destroy");
         curl_setopt_array($ch, [
@@ -244,6 +262,5 @@ class ProjectController extends BaseApiController
         ]);
         curl_exec($ch);
         curl_close($ch);
-        // We don't check the response — DB removal happens regardless
     }
 }

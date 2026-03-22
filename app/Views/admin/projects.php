@@ -17,8 +17,6 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);font-size:14px;line-height:1.5}
 .layout{display:flex;min-height:100vh}
-
-/* ── SIDEBAR ── */
 .sidebar{width:var(--sidebar-w);background:var(--sidebar);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:200}
 .sb-brand{padding:20px 18px;display:flex;align-items:center;gap:11px;border-bottom:1px solid rgba(255,255,255,0.07)}
 .sb-icon{width:38px;height:38px;background:var(--accent);border-radius:9px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;flex-shrink:0}
@@ -34,8 +32,6 @@ body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);fon
 .btn-preview:hover{opacity:0.88}
 .btn-signout{display:flex;align-items:center;justify-content:center;gap:7px;color:rgba(255,255,255,0.45);font-size:12px;text-decoration:none;padding:6px;border-radius:6px;transition:color 0.2s}
 .btn-signout:hover{color:#fff}
-
-/* ── MAIN ── */
 .main{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column;min-height:100vh}
 .topbar{background:#fff;border-bottom:1px solid var(--border);height:58px;padding:0 26px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:var(--shadow)}
 .topbar-title{font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px}
@@ -45,31 +41,21 @@ body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);fon
 .user-chip i{color:var(--accent)}
 .btn-sm-outline{padding:6px 14px;border:1.5px solid var(--border);background:#fff;border-radius:7px;font-size:12px;color:var(--text);text-decoration:none;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:5px;transition:border-color 0.2s,color 0.2s}
 .btn-sm-outline:hover{border-color:var(--accent);color:var(--accent)}
-
-/* ── CONTENT ── */
 .content{padding:22px 26px;display:flex;flex-direction:column;gap:20px}
-
-/* ── CARD ── */
 .card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden}
 .card-head{padding:16px 22px;background:#fafafa;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
 .card-head-icon{width:34px;height:34px;border-radius:8px;background:rgba(59,130,246,0.1);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:14px;flex-shrink:0}
 .card-head-text h2{font-size:14px;font-weight:600;margin-bottom:2px}
 .card-head-text p{font-size:12px;color:var(--muted)}
 .card-body{padding:20px 22px}
-
-/* ── BUTTONS ── */
 .btn-primary{background:var(--accent);color:#fff;border:none;padding:9px 18px;border-radius:7px;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;display:inline-flex;align-items:center;gap:6px;transition:background 0.2s}
 .btn-primary:hover{background:var(--accent-dark)}
 .btn-cancel-soft{background:#f3f4f6;color:var(--text);border:none;padding:7px 13px;border-radius:6px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;display:inline-flex;align-items:center;gap:4px}
 .icon-btn{width:26px;height:26px;border-radius:5px;border:1.5px solid var(--border);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:10.5px;transition:all 0.15s;flex-shrink:0}
 .icon-btn.edit:hover{border-color:var(--accent);color:var(--accent);background:rgba(59,130,246,0.05)}
 .icon-btn.del:hover{border-color:var(--danger);color:var(--danger);background:rgba(239,68,68,0.05)}
-.icon-btn.drag{cursor:grab;color:#d1d5db}
 .btn-add-item{background:transparent;border:1.5px dashed var(--accent);color:var(--accent);padding:8px 16px;border-radius:7px;font-size:12px;font-weight:500;cursor:pointer;font-family:"DM Sans",sans-serif;display:inline-flex;align-items:center;gap:6px;transition:background 0.2s}
 .btn-add-item:hover{background:rgba(59,130,246,0.05)}
-.icon-btn.drag:active{cursor:grabbing}
-
-/* ── PROJECT LIST ── */
 .proj-list{display:flex;flex-direction:column;gap:8px}
 .proj-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:#fff;transition:border-color 0.15s;cursor:grab}
 .proj-row:hover{border-color:#c7d2fe}
@@ -90,24 +76,17 @@ body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);fon
 .feat-toggle{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);cursor:pointer;padding:3px 8px;border-radius:4px;background:#f9fafb;border:1px solid var(--border);transition:all 0.15s;white-space:nowrap}
 .feat-toggle.on{background:#f0fdf4;border-color:#86efac;color:#16a34a}
 .feat-toggle:hover{border-color:var(--accent)}
-
-/* ── FORMS (FG) ── */
 .fg{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
 .fg label{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px}
 .fg input,.fg textarea,.fg select{padding:8px 12px;border:1.5px solid var(--border);border-radius:7px;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--text);outline:none;transition:border-color 0.2s;background:#fff;width:100%}
 .fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,130,246,0.08)}
 .fg textarea{resize:vertical;min-height:80px}
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-
-/* ── TECH PILLS EDITOR ── */
 .tech-pills-wrap{display:flex;flex-wrap:wrap;gap:6px;padding:8px 10px;border:1.5px solid var(--border);border-radius:7px;min-height:42px;cursor:text;background:#fff;transition:border-color 0.2s}
 .tech-pills-wrap:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,130,246,0.08)}
 .tech-pill-item{display:inline-flex;align-items:center;gap:5px;background:#eff6ff;color:#1d4ed8;border-radius:4px;padding:3px 8px;font-size:12px;font-weight:500}
 .tech-pill-item button{background:none;border:none;cursor:pointer;color:#93c5fd;font-size:11px;padding:0;line-height:1;transition:color 0.15s}
 .tech-pill-item button:hover{color:#ef4444}
 .tech-input{border:none;outline:none;font-size:12px;font-family:'DM Sans',sans-serif;background:transparent;min-width:120px;flex:1;padding:2px 0}
-
-/* ── SLIDE PANEL ── */
 .edit-overlay{position:fixed;inset:0;background:rgba(15,23,42,0.45);z-index:900;opacity:0;pointer-events:none;transition:opacity 0.3s}
 .edit-overlay.open{opacity:1;pointer-events:all}
 .edit-panel{position:fixed;top:0;right:0;bottom:0;width:520px;max-width:95vw;background:#fff;z-index:901;display:flex;flex-direction:column;box-shadow:-8px 0 40px rgba(0,0,0,0.15);transform:translateX(100%);transition:transform 0.35s cubic-bezier(0.4,0,0.2,1)}
@@ -122,9 +101,6 @@ body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);fon
 .ep-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:10px;background:#fafafa;flex-shrink:0}
 .ep-footer .btn-primary{flex:1;justify-content:center;padding:11px;font-size:14px}
 .ep-footer .btn-cancel-soft{padding:11px 20px;font-size:14px}
-
-/* ── ICON PICKER ── */
-.icon-picker-wrap{position:relative}
 .icon-search-input{width:100%;padding:8px 12px 8px 34px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E") no-repeat 9px center;transition:border-color 0.2s}
 .icon-search-input:focus{outline:none;border-color:var(--accent)}
 .icon-selected-preview{display:flex;align-items:center;gap:8px;padding:7px 12px;background:#eff6ff;border-radius:7px;margin-bottom:8px;font-size:12px;color:var(--accent)}
@@ -135,8 +111,6 @@ body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);fon
 .icon-option.selected{background:var(--accent);color:#fff;border-color:var(--accent)}
 .icon-load-more{grid-column:1/-1;text-align:center;padding:8px;font-size:12px;color:var(--accent);cursor:pointer;font-weight:600;border-top:1px solid var(--border)}
 .icon-load-more:hover{text-decoration:underline}
-
-/* ── DELETE MODAL ── */
 .del-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.15s}
 .del-modal-overlay.open{opacity:1;pointer-events:all}
 .del-modal{background:#1e293b;border-radius:8px;padding:22px 24px 18px;min-width:300px;max-width:360px;width:90%;box-shadow:0 8px 32px rgba(0,0,0,0.4);transform:translateY(-4px);transition:transform 0.15s}
@@ -149,14 +123,10 @@ body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);fon
 .btn-del-cancel:hover{background:#475569}
 .btn-del-confirm{padding:7px 18px;background:#ef4444;color:#fff;border:none;border-radius:5px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:background 0.15s}
 .btn-del-confirm:hover{background:#dc2626}
-
-/* ── TOAST ── */
 #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1e293b;color:#fff;padding:12px 18px;border-radius:12px;font-size:13px;font-weight:500;display:flex;align-items:center;gap:10px;box-shadow:0 8px 32px rgba(0,0,0,0.2);z-index:2000;transition:transform 0.3s ease;white-space:nowrap}
 #toast.show{transform:translateX(-50%) translateY(0)}
 #toast.ok{background:#1e293b}
 #toast.err{background:#991b1b}
-
-/* ── DARK MODE ── */
 body.dark{--bg:#0f1117;--card:#161b27;--border:#1e2535;--text:#e2e8f0;--muted:#64748b}
 body.dark .topbar{background:#161b27;border-color:#1e2535}
 body.dark .card{background:#161b27;border-color:#1e2535}
@@ -171,8 +141,6 @@ body.dark .feat-toggle{background:#111827;border-color:#1e2535}
 .dark-toggle{width:36px;height:36px;border-radius:8px;border:1.5px solid var(--border);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--muted);transition:all 0.2s}
 .dark-toggle:hover{border-color:var(--accent);color:var(--accent)}
 body.dark .dark-toggle{background:#111827;border-color:#1e2535;color:#fbbf24}
-
-/* ── THESIS CONTENT MANAGEMENT ── */
 .thesis-card{margin-top:20px}
 .thesis-tabs{display:flex;gap:4px;margin-bottom:18px}
 .thesis-tab{padding:7px 18px;border-radius:7px;font-size:13px;font-weight:500;cursor:pointer;border:1.5px solid var(--border);background:#fff;color:var(--muted);font-family:'DM Sans',sans-serif;transition:all 0.15s}
@@ -207,7 +175,6 @@ body.dark .dark-toggle{background:#111827;border-color:#1e2535;color:#fbbf24}
 <body>
 
 <div id="toast"></div>
-
 <div class="edit-overlay" id="editOverlay" onclick="closePanel()"></div>
 
 <div class="edit-panel" id="editPanel">
@@ -280,7 +247,6 @@ body.dark .dark-toggle{background:#111827;border-color:#1e2535;color:#fbbf24}
     </div>
 
     <div class="content">
-
       <div class="card">
         <div class="card-head">
           <div class="card-head-icon"><i class="fas fa-briefcase"></i></div>
@@ -371,7 +337,6 @@ body.dark .dark-toggle{background:#111827;border-color:#1e2535;color:#fbbf24}
           </div>
         </div>
       </div>
-
     </div>
   </main>
 </div>
@@ -508,7 +473,7 @@ function buildPanelForm(p) {
     <div class="ep-divider"></div>
     <div class="fg">
       <label><i class="fas fa-images" style="color:var(--accent)"></i> Project Media
-        <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);font-size:10.5px"> — images &amp; videos shown in project detail</span>
+        <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);font-size:10.5px"> — upload images &amp; videos, managed independently from Save</span>
       </label>
       <div id="media-preview-list" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px"></div>
       <label style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(59,130,246,0.06);border:1.5px dashed var(--accent);border-radius:9px;cursor:pointer;font-size:13px;color:var(--accent);font-weight:500;transition:background 0.2s" id="media-upload-label">
@@ -517,15 +482,20 @@ function buildPanelForm(p) {
       </label>
       <div style="font-size:11px;color:var(--muted);margin-top:6px;line-height:1.6">
         <i class="fas fa-circle-info" style="color:var(--accent)"></i>
-        JPG, PNG, GIF, WEBP, MP4, WEBM · Max 50MB each · Multiple files allowed<br>
-        You can also paste a <strong>YouTube link</strong> below:
+        JPG, PNG, GIF, WEBP, MP4, WEBM · Max 100MB each · Multiple files allowed<br>
+        Uploads save instantly — no need to click Save Project.<br>
+        You can also paste a <strong>YouTube link</strong> below and click Save Project:
       </div>
       <input type="text" id="pf-youtube" placeholder="https://youtu.be/abc123  (optional YouTube link)" style="margin-top:8px;font-size:12px">
-      <input type="hidden" id="pf-media" value="${v('media_urls')}">
     </div>
   `;
 }
 
+// ── SAVE PROJECT ──
+// ★ FIX: media_urls is NOT included in this payload.
+// Media is managed independently via uploadMedia / deleteMedia API calls.
+// Including media_urls here would overwrite the DB value with a stale
+// copy from PROJECTS_DATA, losing any uploads done in this session.
 async function saveProject() {
   const title  = document.getElementById('pf-title').value.trim();
   const desc   = document.getElementById('pf-desc').value.trim();
@@ -534,27 +504,30 @@ async function saveProject() {
   const icon   = document.getElementById('pf-icon').value;
   const github = document.getElementById('pf-github').value.trim();
   const demo   = document.getElementById('pf-demo').value.trim();
-  const ytEl   = document.getElementById('pf-youtube');
-  if (ytEl && ytEl.value.trim()) {
-    const hiddenMedia = document.getElementById('pf-media');
+
+  // Handle YouTube link — save it directly via a separate media update
+  const ytEl = document.getElementById('pf-youtube');
+  if (ytEl && ytEl.value.trim() && currentEditId) {
     const ytUrl = ytEl.value.trim();
-    const existing = (hiddenMedia?.value || '').split(/[\n,]+/).map(u=>u.trim()).filter(Boolean);
-    if (!existing.includes(ytUrl)) existing.push(ytUrl);
-    if (hiddenMedia) hiddenMedia.value = existing.join('\n');
-    ytEl.value = '';
+    const ytR = await api(`/api/project/add-youtube/${currentEditId}`, { url: ytUrl });
+    if (ytR.success) {
+      PROJECTS_DATA[currentEditId].media_urls = ytR.media_urls;
+      ytEl.value = '';
+    }
   }
-  const media   = document.getElementById('pf-media')?.value.trim() || '';
+
   const techRaw = document.getElementById('pf-tech').value;
   let tech = [];
   try { tech = JSON.parse(techRaw); } catch(e) {}
   if (!title) { toast('Title is required.', 'err'); return; }
-  const payload = { title, description:desc, category:cat, icon, tech, github_url:github, demo_url:demo, media_urls:media, is_featured:feat };
+
+  // ★ No media_urls in payload — controller's update() will not touch it
+  const payload = { title, description:desc, category:cat, icon, tech, github_url:github, demo_url:demo, is_featured:feat };
   const path = currentEditId ? `/api/project/update/${currentEditId}` : '/api/project/add';
   const r = await api(path, payload);
   if (r.success) {
-    // ── Sync PROJECTS_DATA so reopening the panel reflects latest state ──
     if (currentEditId && PROJECTS_DATA[currentEditId]) {
-      PROJECTS_DATA[currentEditId] = { ...PROJECTS_DATA[currentEditId], title, description:desc, category:cat, icon, tech, github_url:github, demo_url:demo, media_urls:media, is_featured:feat };
+      PROJECTS_DATA[currentEditId] = { ...PROJECTS_DATA[currentEditId], title, description:desc, category:cat, icon, tech, github_url:github, demo_url:demo, is_featured:feat };
     }
     toast(currentEditId ? 'Project updated!' : 'Project added!');
     closePanel();
@@ -585,7 +558,6 @@ function renderMediaPreviews(mediaUrls) {
   }).join('');
 }
 
-// ── MEDIA UPLOAD ──
 async function handleMediaUpload(input) {
   if (!currentEditId) { toast('Save the project first, then add media.', 'err'); return; }
   const files = Array.from(input.files);
@@ -612,12 +584,9 @@ async function handleMediaUpload(input) {
       const newToken = r.headers.get('X-CSRF-TOKEN');
       if (newToken) { const meta = document.querySelector('meta[name="csrf-token"]'); if (meta) meta.content = newToken; }
       if (data.success) {
-        document.getElementById('pf-media').value = data.media_urls;
         renderMediaPreviews(data.media_urls);
-        // ★ FIX: keep PROJECTS_DATA in sync so reopening the panel shows updated media
-        if (PROJECTS_DATA[currentEditId]) {
-          PROJECTS_DATA[currentEditId].media_urls = data.media_urls;
-        }
+        // Sync PROJECTS_DATA so panel always shows latest media
+        if (PROJECTS_DATA[currentEditId]) PROJECTS_DATA[currentEditId].media_urls = data.media_urls;
         toast('Uploaded: ' + file.name);
       } else {
         toast(data.message || 'Upload failed', 'err');
@@ -634,12 +603,8 @@ async function deleteMediaItem(url) {
   if (!currentEditId) return;
   const r = await api('/api/project/delete-media/' + currentEditId, { url });
   if (r.success) {
-    document.getElementById('pf-media').value = r.media_urls;
     renderMediaPreviews(r.media_urls);
-    // ★ FIX: keep PROJECTS_DATA in sync so reopening the panel shows updated media
-    if (PROJECTS_DATA[currentEditId]) {
-      PROJECTS_DATA[currentEditId].media_urls = r.media_urls;
-    }
+    if (PROJECTS_DATA[currentEditId]) PROJECTS_DATA[currentEditId].media_urls = r.media_urls;
     toast('Media removed.');
   } else toast(r.message || 'Error', 'err');
 }
@@ -767,12 +732,11 @@ function selectIcon(el, fc) {
 let dragSrc = null;
 document.addEventListener('DOMContentLoaded', () => { initDrag(); });
 function initDrag() {
-  const rows = document.querySelectorAll('.proj-row');
-  rows.forEach(row => {
+  document.querySelectorAll('.proj-row').forEach(row => {
     row.addEventListener('dragstart', e => { dragSrc = row; row.classList.add('dragging'); e.dataTransfer.effectAllowed = 'move'; });
     row.addEventListener('dragend', () => { row.classList.remove('dragging'); document.querySelectorAll('.proj-row').forEach(r => r.classList.remove('drag-over')); saveOrder(); });
     row.addEventListener('dragover', e => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; if (row !== dragSrc) { document.querySelectorAll('.proj-row').forEach(r=>r.classList.remove('drag-over')); row.classList.add('drag-over'); } });
-    row.addEventListener('drop', e => { e.preventDefault(); if (dragSrc && dragSrc !== row) { const list = document.getElementById('proj-list'); const rows = [...list.querySelectorAll('.proj-row')]; const srcIdx = rows.indexOf(dragSrc); const tgtIdx = rows.indexOf(row); if (srcIdx < tgtIdx) list.insertBefore(dragSrc, row.nextSibling); else list.insertBefore(dragSrc, row); } row.classList.remove('drag-over'); });
+    row.addEventListener('drop', e => { e.preventDefault(); if (dragSrc && dragSrc !== row) { const list = document.getElementById('proj-list'); const rows = [...list.querySelectorAll('.proj-row')]; if (rows.indexOf(dragSrc) < rows.indexOf(row)) list.insertBefore(dragSrc, row.nextSibling); else list.insertBefore(dragSrc, row); } row.classList.remove('drag-over'); });
   });
 }
 async function saveOrder() {
@@ -797,7 +761,6 @@ function toggleDark() {
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') { closePanel(); closeDelModal(); } });
 
-// ── METHODOLOGY & ISO ──
 let _currentMethodologyProjectId = null;
 function openMethodology(projectId, projectTitle) {
   _currentMethodologyProjectId = projectId;
